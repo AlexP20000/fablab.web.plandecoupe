@@ -121,9 +121,41 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 }
 
 function tests() {
-	// draw_path(wooden_plate_thickness, size, rotate_case);
-	draw_path(5, 100, 0, 0, 0);
-	draw_path(5, 100, 4, 100, 0);
-	draw_path(5, 100, 2, 100, 100);
-	draw_path(5, 100, 6, 0, 100);
+	wooden_plate_width = 100;
+	wooden_plate_length = 100;
+	wooden_plate_thickness = 5;
+	width_box = 200;
+	depth_box = 50;
+	height_box = 50;
+	
+	// draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
+	// part 1
+	draw_path(wooden_plate_thickness, width_box, 1, height_box, 0);
+	draw_path(wooden_plate_thickness, height_box, 4, height_box + width_box, 0);
+	draw_path(wooden_plate_thickness, width_box, 3, height_box + width_box, height_box);
+	draw_path(wooden_plate_thickness, height_box, 6, height_box, height_box);
+	// part 2
+	draw_path(wooden_plate_thickness, depth_box, 4, height_box + width_box, height_box);
+	draw_path(wooden_plate_thickness, width_box, 2, height_box + width_box, height_box + depth_box);
+	draw_path(wooden_plate_thickness, depth_box, 6, height_box, height_box + depth_box);
+	// part 3
+	draw_path(wooden_plate_thickness, height_box, 4, height_box + width_box, height_box + depth_box);
+	draw_path(wooden_plate_thickness, width_box, 3, height_box + width_box, height_box + depth_box + height_box);
+	draw_path(wooden_plate_thickness, height_box, 6, height_box, height_box + depth_box + height_box);
+	// part 4
+	draw_path(wooden_plate_thickness, height_box, 3, height_box, height_box - wooden_plate_thickness + depth_box);
+	draw_path(wooden_plate_thickness, depth_box - 2 * wooden_plate_thickness, 7, 0, height_box - wooden_plate_thickness + depth_box);
+	draw_path(wooden_plate_thickness, height_box, 1, 0, height_box + wooden_plate_thickness);
+	// part 5
+	draw_path(wooden_plate_thickness, height_box, 1, height_box + width_box, height_box + wooden_plate_thickness);
+	draw_path(wooden_plate_thickness, depth_box - 2 * wooden_plate_thickness, 5, height_box * 2 + width_box, height_box + wooden_plate_thickness);
+	draw_path(wooden_plate_thickness, height_box, 3, height_box * 2 + width_box, height_box + depth_box - wooden_plate_thickness);
+	// path 6
+	draw_line(height_box + width_box, height_box * 2 + depth_box, 0, wooden_plate_thickness); // paddng
+	draw_path(wooden_plate_thickness, depth_box - wooden_plate_thickness * 2, 4, height_box + width_box, height_box * 2 + depth_box + wooden_plate_thickness);
+	draw_line(height_box + width_box, height_box * 2 + depth_box * 2 - wooden_plate_thickness, 0, wooden_plate_thickness); // paddng 
+	draw_path(wooden_plate_thickness, width_box, 2, height_box + width_box, height_box * 2 + depth_box * 2);
+	draw_line(height_box, height_box * 2 + depth_box * 2, 0, -wooden_plate_thickness); // paddng
+	draw_path(wooden_plate_thickness, depth_box - wooden_plate_thickness * 2, 6, height_box, height_box * 2 + depth_box * 2 - wooden_plate_thickness);
+	draw_line(height_box, height_box * 2 + depth_box + wooden_plate_thickness , 0, - wooden_plate_thickness); // paddng 
 }

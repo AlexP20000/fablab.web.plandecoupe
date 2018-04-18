@@ -1,19 +1,30 @@
 
 var NOTCH_SIZE = 10;
 
+// it create the tag elements necessary and put them inside the svg tag using the tab_coordiante values.
+function create_path(tab_coordinate) {
+	var svg = document.getElementById("svginfo");
+	var newpath = document.createElementNS(svg.namespaceURI,"path");  
+	newpath.setAttribute("transform", "translate(50,50)"); 
+	newpath.setAttribute("d", tab_coordinate);  
+	svg.appendChild(newpath);
+}
+
+// function that draws a simple line from a (x,y) to b (x,y)
+function draw_line(Ax, Ay, Bx, By) {
+	var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
+	create_path(tab_coordinate);
+}
+
 // function that draws a path depending on a (x,y) origin and using rotation eventually.
-// it create the tag elements necessary and put them inside the svg tag.
+// return the tab_coordiante which contains all the cuple (x,y) to draw a path
 // @param draw_origin_x, draw_origin_x 	are the (x,y) position where we start the drawing.
 // @param translate_x, translate_y 		are the (x,y) position where we move our drawing to.
 function draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y) {
 	var tab_coordinate = draw_side(wooden_plate_thickness, size); 							// gets the good values to draw
 	tab_coordinate = rotate_path(tab_coordinate, rotate_case) 								// rotate them if need be
 	var tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
-	var svg = document.getElementById("svginfo");
-	var newpath = document.createElementNS(svg.namespaceURI,"path");  
-	newpath.setAttribute("transform", "translate(50,50)"); 
-	newpath.setAttribute("d", tab_coordinate);  
-	svg.appendChild(newpath);
+	create_path(tab_coordinate);
 }
 
 // function that return a string with all the scheme "value1,value2" as "x,y" which represent an entire side
@@ -79,13 +90,13 @@ function rotate(scheme, rotate_case) {
 	var value2 = stringTab[1];
 	
 	switch( rotate_case ) { // by default it draws the top side/path from left to right
-		case 1: return value1 + "," + -value2;	// draw from left to right reversed == default reversed
-		case 2: return -value1 + "," + -value2;	// draw from right to left
-		case 3: return -value1 + "," + value2;	// draw from right to left reversed
-		case 4: return -value2 + "," + value1;	// draw from top to bottom
-		case 5: return value2 + "," + value1;	// draw from top to bottom reversed
-		case 6: return value2 + "," + -value1;	// draw from bottom to top
-		case 7: return -value2 + "," + -value1;	// draw from bottom to top reversed
+		case 1: return value1 + "," + -value2 + " ";	// draw from left to right reversed == default reversed
+		case 2: return -value1 + "," + -value2 + " ";	// draw from right to left
+		case 3: return -value1 + "," + value2 + " ";	// draw from right to left reversed
+		case 4: return -value2 + "," + value1 + " ";	// draw from top to bottom
+		case 5: return value2 + "," + value1 + " ";	// draw from top to bottom reversed
+		case 6: return value2 + "," + -value1 + " ";	// draw from bottom to top
+		case 7: return -value2 + "," + -value1 + " ";	// draw from bottom to top reversed
 		default: return scheme;
 	}
 }
@@ -130,9 +141,9 @@ function tests() {
 	
 	// draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
 	// part 1
-	draw_path(wooden_plate_thickness, width_box, 0, height_box, 0);
+	draw_path(wooden_plate_thickness, width_box, 1, height_box, 0);
 	draw_path(wooden_plate_thickness, height_box, 4, height_box + width_box, 0);
-	draw_path(wooden_plate_thickness, width_box, 2, height_box + width_box, height_box);
+	draw_path(wooden_plate_thickness, width_box, 3, height_box + width_box, height_box);
 	draw_path(wooden_plate_thickness, height_box, 6, height_box, height_box);
 	// part 2
 	draw_path(wooden_plate_thickness, depth_box, 4, height_box + width_box, height_box);
@@ -140,15 +151,23 @@ function tests() {
 	draw_path(wooden_plate_thickness, depth_box, 6, height_box, height_box + depth_box);
 	// part 3
 	draw_path(wooden_plate_thickness, height_box, 4, height_box + width_box, height_box + depth_box);
-	draw_path(wooden_plate_thickness, width_box, 2, height_box + width_box, height_box + depth_box + height_box);
+	draw_path(wooden_plate_thickness, width_box, 3, height_box + width_box, height_box + depth_box + height_box);
 	draw_path(wooden_plate_thickness, height_box, 6, height_box, height_box + depth_box + height_box);
 	// part 4
 	draw_path(wooden_plate_thickness, height_box, 3, height_box, height_box - wooden_plate_thickness + depth_box);
 	draw_path(wooden_plate_thickness, depth_box - 2 * wooden_plate_thickness, 7, 0, height_box - wooden_plate_thickness + depth_box);
 	draw_path(wooden_plate_thickness, height_box, 1, 0, height_box + wooden_plate_thickness);
 	// part 5
-	draw_path(wooden_plate_thickness, height_box, 3, height_box + width_box, height_box + wooden_plate_thickness);
-	draw_path(wooden_plate_thickness, depth_box - 2 * wooden_plate_thickness, 6, 0, height_box * 2 + wooden_plate_thickness);
-	draw_path(wooden_plate_thickness, height_box, 1, 0, height_box - wooden_plate_thickness + depth_box);
+	draw_path(wooden_plate_thickness, height_box, 1, height_box + width_box, height_box + wooden_plate_thickness);
+	draw_path(wooden_plate_thickness, depth_box - 2 * wooden_plate_thickness, 5, height_box * 2 + width_box, height_box + wooden_plate_thickness);
+	draw_path(wooden_plate_thickness, height_box, 3, height_box * 2 + width_box, height_box + depth_box - wooden_plate_thickness);
+	// path 6
+	draw_line(height_box + width_box, height_box * 2 + depth_box, 0, wooden_plate_thickness); // paddng
+	draw_path(wooden_plate_thickness, depth_box - wooden_plate_thickness * 2, 4, height_box + width_box, height_box * 2 + depth_box + wooden_plate_thickness);
+	draw_line(height_box + width_box, height_box * 2 + depth_box * 2 - wooden_plate_thickness, 0, wooden_plate_thickness); // paddng 
+	draw_path(wooden_plate_thickness, width_box, 2, height_box + width_box, height_box * 2 + depth_box * 2);
+	draw_line(height_box, height_box * 2 + depth_box * 2, 0, -wooden_plate_thickness); // paddng
+	draw_path(wooden_plate_thickness, depth_box - wooden_plate_thickness * 2, 6, height_box, height_box * 2 + depth_box * 2 - wooden_plate_thickness);
+	draw_line(height_box, height_box * 2 + depth_box + wooden_plate_thickness , 0, - wooden_plate_thickness); // paddng 
 	
 }
