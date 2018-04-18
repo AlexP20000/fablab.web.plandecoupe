@@ -128,24 +128,6 @@
         </div>
     </div>
     </div>
-	<script type="text/javascript">
-		// encode the data from the svg tag into URI data, and then set those information directly to the a tag.
-		// then we use the magic function click that simulate a human click on this a tag, which open the download yes/no window.
-		function generate_svg_file() {
-			// Use XMLSerializer to convert the DOM to a string
-			var s = new XMLSerializer();
-			var d = document.getElementById("svg");
-			var str = s.serializeToString(d); // the svg tag with its contents 
-			// and then btoa can convert that to base64
-			var encodedData = "data:image/svg+xml;base64," + window.btoa(str); 
-			// we set the uri content
-			document.getElementById("filesvg").setAttribute("href", encodedData);
-			// we set the file name downloaded
-			document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
-			// our a tag is hidden, so we use the click function as we would click on it usualy
-			document.getElementById("filesvg").click();
-		}		
-	</script>
     <script src="generate_svg_boxes.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
