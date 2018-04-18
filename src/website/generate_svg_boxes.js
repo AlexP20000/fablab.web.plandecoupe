@@ -132,7 +132,6 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 }
 
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
-	generate_svg_file();
 	
 	wooden_plate_width = 100;
 	wooden_plate_length = 100;
@@ -171,6 +170,8 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	draw_line(height_box, height_box * 2 + depth_box * 2, 0, -wooden_plate_thickness); // paddng
 	draw_path(wooden_plate_thickness, depth_box - wooden_plate_thickness * 2, 6, height_box, height_box * 2 + depth_box * 2 - wooden_plate_thickness);
 	draw_line(height_box, height_box * 2 + depth_box + wooden_plate_thickness , 0, - wooden_plate_thickness); // paddng 
+
+	generate_svg_file();
 }
 
 // encode the data from the svg tag into URI data, and then set those information directly to the a tag.
@@ -181,7 +182,7 @@ function generate_svg_file() {
 	var d = document.getElementById("svg");
 	var str = s.serializeToString(d); // the svg tag with its contents 
 	// and then btoa can convert that to base64
-	var encodedData = "data:image/svg+xml;base64," + window.btoa(str); 
+	var encodedData = "data:image/svg+xml;base64," + window.btoa("<?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
 	// we set the uri content
 	document.getElementById("filesvg").setAttribute("href", encodedData);
 	// we set the file name downloaded
