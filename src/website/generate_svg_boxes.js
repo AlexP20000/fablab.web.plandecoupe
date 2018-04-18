@@ -10,13 +10,13 @@ function create_path(tab_coordinate) {
 	svg.appendChild(newpath);
 }
 
-// function that draws a simple line from a (x,y) to b (x,y)
+// function that create a string containing the value of a simple line from a (x,y) to b (x,y)
 function draw_line(Ax, Ay, Bx, By) {
 	var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
 	create_path(tab_coordinate);
 }
 
-// function that draws a path depending on a (x,y) origin and using rotation eventually.
+// function that create a string containing the value of the path depending on a (x,y) origin and using rotation eventually.
 // return the tab_coordiante which contains all the cuple (x,y) to draw a path
 // @param draw_origin_x, draw_origin_x 	are the (x,y) position where we start the drawing.
 // @param translate_x, translate_y 		are the (x,y) position where we move our drawing to.
@@ -131,13 +131,13 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 	return -1;
 }
 
-function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
-	wooden_plate_width = 100;
-	wooden_plate_length = 100;
-	/*wooden_plate_thickness = document.getElementById("epaisseur").value;// = 5;
-	width_box = document.getElementById("longueur").value; // = 200;
-	depth_box = document.getElementById("largeur").value; // = 50;
-	height_box = document.getElementById("hauteur").value; // = 50;*/
+function tests() {
+	var wooden_plate_width = 100;
+	var wooden_plate_length = 100;
+	var wooden_plate_thickness = document.getElementById("epaisseur").value;// = 5;
+	var width_box = document.getElementById("longueur").value; // = 200;
+	var depth_box = document.getElementById("largeur").value; // = 50;
+	var height_box = document.getElementById("hauteur").value; // = 50;
 	
 	// draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
 	// part 1
