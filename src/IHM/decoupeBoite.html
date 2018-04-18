@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator fichier svg</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:5px;">
+            <div class="col" align="center"><img src="assets/img/logo_transparent.png">
+                <h1 class="text-center">Générateur de fichier svg pour découpe de boites</h1>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;" align="center">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Application</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="Formulaire">
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :&nbsp;</label><select><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                            <div
+                                class="form-group"><label class="d-block float-left" style="width:150px;">Longueur :&nbsp;</label><input type="number" placeholder="mm"></div>
+                        <div class="form-group"><label class="d-block float-left" style="width:150px;">Profondeur :&nbsp;</label><input type="number" placeholder="mm"></div>
+                        <div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur :&nbsp;</label><input type="number" placeholder="mm"></div>
+                        <div class="form-group"><label class="d-block float-left" style="width:150px;">Epaisseur :&nbsp;</label><input type="number" placeholder="mm"></div>
+                        <div class="form-group">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Boite fermée</label></div>
+                        </div><button class="btn btn-primary" type="button">Générer la boite</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Documentation</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Prévisualisation</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Infos</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="tab-1">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis&nbsp;<br>eros tincidunt, posuere nisl in, suscipit libero. Mauris a turpis&nbsp;<br>lectus. Donec non nunc tellus. Morbi suscipit bibendum ipsum,&nbsp;<br>ullamcorper
+                            vehicula justo tincidunt at. Nulla facilisi. Vivamus et&nbsp;<br>augue est. Ut a rutrum ligula.<br><br><br><br></p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-2">
+                        <p>Content for tab 2.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-3">
+                        <p>Content for tab 3.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
