@@ -1,19 +1,30 @@
 
 var NOTCH_SIZE = 10;
 
+// it create the tag elements necessary and put them inside the svg tag using the tab_coordiante values.
+function create_path(tab_coordinate) {
+	var svg = document.getElementById("svginfo");
+	var newpath = document.createElementNS(svg.namespaceURI,"path");  
+	newpath.setAttribute("transform", "translate(50,50)"); 
+	newpath.setAttribute("d", tab_coordinate);  
+	svg.appendChild(newpath);
+}
+
+// function that draws a simple line from a (x,y) to b (x,y)
+function draw_line(Ax, Ay, Bx, By) {
+	var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
+	create_path(tab_coordinate);
+}
+
 // function that draws a path depending on a (x,y) origin and using rotation eventually.
-// it create the tag elements necessary and put them inside the svg tag.
+// return the tab_coordiante which contains all the cuple (x,y) to draw a path
 // @param draw_origin_x, draw_origin_x 	are the (x,y) position where we start the drawing.
 // @param translate_x, translate_y 		are the (x,y) position where we move our drawing to.
 function draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y) {
 	var tab_coordinate = draw_side(wooden_plate_thickness, size); 							// gets the good values to draw
 	tab_coordinate = rotate_path(tab_coordinate, rotate_case) 								// rotate them if need be
 	var tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
-	var svg = document.getElementById("svg");
-	var newpath = document.createElementNS(svg.namespaceURI,"path");  
-	newpath.setAttribute("transform", "translate(50,50)"); 
-	newpath.setAttribute("d", tab_coordinate);  
-	svg.appendChild(newpath);
+	create_path(tab_coordinate);
 }
 
 // function that return a string with all the scheme "value1,value2" as "x,y" which represent an entire side
@@ -79,13 +90,13 @@ function rotate(scheme, rotate_case) {
 	var value2 = stringTab[1];
 	
 	switch( rotate_case ) { // by default it draws the top side/path from left to right
-		case 1: return value1 + "," + -value2;	// draw from left to right reversed == default reversed
-		case 2: return -value1 + "," + -value2;	// draw from right to left
-		case 3: return -value1 + "," + value2;	// draw from right to left reversed
-		case 4: return -value2 + "," + value1;	// draw from top to bottom
-		case 5: return value2 + "," + value1;	// draw from top to bottom reversed
-		case 6: return value2 + "," + -value1;	// draw from bottom to top
-		case 7: return -value2 + "," + -value1;	// draw from bottom to top reversed
+		case 1: return value1 + "," + -value2 + " ";	// draw from left to right reversed == default reversed
+		case 2: return -value1 + "," + -value2 + " ";	// draw from right to left
+		case 3: return -value1 + "," + value2 + " ";	// draw from right to left reversed
+		case 4: return -value2 + "," + value1 + " ";	// draw from top to bottom
+		case 5: return value2 + "," + value1 + " ";	// draw from top to bottom reversed
+		case 6: return value2 + "," + -value1 + " ";	// draw from bottom to top
+		case 7: return -value2 + "," + -value1 + " ";	// draw from bottom to top reversed
 		default: return scheme;
 	}
 }
@@ -120,13 +131,13 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 	return -1;
 }
 
-function tests() {
+function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	wooden_plate_width = 100;
 	wooden_plate_length = 100;
-	wooden_plate_thickness = 5;
-	width_box = 200;
-	depth_box = 50;
-	height_box = 50;
+	/*wooden_plate_thickness = document.getElementById("epaisseur").value;// = 5;
+	width_box = document.getElementById("longueur").value; // = 200;
+	depth_box = document.getElementById("largeur").value; // = 50;
+	height_box = document.getElementById("hauteur").value; // = 50;*/
 	
 	// draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
 	// part 1
