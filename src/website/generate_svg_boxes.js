@@ -131,15 +131,15 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 	return -1;
 }
 
-function tests() {
-	var wooden_plate_width = 100;
-	var wooden_plate_length = 100;
-	var wooden_plate_thickness = document.getElementById("epaisseur").value;// = 5;
-	var width_box = document.getElementById("longueur").value; // = 200;
-	var depth_box = document.getElementById("largeur").value; // = 50;
-	var height_box = document.getElementById("hauteur").value; // = 50;
+function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
+	wooden_plate_width = 100;
+	wooden_plate_length = 100;
+	wooden_plate_thickness = Number(document.getElementById("epaisseur").value);// = 5;
+	width_box = Number(document.getElementById("longueur").value); // = 200;
+	depth_box = Number(document.getElementById("largeur").value); // = 50;
+	height_box = Number(document.getElementById("hauteur").value); // = 50;*/
 	
-	// draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
+	//draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
 	// part 1
 	draw_path(wooden_plate_thickness, width_box, 1, height_box, 0);
 	draw_path(wooden_plate_thickness, height_box, 4, height_box + width_box, 0);
