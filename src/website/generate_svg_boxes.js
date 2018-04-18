@@ -10,6 +10,14 @@ function create_path(tab_coordinate) {
 	svg.appendChild(newpath);
 }
 
+function clear_svg(){
+	var svg = document.getElementById("svginfo");
+	var parentElement = svg.parentElement;
+    var emptySvg = svg.cloneNode(false);
+    parentElement.removeChild(svg);
+    parentElement.appendChild(emptySvg);
+}
+
 // function that draws a simple line from a (x,y) to b (x,y)
 function draw_line(Ax, Ay, Bx, By) {
 	var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
@@ -132,6 +140,7 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 }
 
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
+	clear_svg();
 	wooden_plate_width = 100;
 	wooden_plate_length = 100;
 	wooden_plate_thickness = Number(document.getElementById("epaisseur").value);// = 5;
