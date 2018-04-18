@@ -132,12 +132,12 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 }
 
 function tests() {
-	wooden_plate_width = 100;
-	wooden_plate_length = 100;
-	wooden_plate_thickness = 5;
-	width_box = 200;
-	depth_box = 50;
-	height_box = 50;
+	var wooden_plate_width = 100;
+	var wooden_plate_length = 100;
+	var wooden_plate_thickness = 5;
+	var width_box = 200;
+	var depth_box = 50;
+	var height_box = 50;
 	
 	// draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, translate_x, translate_y);
 	// part 1
