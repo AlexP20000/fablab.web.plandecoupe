@@ -1,5 +1,5 @@
 // the default size of a notch
-var NOTCH_SIZE = 40;
+var NOTCH_SIZE = 10;
 
 // it create the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
 function create_path(tab_coordinate) {
@@ -143,7 +143,7 @@ function economize_laser_and_wood_column_model(origin_x, origin_y, wooden_plate_
 
 // draws at (x,y) position 4 basic scheme which is the best to economize both wood and laser path
 // this is of couse used to draw two boxes, and have them inside the same svg.
-function economize_laser_and_wood_square(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
+function economize_laser_and_wood_square_model(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 	economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 	economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
 	economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
@@ -199,6 +199,15 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 	return -1;
 }
 
+// function that check the mod selected, and return a value depending on the error, 0 if no error
+function check_mod() {
+	// a simple piece
+	// basic scheme
+	// line_model
+	// column_model
+	// square_model
+}
+
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	clear_svg();
 	wooden_plate_width = 100;
@@ -207,13 +216,14 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	width_box = Number(document.getElementById("longueur").value); // = 200;
 	depth_box = Number(document.getElementById("largeur").value); // = 50;
 	height_box = Number(document.getElementById("hauteur").value); // = 50;
+	var notch_size = 
 	
 	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	
 	//economize_laser_and_wood_basic_scheme(0, 20, wooden_plate_thickness, width_box, depth_box, height_box);
 	//economize_laser_and_wood_line_model(0, 20, wooden_plate_thickness, width_box, depth_box, height_box);
 	economize_laser_and_wood_column_model(0, 20, wooden_plate_thickness, width_box, depth_box, height_box);
-	//economize_laser_and_wood_square(0, 20, wooden_plate_thickness, width_box, depth_box, height_box);
+	//economize_laser_and_wood_square_model(0, 20, wooden_plate_thickness, width_box, depth_box, height_box);
 	
 	generate_svg_file();
 }
