@@ -17,8 +17,15 @@ function clear_svg(){
     var emptySvg = svg.cloneNode(false);
     parentElement.removeChild(svg);
     parentElement.appendChild(emptySvg);
-}
+    larg = Number(document.getElementById("largeur").value);
+    long = Number(document.getElementById("longueur").value);
+    haut = Number(document.getElementById("hauteur").value);
 
+    height = haut + larg + 10;
+    witdh = long*2 + haut*2 + 10; 
+    document.getElementById("svg").setAttribute("height", height+"mm");
+    document.getElementById("svg").setAttribute("width", witdh+"mm");
+}
 // function that draws a simple line from a (x,y) to b (x,y)
 function draw_line(Ax, Ay, Bx, By) {
 	var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
