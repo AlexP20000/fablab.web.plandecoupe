@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body>
+<body onLoad="checkValue()">
     <div class="container">
         <div class="row" style="margin-top:5px;">
             <div class="col" align="center"><img src="assets/img/logo_transparent.png">
@@ -117,11 +117,11 @@
                     </rdf:RDF>
                 </metadata>
                 <g id="svginfo" inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1">
-                 <!-- your path goes here my dear -->
-             </g>
-         </svg>
-     </div>
-     <div class="tab-pane" role="tabpanel" id="tab-3">
+                   <!-- your path goes here my dear -->
+               </g>
+           </svg>
+       </div>
+       <div class="tab-pane" role="tabpanel" id="tab-3">
         <p>Content for tab 3.</p>
     </div>
 </div>
@@ -132,10 +132,12 @@
 <script type="text/javascript">
 
     document.getElementById("genButton").disabled = true;
+
     function isNumeric(a) {
         var b = a && a.toString();
         return !$.isArray(a) && b - parseFloat(b) + 1 >= 0;
-    }
+    };
+
     function checkValue(){
         var length = document.getElementById("longueur").value;
         var witdh = document.getElementById("largeur").value;
@@ -145,6 +147,7 @@
         var valid = isNumeric(length) && isNumeric(witdh) && isNumeric(height) && isNumeric(notch) && isNumeric(thickness);
         document.getElementById("genButton").disabled = !valid;
     }
+    //checkValue();
 </script>
 <script src="generate_svg_boxes.js"></script>
 <script src="assets/js/jquery.min.js"></script>

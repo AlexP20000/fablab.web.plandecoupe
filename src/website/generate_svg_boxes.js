@@ -1,5 +1,5 @@
 // the default size of a notch
-var NOTCH_SIZE = 40;
+var NOTCH_SIZE = 10;
 
 // it create the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
 function create_path(tab_coordinate) {
