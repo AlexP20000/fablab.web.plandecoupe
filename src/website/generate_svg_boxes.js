@@ -1,4 +1,4 @@
-
+// the default size of a notch
 var NOTCH_SIZE = 10;
 
 // it create the tag elements necessary and put them inside the svg tag using the tab_coordiante values.
@@ -10,6 +10,7 @@ function create_path(tab_coordinate) {
 	svg.appendChild(newpath);
 }
 
+// clear the svg tag so that it will be up for new parameters/shapes to be drawn in
 function clear_svg(){
 	var svg = document.getElementById("svginfo");
 	var parentElement = svg.parentElement;
@@ -65,8 +66,8 @@ function next_coordinate_non_notch(tab_coordinate,size_rest_parts) {
 
 // function that push in tab_coordinate the two next position that will represent a notch
 function next_coordinate_notch(tab_coordinate,wooden_plate_thickness) {
-	tab_coordinate.push([0          + "," + wooden_plate_thickness + " "]);
-	tab_coordinate.push([NOTCH_SIZE + "," + 0 + " "]);
+	tab_coordinate.push([0          + "," + wooden_plate_thickness 	+ " "]);
+	tab_coordinate.push([NOTCH_SIZE + "," + 0 						+ " "]);
 	tab_coordinate.push([0          + "," + -wooden_plate_thickness + " "]);
 }
 
@@ -102,7 +103,7 @@ function rotate(scheme, rotate_case) {
 		case 2: return -value1 + "," + -value2 + " ";	// draw from right to left
 		case 3: return -value1 + "," + value2 + " ";	// draw from right to left reversed
 		case 4: return -value2 + "," + value1 + " ";	// draw from top to bottom
-		case 5: return value2 + "," + value1 + " ";	// draw from top to bottom reversed
+		case 5: return value2 + "," + value1 + " ";		// draw from top to bottom reversed
 		case 6: return value2 + "," + -value1 + " ";	// draw from bottom to top
 		case 7: return -value2 + "," + -value1 + " ";	// draw from bottom to top reversed
 		default: return scheme;
