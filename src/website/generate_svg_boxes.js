@@ -14,9 +14,9 @@ function create_path(tab_coordinate) {
 function clear_svg(){
 	var svg = document.getElementById("svginfo");
 	var parentElement = svg.parentElement;
-    var emptySvg = svg.cloneNode(false);
-    parentElement.removeChild(svg);
-    parentElement.appendChild(emptySvg);
+	var emptySvg = svg.cloneNode(false);
+	parentElement.removeChild(svg);
+	parentElement.appendChild(emptySvg);
 }
 
 // function that draws a simple line from a (x,y) to b (x,y)
@@ -25,7 +25,7 @@ function draw_line(Ax, Ay, Bx, By) {
 	create_path(tab_coordinate);
 }
 
-// function that create a string containing the value of the path depending on a (x,y) origin and using rotation eventually.
+// function that draws a path depending on a (x,y) origin and using rotation eventually.
 // return the tab_coordiante which contains all the cuple (x,y) to draw a path
 // @param draw_origin_x, draw_origin_x 	are the (x,y) position where we start the drawing.
 // @param translate_x, translate_y 		are the (x,y) position where we move our drawing to.
