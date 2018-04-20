@@ -1,5 +1,5 @@
 // the default size of a notch
-var NOTCH_SIZE = 10;
+var NOTCH_SIZE_DEFAULT = 10;
 
 // it create the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
 function create_path(tab_coordinate) {
@@ -64,7 +64,7 @@ function draw_side(wooden_plate_thickness, size) {
 // function that return a string with all the scheme "value1,value2" as "x,y" which represent the inner part of a side
 function draw_inner_side(wooden_plate_thickness, size) {
 	var number_notch = get_number_notch(wooden_plate_thickness, size);
-	var size_rest = ( size - ( number_notch * NOTCH_SIZE ) );
+	var size_rest = ( size - ( number_notch * NOTCH_SIZE_DEFAULT ) );
 	var size_rest_parts = ( size_rest / ( number_notch + 1 ) );
 	var tab_coordinate = [];
 	for( var i = 0 ; i < number_notch ; i++ ) {
@@ -84,7 +84,7 @@ function next_coordinate_non_notch(tab_coordinate,size_rest_parts) {
 // function that push in tab_coordinate the two next position that will represent a notch
 function next_coordinate_notch(tab_coordinate,wooden_plate_thickness) {
 	tab_coordinate.push([0          + "," + wooden_plate_thickness 	+ " "]);
-	tab_coordinate.push([NOTCH_SIZE + "," + 0 						+ " "]);
+	tab_coordinate.push([NOTCH_SIZE_DEFAULT + "," + 0 						+ " "]);
 	tab_coordinate.push([0          + "," + -wooden_plate_thickness + " "]);
 }
 
@@ -92,7 +92,7 @@ function next_coordinate_notch(tab_coordinate,wooden_plate_thickness) {
 // --> the idea is to have aproximatly 50% of a side which is notch, and 50% which isnt
 function get_number_notch(wooden_plate_thickness, size) {
 	var number_notch = 1;
-	while ( number_notch < Math.trunc( size / ( 2 * NOTCH_SIZE ) ) ) {
+	while ( number_notch < Math.trunc( size / ( 2 * NOTCH_SIZE_DEFAULT ) ) ) {
 		number_notch++;
 	}
 	return number_notch;
@@ -170,7 +170,7 @@ function economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_
 }
 
 // function that check the form parameters, ad return a value depending on the error, 0 if no error.
-function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box) {
+function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
 	// case 1 : all bounds
 	var case1_length = ( height_box * 2 + depth_box * 2 - wooden_plate_thickness * 3 < wooden_plate_length );
 	var case1_width  = ( height_box * 2 + width_box                                  < wooden_plate_width  );
@@ -212,7 +212,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	width_box = Number(document.getElementById("longueur").value); // = 200;
 	depth_box = Number(document.getElementById("largeur").value); // = 50;
 	height_box = Number(document.getElementById("hauteur").value); // = 50;
-	var notch_size = 
+	//var notch_size = 
 	
 	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	
