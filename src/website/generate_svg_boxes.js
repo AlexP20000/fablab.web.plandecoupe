@@ -172,17 +172,27 @@ function economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_
 // box without top :'(
 var Box_without_top = {
 	economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
-		// part 2
-		draw_path(wooden_plate_thickness, depth_box, 0, origin_x, origin_y);
-		draw_path(wooden_plate_thickness, width_box, 4, origin_x + depth_box, origin_y);
-		draw_path(wooden_plate_thickness, depth_box, 2, origin_x + depth_box, origin_y + width_box);
-		draw_path(wooden_plate_thickness, width_box, 6, origin_x, origin_y + width_box);
 		// part 1
-		draw_path(wooden_plate_thickness, width_box, 0, origin_x + depth_box, origin_y);
-		draw_path(wooden_plate_thickness, height_box, 4, origin_x + depth_box + width_box, origin_y);
-		draw_path(wooden_plate_thickness, width_box, 2, origin_x + depth_box + width_box, origin_y + width_box);
-		draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + width_box);
+		draw_line(origin_x, origin_y, width_box, 0);
+		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
+		draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box);
+		draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
+		// part 2
+		draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y + height_box);
+		draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box + depth_box);
+		draw_path(wooden_plate_thickness, depth_box, 6, origin_x, origin_y + height_box + depth_box);
 		// part 3
+		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y + height_box + depth_box);
+		draw_line(origin_x + width_box, origin_y + height_box * 2 + depth_box, -width_box, 0);
+		draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box * 2 + depth_box);
+		// part 4		
+		draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);
+		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
+		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + depth_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
+		// part 5
+		/*draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + width_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
+		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
+		draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);*/
 	},
 	economize_laser_and_wood_two_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 		economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
@@ -252,6 +262,9 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	svg.setAttribute("viewBox",stringViewBox);
 	
 	generate_svg_file();
+	
+	// on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
+	svg.removeAttribute("viewBox",stringViewBox);
 }
 
 // encode the data from the svg tag into URI data, and then set those information directly to the a tag.
