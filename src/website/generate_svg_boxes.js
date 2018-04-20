@@ -169,11 +169,7 @@ function economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_
 	draw_path(wooden_plate_thickness, height_box, 3, origin_x + height_box + width_box, origin_y + height_box + depth_box - wooden_plate_thickness);
 }
 
-// function that check the form parameters
-// print to the screen a error message if an error is found with those parameters and return -1
-// else way it return a positive number, which represents the svg case we are in
-// svg cases : 1 is the best, every coponents are bounds to the rest by the edges.
-// svg cases : 2 is a bit less good, etc...
+// function that check the form parameters, ad return a value depending on the error, 0 if no error.
 function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box) {
 	// case 1 : all bounds
 	var case1_length = ( height_box * 2 + depth_box * 2 - wooden_plate_thickness * 3 < wooden_plate_length );
@@ -199,7 +195,7 @@ function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_
 	return -1;
 }
 
-// function that check the mod selected, and return a value depending on the error, 0 if no error
+// function that check the mod selected, and return a value depending on the error, 0 if no error.
 function check_mod() {
 	// a simple piece
 	// basic scheme
