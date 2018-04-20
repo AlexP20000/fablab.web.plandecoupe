@@ -142,12 +142,12 @@
                 <div class="modal-body">
                     <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
                     (cela rajoutera des planches provisoirement)</p>
-                    <div class="form-group"><label>Nom :</label><input id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur :</label><input id='pLenght' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur :</label><input id='pWidth' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur :</label><input id='pThick' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
+                    <div class="form-group"><label>Longueur :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Largeur :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Epaisseur :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" placeholder="mm" /></div>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
             </div>
         </div>
     </div>
@@ -214,11 +214,23 @@
         updateSelectPlank(selectPlanche);
 
         document.getElementById("genButton").disabled = true;
+        document.getElementById("pButton").disabled = true;
 
         function isNumeric(a) {
             var b = a && a.toString();
             return !$.isArray(a) && b - parseFloat(b) + 1 >= 0;
         };
+
+
+        function checkValueModal(){
+            var name = document.getElementById('pName').value;
+            var lenght = Number(document.getElementById("pLenght").value);
+            var width = Number(document.getElementById("pWidth").value);
+            var thick = Number(document.getElementById("pThick").value);
+            var valid = isNumeric(lenght) && isNumeric(width) && isNumeric(thick) && name;
+            document.getElementById("pButton").disabled = !valid;
+
+        }
 
         function checkValue(){
             var length = document.getElementById("longueur").value;
@@ -231,7 +243,6 @@
         }
 
         function getSelectedPlankIndex(){
-            console.log("in selectedPlankIndex");
             var select = document.getElementById('selectP');
             selectedOption = select.options[select.selectedIndex];
             var plankId = Number(selectedOption.getAttribute("id"));
