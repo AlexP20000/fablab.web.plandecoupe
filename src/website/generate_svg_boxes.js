@@ -155,8 +155,8 @@ function economize_laser_and_wood_square_model(origin_x, origin_y, wooden_plate_
 // @boolean_duplicate_right, boolean_duplicate_bottom are boolean values which tell us wether a side mustnt be drawn to avoid duplicate
 function economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, boolean_duplicate_right, boolean_duplicate_bottom) {
 	// part 1 == part 3
-	draw_path(wooden_plate_thickness, width_box, 1, origin_x , origin_y + 0);
-	draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y + 0);
+	draw_path(wooden_plate_thickness, width_box, 1, origin_x , origin_y);
+	draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
 	draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
 	draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
 	// part 2 == part 6
@@ -168,6 +168,31 @@ function economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_
 	if(!boolean_duplicate_right) { draw_path_right_left_correction(wooden_plate_thickness, depth_box, 5, origin_x + height_box + width_box, origin_y + height_box + wooden_plate_thickness); }
 	draw_path(wooden_plate_thickness, height_box, 3, origin_x + height_box + width_box, origin_y + height_box + depth_box - wooden_plate_thickness);
 }
+
+// box without top :'(
+var Box_without_top = {
+	economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
+		// part 1
+		draw_path(wooden_plate_thickness, height_box, 0, origin_x, origin_y);
+		draw_path(wooden_plate_thickness, width_box, 5, origin_x + height_box, origin_y);
+		draw_path(wooden_plate_thickness, height_box, 2, origin_x + height_box, origin_y + width_box);
+		draw_line(origin_x, origin_y + width_box, 0, - width_box);
+		// part 2
+		draw_path(wooden_plate_thickness, depth_box, 0, origin_x + height_box, origin_y);
+		draw_path(wooden_plate_thickness, width_box, 4, origin_x + height_box + depth_box, origin_y);
+		draw_path(wooden_plate_thickness, depth_box, 2, origin_x + height_box + depth_box, origin_y + width_box);
+		// part 3
+		draw_path(wooden_plate_thickness, height_box, 0, origin_x + height_box + depth_box, origin_y);
+		draw_line(origin_x + height_box * 2 + depth_box, origin_y, 0, width_box);
+		draw_path(wooden_plate_thickness, height_box, 2, origin_x + height_box * 2 + depth_box, origin_y + width_box);
+		// part 4
+		draw_path(wooden_plate_thickness, height_box, 1, origin_x + height_box * 2 + depth_box, origin_y + wooden_plate_thickness);
+		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 5, origin_x + height_box * 3 + depth_box, origin_y + wooden_plate_thickness);
+		draw_path(wooden_plate_thickness, height_box, 3, origin_x + height_box * 3 + depth_box, origin_y + depth_box - wooden_plate_thickness);
+	},
+	economize_laser_and_wood_two_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
+	}
+};
 
 // function that check the form parameters, ad return a value depending on the error, 0 if no error.
 function check_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
@@ -216,10 +241,14 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	
 	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	
-	//economize_laser_and_wood_basic_scheme(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-	//economize_laser_and_wood_line_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-	economize_laser_and_wood_column_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-	//economize_laser_and_wood_square_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+	// box with top :
+		//economize_laser_and_wood_basic_scheme(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		economize_laser_and_wood_line_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//economize_laser_and_wood_column_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//economize_laser_and_wood_square_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+	
+	// box without top :
+	//Box_without_top.economize_laser_and_wood_one_box(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 	
 	generate_svg_file();
 }
