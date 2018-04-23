@@ -251,6 +251,10 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 						return;
 			default : 	console.log("pas de problème, y'a point S");
 		}
+		
+	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
+	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
+	  
 	
 	// box with top :
 		//Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
@@ -260,7 +264,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	
 	// box without top :
 		//Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		//Box_without_top.economize_laser_and_wood_four_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		
 	generate_svg_file();
