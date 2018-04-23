@@ -194,15 +194,15 @@ var Box_without_top = {
 		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
 		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + depth_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
 		// part 5
-		/*draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + width_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
-		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
-		draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);*/
-		define_attributes_box(500 + 10, 300 + 10);
+		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 1, origin_x + width_box, origin_y + depth_box + height_box);
+		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box);
+		draw_line(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box * 2, - depth_box + wooden_plate_thickness * 2, 0);
+		define_attributes_box(width_box + depth_box + 10, height_box * 2 + depth_box + 10);
 	},
 	economize_laser_and_wood_two_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
-		economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
-		economize_laser_and_wood_one_box(origin_x + depth_box + width_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
-		define_attributes_box(500 + 10, 300 + 10);		
+		Box_without_top.economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
+		Box_without_top.economize_laser_and_wood_one_box(origin_x + depth_box + width_box - wooden_plate_thickness * 2, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
+		define_attributes_box(width_box * 2 + depth_box * 2 + 10, height_box * 2 + depth_box + 10);		
 	}
 };
 
@@ -254,18 +254,19 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	
 	// box with top :
-		//economize_laser_and_wood_basic_scheme(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		//economize_laser_and_wood_line_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		//economize_laser_and_wood_column_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		economize_laser_and_wood_square_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//economize_laser_and_wood_column_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 	
 	// box without top :
-		//Box_without_top.economize_laser_and_wood_one_box(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-	
+		Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		
 	generate_svg_file();
 	
 	// on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
-	svg.removeAttribute("viewBox",stringViewBox);
+	svg.removeAttribute("viewBox");
 }
 
 // function that defines properly the width, height and the viewbox of the final svg object depending on the box the user choose
