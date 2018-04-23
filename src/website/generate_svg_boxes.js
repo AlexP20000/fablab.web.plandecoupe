@@ -229,6 +229,7 @@ function check_mod() {
 }
 
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
+	document.getElementById("previsualisation").click();
 	clear_svg();
 	wooden_plate_width = selectPlanche[indexSelection].width;
 	wooden_plate_length = selectPlanche[indexSelection].height;
