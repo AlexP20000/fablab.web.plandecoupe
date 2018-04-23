@@ -228,9 +228,9 @@ function check_mod() {
 
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	clear_svg();
-	wooden_plate_width = 100;
-	wooden_plate_length = 100;
-	wooden_plate_thickness = Number(document.getElementById("epaisseur").value);// = 5;
+	wooden_plate_width = selectPlanche[indexSelection].width;
+	wooden_plate_length = selectPlanche[indexSelection].height;
+	wooden_plate_thickness = selectPlanche[indexSelection].thickness; // = 5;
 	width_box = Number(document.getElementById("longueur").value); // = 200;
 	depth_box = Number(document.getElementById("largeur").value); // = 50;
 	height_box = Number(document.getElementById("hauteur").value); // = 50;
