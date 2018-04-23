@@ -12,7 +12,7 @@
 <body onLoad="checkValue()">
     <div class="container">
         <div class="row" style="margin-top:5px;">
-            <div class="col" align="center"><img src="assets/img/logo_transparent.png">
+            <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a>
                 <h1 class="text-center">Générateur de fichier svg pour découpe de boites</h1>
             </div>
         </div>
@@ -32,11 +32,15 @@
                             class="form-group"><label class="d-block float-left" style="width:150px;">Longueur :&nbsp;</label><input onkeyup ="checkValue()" id="longueur" type="number" placeholder="mm"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Largeur :&nbsp;</label><input onkeyup ="checkValue()" id="largeur" type="number" placeholder="mm"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur :&nbsp;</label><input onkeyup ="checkValue()" id="hauteur" type="number" placeholder="mm"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Epaisseur :&nbsp;</label><input onkeyup ="checkValue()" id="epaisseur" type="number" placeholder="mm"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Encoches :&nbsp;</label><input onkeyup ="checkValue()" id="encoche" type="number" placeholder="mm"></div>
                             <div class="form-group">
                                 <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Boite fermée</label></div>
-                            </div><button id="genButton" class="btn btn-primary" type="button" onclick="tests()" >Générer la boite</button></div>
+                            </div>
+                            <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Sauver modèle</button>
+                            <button class="btn btn-primary" type="button" onclick="loadModelFile()" style="margin:0px;margin-right:15px;">Charger modèle</button>
+                            <input id='fileid' type='file' hidden/>
+                            <button id="genButton" class="btn btn-primary" type="button" onclick="tests()" >Générer la boite</button></div>
+                            <a hidden id="json" href=""></a>
                         </div>
                     </div>
                 </div>
@@ -50,85 +54,85 @@
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="tab-1">
                                 <p><br>Ce formulaire permet de générer le plan de découpe d'une boîte fermée, ce plan est au format '.svg'. Le but principal est d'économiser au 
-										maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
-										de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
-										ou deux boîte entière, ou un sous-ensemble, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
-                                </div>
-                                <div class="tab-pane" role="tabpanel" id="tab-2">
-                                    <a id="filesvg" >
-                                    </a>
-                                    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-                                    <svg
-                                    xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-                                    xmlns:dc="http://purl.org/dc/elements/1.1/"
-                                    xmlns:cc="http://creativecommons.org/ns#"
-                                    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                                    xmlns:svg="http://www.w3.org/2000/svg"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-                                    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-                                    width="100%"
-                                    height="100%"
-                                    version="1.1"
-                                    id="svg"
-                                    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-                                    sodipodi:docname="inkscape1test.svg"
-                                    stroke="#ff0000" fill="#ffffff" fill-opacity="0">
-                                    <defs
-                                    id="defs3727">
-                                    <linearGradient
-                                    inkscape:collect="always"
-                                    id="linearGradient4578"
-                                    osb:paint="gradient">
-                                    <stop
-                                    style="stop-color:#000000;stop-opacity:1;"
-                                    offset="0"
-                                    id="stop4574" />
-                                    <stop
-                                    style="stop-color:#000000;stop-opacity:0;"
-                                    offset="1"
-                                    id="stop4576" />
-                                </linearGradient>
-                            </defs>
-                            <sodipodi:namedview
-                            id="base"
-                            pagecolor="#ffffff"
-                            bordercolor="#666666"
-                            borderopacity="1.0"
-                            inkscape:pageopacity="0.0"
-                            inkscape:pageshadow="2"
-                            inkscape:zoom="0.7"
-                            inkscape:cx="280.75598"
-                            inkscape:cy="674.9179"
-                            inkscape:document-units="mm" 
-                            units="mm"
-                            inkscape:current-layer="layer1"
-                            showgrid="false"
-                            inkscape:window-width="1600"
-                            inkscape:window-height="837"
-                            inkscape:window-x="-8"
-                            inkscape:window-y="-8"
-                            inkscape:window-maximized="1" />
-                            <metadata
-                            id="metadata3730">
-                            <rdf:RDF>
-                            <cc:Work
-                            rdf:about="">
-                            <dc:format>image/svg+xml</dc:format>
-                            <dc:type
-                            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-                            <dc:title></dc:title>
-                        </cc:Work>
-                    </rdf:RDF>
-                </metadata>
-                <g id="svginfo" inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1">
-                   <!-- your path goes here my dear -->
-               </g>
-           </svg>
-       </div>
-       <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br>Pour plus de détails sur les différents paramètres :<br> ( intégrer shéma ici ? )</p>
-    </div>
+                                  maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
+                                  de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
+                                  ou deux boîte entière, ou un sous-ensemble, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
+                              </div>
+                              <div class="tab-pane" role="tabpanel" id="tab-2">
+                                <a id="filesvg" >
+                                </a>
+                                <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                                <svg
+                                xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+                                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                xmlns:cc="http://creativecommons.org/ns#"
+                                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                                xmlns:svg="http://www.w3.org/2000/svg"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                                width="100%"
+                                height="100%"
+                                version="1.1"
+                                id="svg"
+                                inkscape:version="0.92.3 (2405546, 2018-03-11)"
+                                sodipodi:docname="inkscape1test.svg"
+                                stroke="#ff0000" fill="#ffffff" fill-opacity="0">
+                                <defs
+                                id="defs3727">
+                                <linearGradient
+                                inkscape:collect="always"
+                                id="linearGradient4578"
+                                osb:paint="gradient">
+                                <stop
+                                style="stop-color:#000000;stop-opacity:1;"
+                                offset="0"
+                                id="stop4574" />
+                                <stop
+                                style="stop-color:#000000;stop-opacity:0;"
+                                offset="1"
+                                id="stop4576" />
+                            </linearGradient>
+                        </defs>
+                        <sodipodi:namedview
+                        id="base"
+                        pagecolor="#ffffff"
+                        bordercolor="#666666"
+                        borderopacity="1.0"
+                        inkscape:pageopacity="0.0"
+                        inkscape:pageshadow="2"
+                        inkscape:zoom="0.7"
+                        inkscape:cx="280.75598"
+                        inkscape:cy="674.9179"
+                        inkscape:document-units="mm" 
+                        units="mm"
+                        inkscape:current-layer="layer1"
+                        showgrid="false"
+                        inkscape:window-width="1600"
+                        inkscape:window-height="837"
+                        inkscape:window-x="-8"
+                        inkscape:window-y="-8"
+                        inkscape:window-maximized="1" />
+                        <metadata
+                        id="metadata3730">
+                        <rdf:RDF>
+                        <cc:Work
+                        rdf:about="">
+                        <dc:format>image/svg+xml</dc:format>
+                        <dc:type
+                        rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                        <dc:title></dc:title>
+                    </cc:Work>
+                </rdf:RDF>
+            </metadata>
+            <g id="svginfo" inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1">
+               <!-- your path goes here my dear -->
+           </g>
+       </svg>
+   </div>
+   <div class="tab-pane" role="tabpanel" id="tab-3">
+    <p><br>Pour plus de détails sur les différents paramètres :<br> ( intégrer shéma ici ? )</p>
+</div>
 </div>
 </div>
 </div>
@@ -216,43 +220,92 @@
         document.getElementById("genButton").disabled = true;
         document.getElementById("pButton").disabled = true;
 
-        function isNumeric(a) {
-            var b = a && a.toString();
-            return !$.isArray(a) && b - parseFloat(b) + 1 >= 0;
-        };
+        document.getElementById('fileid').onchange = function() {
+            var files = document.getElementById('fileid').files;
+            console.log(files);
+            if (files.length <= 0) {
+                return false;
+            }
+
+            var fr = new FileReader();
+
+            fr.onload = function(e) { 
+              console.log(e);
+              var result = JSON.parse(e.target.result);
+              selectPlanche = result.planches;
+              document.getElementById("longueur").value = result.length;
+              document.getElementById("largeur").value = result.width;
+              document.getElementById("hauteur").value = result.height;
+              document.getElementById("encoche").value = result.notch;
+              document.getElementById("formCheck-1").checked = result.close;
+              document.getElementById("selectP").selectedIndex = result.selectedIndex;
+              updateSelectPlank(selectPlanche);
+              checkValue();
+
+          }
+
+          fr.readAsText(files.item(0));
+      };
+
+      
+      function isNumeric(a) {
+        var b = a && a.toString();
+        return !$.isArray(a) && b - parseFloat(b) + 1 >= 0;
+    };
 
 
-        function checkValueModal(){
-            var name = document.getElementById('pName').value;
-            var lenght = Number(document.getElementById("pLenght").value);
-            var width = Number(document.getElementById("pWidth").value);
-            var thick = Number(document.getElementById("pThick").value);
-            var valid = isNumeric(lenght) && isNumeric(width) && isNumeric(thick) && name;
-            document.getElementById("pButton").disabled = !valid;
+    function saveModelJson(){
+        var jsonObj = new Object();
+        jsonObj.planches = selectPlanche;
+        jsonObj.length = document.getElementById("longueur").value;
+        jsonObj.width = document.getElementById("largeur").value;
+        jsonObj.height = document.getElementById("hauteur").value;
+        jsonObj.notch = document.getElementById("encoche").value;
+        jsonObj.close = document.getElementById("formCheck-1").checked;
+        jsonObj.selectedIndex = indexSelection;
 
-        }
+        var myJSON = JSON.stringify(jsonObj); 
+        var encodedData = "data:image/txt;base64," + window.btoa(myJSON);
+        document.getElementById("json").setAttribute("href", encodedData);
+        document.getElementById("json").setAttribute("download", "model.json");
+        document.getElementById("json").click();
 
-        function checkValue(){
-            var length = document.getElementById("longueur").value;
-            var witdh = document.getElementById("largeur").value;
-            var thickness = document.getElementById("epaisseur").value;
-            var height = document.getElementById("hauteur").value;
-            var notch = document.getElementById("encoche").value;
-            var valid = isNumeric(length) && isNumeric(witdh) && isNumeric(height) && isNumeric(notch) && isNumeric(thickness);
-            document.getElementById("genButton").disabled = !valid;
-        }
+    }
 
-        function getSelectedPlankIndex(){
-            var select = document.getElementById('selectP');
-            selectedOption = select.options[select.selectedIndex];
-            var plankId = Number(selectedOption.getAttribute("id"));
-            var i = 0;
-            for(i=0;i<selectPlanche.length;i++){
-                if(selectPlanche[i].id == plankId){
-                    indexSelection = i;
-                }
+    function loadModelFile(){
+        document.getElementById('fileid').click();
+    }
+
+    function checkValueModal(){
+        var name = document.getElementById('pName').value;
+        var length = Number(document.getElementById("pLenght").value);
+        var width = Number(document.getElementById("pWidth").value);
+        var thick = Number(document.getElementById("pThick").value);
+        var valid = isNumeric(length) && isNumeric(width) && isNumeric(thick) && name && length > 0 && width > 0 && thick >0;
+        document.getElementById("pButton").disabled = !valid;
+
+    }
+
+    function checkValue(){
+        var length = document.getElementById("longueur").value;
+        var witdh = document.getElementById("largeur").value;
+        var height = document.getElementById("hauteur").value;
+        var notch = document.getElementById("encoche").value;
+        var valid = isNumeric(length) && isNumeric(witdh) && isNumeric(height) && isNumeric(notch) && length > 0 && witdh > 0 && height > 0 && notch > 0;
+        document.getElementById("genButton").disabled = !valid;
+    }
+
+    function getSelectedPlankIndex(){
+        var select = document.getElementById('selectP');
+        selectedOption = select.options[select.selectedIndex];
+        var plankId = Number(selectedOption.getAttribute("id"));
+        var i = 0;
+        for(i=0;i<selectPlanche.length;i++){
+            if(selectPlanche[i].id == plankId){
+                indexSelection = i;
             }
         }
+    }
     //checkValue();
 </script>
 <script src="generate_svg_boxes.js"></script>
