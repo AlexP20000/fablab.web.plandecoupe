@@ -180,7 +180,7 @@ var Box_without_top = {
 		// part 1
 		draw_line(origin_x, origin_y, width_box, 0);
 		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
-		draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box);
+		draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
 		draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
 		// part 2
 		draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y + height_box);
