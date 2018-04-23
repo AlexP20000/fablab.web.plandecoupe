@@ -17,15 +17,16 @@ function clear_svg(){
     var emptySvg = svg.cloneNode(false);
     parentElement.removeChild(svg);
     parentElement.appendChild(emptySvg);
-    larg = Number(document.getElementById("largeur").value);
+    /*larg = Number(document.getElementById("largeur").value);
     long = Number(document.getElementById("longueur").value);
     haut = Number(document.getElementById("hauteur").value);
 
     height = haut + larg + 10;
     witdh = long*2 + haut*2 + 10; 
     document.getElementById("svg").setAttribute("height", height+"mm");
-    document.getElementById("svg").setAttribute("width", witdh+"mm");
+    document.getElementById("svg").setAttribute("width", witdh+"mm");*/
 }
+
 // function that draws a simple line from a (x,y) to b (x,y)
 function draw_line(Ax, Ay, Bx, By) {
 	var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
@@ -266,7 +267,8 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	generate_svg_file();
 	
 	// on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
-	svg.removeAttribute("viewBox");
+	var svg = document.getElementById("svg");
+	svg.removeAttribute("transform");
 }
 
 // function that defines properly the width, height and the viewbox of the final svg object depending on the box the user choose
@@ -277,6 +279,7 @@ function define_attributes_box(width, height) {
 	svg.setAttribute("height",height);
 	var stringViewBox = "0 0 " + width + " " + height; 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
 	svg.setAttribute("viewBox",stringViewBox);
+	svg.setAttribute("transform","scale(3.779528)"); // dpi problems, scale px in mm
 }
 
 // encode the data from the svg tag into URI data, and then set those information directly to the a tag.
