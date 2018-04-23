@@ -214,7 +214,7 @@ var Box_without_top = {
 function check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
 	if( width_box < depth_box ){ return 1; } // width_box is the actually the length, and depth_box is the width, which means length must be >= than depth_box
 	if( !(wooden_plate_thickness <= ( 0.20 * Math.min(depth_box, height_box)) ) ){ return 2; } // thickness too big
-	if( !(wooden_plate_thickness > 1 ) ) { return 3; } // thickness < 1 milimeter
+	if( wooden_plate_thickness < 1 ) { return 3; } // thickness < 1 milimeter
 }
 
 // function that check the mod selected, and return a value depending on the error, 0 if no error.
@@ -231,15 +231,26 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	wooden_plate_width = selectPlanche[indexSelection].width;
 	wooden_plate_length = selectPlanche[indexSelection].height;
 	wooden_plate_thickness = selectPlanche[indexSelection].thickness; // = 5;
+	console.log(wooden_plate_length + " " + wooden_plate_thickness + " " + wooden_plate_width);
 	width_box = Number(document.getElementById("longueur").value); // = 200;
 	depth_box = Number(document.getElementById("largeur").value); // = 50;
 	height_box = Number(document.getElementById("hauteur").value); // = 50;
 	var notch_size = Number(document.getElementById("encoche").value); // = 10;
 	
 	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
-	if( !( notch_size >= 3 ) || !( notch_size < ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct if the notch size given isnt correct
+	if( !( notch_size >= 3 ) || !( notch_size < ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct the value if the notch size given isnt good
 	else { NOTCH_SIZE = notch_size; }
-	check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size);
+	
+	var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
+		switch( error_id ) {
+			case 1 : 	console.log("erreur : la largeur est supérieur à la longueur !"); 
+						return;
+			case 2 : 	console.log("erreur : l'épaisseur est trop grande"); 
+						return;
+			case 3 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
+						return;
+			default : 	console.log("pas de problème, y'a point S");
+		}
 	
 	// box with top :
 		//Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
