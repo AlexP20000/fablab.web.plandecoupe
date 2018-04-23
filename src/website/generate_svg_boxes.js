@@ -172,40 +172,42 @@ var Box_with_top = {
 
 // function that draws at a (x,y) position the box without top which is the best to economize both wood and laser path.
 var Box_without_top = {
-	economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
+	// bool_top, bool_right, bool_bot, bool_left are boolean values which tell us if or not we have to draw the relative part
+	economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
 		// part 1
-		draw_line(origin_x, origin_y, width_box, 0);
+		if(bool_top) draw_line(origin_x, origin_y, width_box, 0);
 		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
 		draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
-		draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
+		if(bool_left) draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
 		// part 2
 		draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y + height_box);
 		draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box + depth_box);
 		draw_path(wooden_plate_thickness, depth_box, 6, origin_x, origin_y + height_box + depth_box);
 		// part 3
 		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y + height_box + depth_box);
-		draw_line(origin_x + width_box, origin_y + height_box * 2 + depth_box, -width_box, 0);
-		draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box * 2 + depth_box);
+		if(bool_bot) draw_line(origin_x + width_box, origin_y + height_box * 2 + depth_box, -width_box, 0);
+		if(bool_left) draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box * 2 + depth_box);
 		// part 4		
-		draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);
-		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
+		if(bool_top) draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);
+		if(bool_right) draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
 		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + depth_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
 		// part 5
 		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 1, origin_x + width_box, origin_y + depth_box + height_box);
-		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box);
-		draw_line(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box * 2, - depth_box + wooden_plate_thickness * 2, 0);
+		if(bool_right) draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box);
+		if(bool_bot) draw_line(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box * 2, - depth_box + wooden_plate_thickness * 2, 0);
 		define_attributes_box(width_box + depth_box + 10, height_box * 2 + depth_box + 10);
 	},
 	
 	economize_laser_and_wood_two_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
-		Box_without_top.economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
-		Box_without_top.economize_laser_and_wood_one_box(origin_x + depth_box + width_box - wooden_plate_thickness * 2, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
+		Box_without_top.economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+		Box_without_top.economize_laser_and_wood_one_box(origin_x + depth_box + width_box - wooden_plate_thickness * 2, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false);
 		define_attributes_box(width_box * 2 + depth_box * 2 + 10, height_box * 2 + depth_box + 10);		
 	},
 	
 	economize_laser_and_wood_four_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 		Box_without_top.economize_laser_and_wood_two_boxes(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
-		Box_without_top.economize_laser_and_wood_two_boxes(origin_x, origin_y + height_box * 2 +  depth_box, wooden_plate_thickness, width_box, depth_box, height_box);
+		Box_without_top.economize_laser_and_wood_one_box(origin_x, origin_y + height_box * 2 +  depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
+		Box_without_top.economize_laser_and_wood_one_box(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + height_box * 2 +  depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, false);
 		define_attributes_box(width_box * 2 + depth_box * 2 + 10, height_box * 4 + depth_box *2 + 10);		
 	}
 };
@@ -253,7 +255,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 		}
 		
 	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
-	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
+	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); }
 	  
 	
 	// box with top :
@@ -263,7 +265,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 		//Box_with_top.economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 	
 	// box without top :
-		//Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
 		//Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		//Box_without_top.economize_laser_and_wood_four_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		
