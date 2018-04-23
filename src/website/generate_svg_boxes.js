@@ -132,6 +132,7 @@ function rotate(scheme, rotate_case) {
 function economize_laser_and_wood_line_model(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 	economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
 	economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+	define_attributes_box(width_box * 2 + height_box * 2 + 10, depth_box + height_box + 10);
 }
 
 // draws at a (x,y) position the column model which is the best to economize both wood and laser path
@@ -139,6 +140,7 @@ function economize_laser_and_wood_line_model(origin_x, origin_y, wooden_plate_th
 function economize_laser_and_wood_column_model(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 	economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
 	economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+	define_attributes_box(width_box + height_box + 10, depth_box * 2 + height_box * 2 + 10);
 }
 
 // draws at (x,y) position 4 basic scheme which is the best to economize both wood and laser path
@@ -148,6 +150,7 @@ function economize_laser_and_wood_square_model(origin_x, origin_y, wooden_plate_
 	economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
 	economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
 	economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+	define_attributes_box(width_box * 2 + height_box * 2 + 10, depth_box * 2 + height_box * 2 + 10);
 }
 
 // function that draws at a (x,y) position the basic scheme ( 3 pieces bounds perfecly ) which is the best
@@ -167,6 +170,7 @@ function economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_
 	draw_path(wooden_plate_thickness, height_box, 1, origin_x + width_box, origin_y + height_box + wooden_plate_thickness);
 	if(!boolean_duplicate_right) { draw_path_right_left_correction(wooden_plate_thickness, depth_box, 5, origin_x + height_box + width_box, origin_y + height_box + wooden_plate_thickness); }
 	draw_path(wooden_plate_thickness, height_box, 3, origin_x + height_box + width_box, origin_y + height_box + depth_box - wooden_plate_thickness);
+	define_attributes_box(width_box + height_box + 10, depth_box + height_box + 10);
 }
 
 // box without top :'(
@@ -193,10 +197,12 @@ var Box_without_top = {
 		/*draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + width_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
 		draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
 		draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);*/
+		define_attributes_box(500 + 10, 300 + 10);
 	},
 	economize_laser_and_wood_two_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 		economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
 		economize_laser_and_wood_one_box(origin_x + depth_box + width_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
+		define_attributes_box(500 + 10, 300 + 10);		
 	}
 };
 
@@ -251,20 +257,25 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 		//economize_laser_and_wood_basic_scheme(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		//economize_laser_and_wood_line_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		//economize_laser_and_wood_column_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		//economize_laser_and_wood_square_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		economize_laser_and_wood_square_model(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 	
 	// box without top :
-		Box_without_top.economize_laser_and_wood_one_box(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-	
-	// to use milimetters as units... if you dont use viewbox it will by default be in pixels dimensions which is... bad !
-	var svg = document.getElementById("svg");
-	var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
-	svg.setAttribute("viewBox",stringViewBox);
+		//Box_without_top.economize_laser_and_wood_one_box(0, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 	
 	generate_svg_file();
 	
 	// on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
 	svg.removeAttribute("viewBox",stringViewBox);
+}
+
+// function that defines properly the width, height and the viewbox of the final svg object depending on the box the user choose
+// it allows the svg file to be consider with the units 'mm' milimeters.
+function define_attributes_box(width, height) {
+	var svg = document.getElementById("svg");
+	svg.setAttribute("width",width);
+	svg.setAttribute("height",height);
+	var stringViewBox = "0 0 " + width + " " + height; 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
+	svg.setAttribute("viewBox",stringViewBox);
 }
 
 // encode the data from the svg tag into URI data, and then set those information directly to the a tag.
