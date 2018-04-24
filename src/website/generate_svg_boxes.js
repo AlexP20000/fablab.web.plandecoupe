@@ -1,8 +1,26 @@
-// the default size of a notch
-var NOTCH_SIZE_DEFAULT = 10;
+/**
+ *	@author Axel Murat & Alexandre Mailliu
+ *	@version 1.0
+ * 	@date 24/04/2018
+ */
+ 
+/** the default size of a notch
+ *  @constant
+ *  @type {string}
+ *  @default
+ */
+const NOTCH_SIZE_DEFAULT = 10;
+
+/**
+ * 	global value for the notch_size used by the algorithm
+ * 	@type {number}
+ */
 var NOTCH_SIZE = 10;
 
-// it create the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
+/** 
+ * 	it create the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
+ *	@param {string[]} tab_coordinate : the values (x,y) of the different path position 
+ */
 function create_path(tab_coordinate) {
 	var svg = document.getElementById("svginfo");
 	var newpath = document.createElementNS(svg.namespaceURI,"path");  
