@@ -1,5 +1,33 @@
-/**
- *	@author Axel Murat & Alexandre Mailliu
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: generate_svg_boxes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: generate_svg_boxes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *	@author Axel Murat &amp; Alexandre Mailliu
  *	@version 1.0
  * 	@date 24/04/2018
  *	@module generate_svg_boxes
@@ -109,7 +137,7 @@ function draw_inner_side(wooden_plate_thickness, size) {
 	var size_rest = ( size - ( number_notch * NOTCH_SIZE ) );
 	var size_rest_parts = ( size_rest / ( number_notch + 1 ) );
 	var tab_coordinate = [];
-	for( var i = 0 ; i < number_notch ; i++ ) {
+	for( var i = 0 ; i &lt; number_notch ; i++ ) {
 		next_coordinate_non_notch(tab_coordinate,size_rest_parts);
 		next_coordinate_notch(tab_coordinate,wooden_plate_thickness);
 	}
@@ -147,7 +175,7 @@ function next_coordinate_notch(tab_coordinate,wooden_plate_thickness) {
  */
 function get_number_notch(wooden_plate_thickness, size) {
 	var number_notch = 1;
-	while ( number_notch < Math.trunc( size / ( 2 * NOTCH_SIZE ) ) ) {
+	while ( number_notch &lt; Math.trunc( size / ( 2 * NOTCH_SIZE ) ) ) {
 		number_notch++;
 	}
 	return number_notch;
@@ -161,7 +189,7 @@ function get_number_notch(wooden_plate_thickness, size) {
  */
 function rotate_path(tab_coordinate, rotate_case) {
 	var splited_tab = tab_coordinate.split(" ");
-	for( var i = 0 ; i < splited_tab.length ; i++ ) {
+	for( var i = 0 ; i &lt; splited_tab.length ; i++ ) {
 		splited_tab[i] = rotate(splited_tab[i], rotate_case);
 	}
 	return splited_tab;
@@ -310,9 +338,9 @@ var Box_without_top = {
  * function that check is the constraint of our initial parameters are respected or not, return a value depending on the error, 0 is no error.
  */
 function check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
-	if( width_box < depth_box ){ return 1; } // width_box is the actually the length, and depth_box is the width, which means length must be >= than depth_box
-	if( !(wooden_plate_thickness <= ( 0.20 * Math.min(depth_box, height_box)) ) ){ return 2; } // thickness too big
-	if( wooden_plate_thickness < 1 ) { return 3; } // thickness < 1 milimeter
+	if( width_box &lt; depth_box ){ return 1; } // width_box is the actually the length, and depth_box is the width, which means length must be >= than depth_box
+	if( !(wooden_plate_thickness &lt;= ( 0.20 * Math.min(depth_box, height_box)) ) ){ return 2; } // thickness too big
+	if( wooden_plate_thickness &lt; 1 ) { return 3; } // thickness &lt; 1 milimeter
 }
 
 /**
@@ -342,7 +370,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	var notch_size = Number(document.getElementById("encoche").value); // = 10;
 	
 	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
-	if( !( notch_size >= 3 ) || !( notch_size < ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct the value if the notch size given isnt good
+	if( !( notch_size >= 3 ) || !( notch_size &lt; ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct the value if the notch size given isnt good
 	else { NOTCH_SIZE = notch_size; }
 	
 	var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
@@ -351,7 +379,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 						return;
 			case 2 : 	console.log("erreur : l'épaisseur est trop grande"); 
 						return;
-			case 3 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
+			case 3 : 	console.log("erreur : l'épaisseur est trop petite ( &lt; 3 milimètres )"); 
 						return;
 			default : 	console.log("pas de problème, y'a point S");
 		}
@@ -404,11 +432,33 @@ function generate_svg_file() {
 	var d = document.getElementById("svg");
 	var str = s.serializeToString(d); // the svg tag with its contents 
 	// and then btoa can convert that to base64
-	var encodedData = "data:image/svg+xml;base64," + window.btoa("<?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
+	var encodedData = "data:image/svg+xml;base64," + window.btoa("&lt;?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
 	// we set the uri content
 	document.getElementById("filesvg").setAttribute("href", encodedData);
 	// we set the file name downloaded
 	document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
 	// our a tag is hidden, so we use the click function as we would click on it usualy
 	document.getElementById("filesvg").click();
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-generate_svg_boxes.html">generate_svg_boxes</a></li></ul><h3>Classes</h3><ul><li><a href="module-generate_svg_boxes-Box_with_top.html">Box_with_top</a></li><li><a href="module-generate_svg_boxes-Box_without_top.html">Box_without_top</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 24 2018 14:00:39 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
