@@ -1,5 +1,5 @@
 /**
-  *@module ihm.js
+  *@module ihm
   *@version 1.0
   *@date 24/04/2018
   *@author Axel Murat & Alexandre Mailliu
