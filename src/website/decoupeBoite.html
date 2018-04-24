@@ -59,6 +59,7 @@
                                   ou deux boîte entière, ou un sous-ensemble, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
                               </div>
                               <div class="tab-pane" role="tabpanel" id="tab-2">
+							    <br>
                                 <a id="filesvg" >
                                 </a>
                                 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -131,7 +132,7 @@
        </svg>
    </div>
    <div class="tab-pane" role="tabpanel" id="tab-3">
-    <p><br>Pour plus de détails sur les différents paramètres :<br> <img src="assets/img/shema_boite_ferme.png" alt="shema_boite_ferme" height="100%" width="100%"></p>
+    <p><br> <img src="assets/img/shema_boite_ferme.png" alt="shema_boite_ferme" height="100%" width="100%"></p>
 </div>
 </div>
 </div>
@@ -227,12 +228,14 @@
         })();
 
         var planche1 = new Planche("planche1",120,70,1);
+		var planche2 = new Planche("planche2",120,70,3);
         /** Store the selected index in the plank select*/
         var indexSelection = 0;
         /** Array of planks */
         var selectPlanche = [];
         selectPlanche = [];
         selectPlanche.push(planche1);
+        selectPlanche.push(planche2);
         updateSelectPlank(selectPlanche);
 
         document.getElementById("genButton").disabled = true;
