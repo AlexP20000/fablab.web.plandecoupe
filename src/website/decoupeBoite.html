@@ -37,8 +37,8 @@
                                 <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Boite fermée</label></div>
                             </div>
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Sauver modèle</button>
-                            <button class="btn btn-primary" type="button" onclick="loadModelFile()" style="margin:0px;margin-right:15px;">Charger modèle</button>
-                            <input id='fileid' accept=".json" type='file' hidden/>
+                            <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Charger modèle</button>
+                            <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
                             <button id="genButton" class="btn btn-primary" type="button" onclick="tests()" >Générer la boite</button></div>
                             <a hidden id="json" href=""></a>
                         </div>
@@ -157,6 +157,7 @@
     </div>
     <script type="text/javascript">
 
+        /**Function to add a plank in the plank select*/
 
         function addPlank(){
 
@@ -170,21 +171,28 @@
             removeOptions(document.getElementById("selectP"));
             updateSelectPlank(selectPlanche);
         }
-
-        function removeOptions(selectbox)
-        {
+        /** Function to remove all element in the select
+         * @param {HTMLElement} selectbox - The select that we want to remove all element
+         */
+         function removeOptions(selectbox)
+         {
             var i;
             for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
             {
                 selectbox.remove(i);
             }
         }
+        /** Function to add an option in the select
         function addOption(selectBox,element){
             var option = document.createElement("option");
             option.text = element;
             selectBox.add(option);
         }
-        function updateSelectPlank(array){
+
+        /** Function that's update the select with the data of the plank array
+          * @param {Planche[]}
+          */
+          function updateSelectPlank(array){
             select = document.getElementById("selectP");
             removeOptions(document.getElementById("selectP"));
             var i = 0;
@@ -193,16 +201,25 @@
                 selectBox.remove(i);
             }
             for(i = 0;i<array.length;i++){
-                addOption(select,array[i].name+"("+array[i].width+"x"+array[i].height+"x"+array[i].thickness+"mm)");
+                addOption(select,array[i].name+"("+array[i].width+"x"+array[i].length+"x"+array[i].thickness+"mm)");
                 select.options[i].setAttribute("id",array[i].id);
             }
         }
-        var Planche = (function(){
+        /**
+          *Represent a plank
+          *@constructor
+          *@param {string} name - Name or id of the plank
+          *@param {integer} witdh - Witdh of the plank
+          *@param {integer} length - Length of the plank
+          *@param {integer} thickness - Thickness of the plankId
+          */
+          var Planche = (function(){
+            /** @member{integer} NextId - value for the next plank Id */
             var nextId = 1;
             return function Planche(name,width,height,thickness){
                 this.name = name;
                 this.width = width;
-                this.height  = height;
+                this.length  = length;
                 this.thickness = thickness;
                 this.id = nextId++;
             }
@@ -210,8 +227,9 @@
         })();
 
         var planche1 = new Planche("planche1",120,70,1);
-
+        /** Store the selected index in the plank select*/
         var indexSelection = 0;
+        /** Array of planks */
         var selectPlanche = [];
         selectPlanche = [];
         selectPlanche.push(planche1);
@@ -220,8 +238,12 @@
         document.getElementById("genButton").disabled = true;
         document.getElementById("pButton").disabled = true;
 
-        document.getElementById('fileid').onchange = function() {
-            var files = document.getElementById('fileid').files;
+
+      /*
+       *Function to load the values in the form after uploading an user model
+       */
+      function fileChangeEvent(){
+        var files = document.getElementById('fileid').files;
             console.log(files);
             if (files.length <= 0) {
                 return false;
@@ -245,16 +267,23 @@
           }
 
           fr.readAsText(files.item(0));
-      };
+      }
 
-      
-      function isNumeric(a) {
+
+      /*
+       * Function that's check if the data is numéric
+       * @param Value - The value we want to check
+       * @return {Boolean} Return True or False
+       */
+       function isNumeric(a) {
         var b = a && a.toString();
         return !$.isArray(a) && b - parseFloat(b) + 1 >= 0;
     };
 
-
-    function saveModelJson(){
+    /*
+     *Function to save the user Model in JSON format and download the file
+     */
+     function saveModelJson(){
         var jsonObj = new Object();
         jsonObj.planches = selectPlanche;
         jsonObj.length = document.getElementById("longueur").value;
@@ -272,10 +301,9 @@
 
     }
 
-    function loadModelFile(){
-        document.getElementById('fileid').click();
-    }
-
+    /*
+     *Function that's check the values within the form of the modal and allow or not the user to click on the button to add plank in the select
+     */
     function checkValueModal(){
         var name = document.getElementById('pName').value;
         var length = Number(document.getElementById("pLenght").value);
@@ -285,7 +313,9 @@
         document.getElementById("pButton").disabled = !valid;
 
     }
-
+    /*
+     * Function that's check the values within the form of the box and allow or not the user to click on the button to generate a svg 
+     */
     function checkValue(){
         var length = document.getElementById("longueur").value;
         var witdh = document.getElementById("largeur").value;
@@ -294,7 +324,9 @@
         var valid = isNumeric(length) && isNumeric(witdh) && isNumeric(height) && isNumeric(notch) && length > 0 && witdh > 0 && height > 0 && notch > 0;
         document.getElementById("genButton").disabled = !valid;
     }
-
+    /*
+     * Function to set the var IndexSelection to the selected index of the plank select
+     */
     function getSelectedPlankIndex(){
         var select = document.getElementById('selectP');
         selectedOption = select.options[select.selectedIndex];
