@@ -14,9 +14,44 @@ const NOTCH_SIZE_DEFAULT = 10;
 
 /**
  * 	global value for the notch_size used by the algorithm
- * 	@type {number}
+ * 	@type {int}
  */
 var NOTCH_SIZE = 10;
+
+/**
+ *	function that defines properly the width, height and the viewbox of the final svg object depending on the box the user choose
+ *	it allows the svg file to be consider with the units 'mm' milimeters.
+ *	@param {int} the width of the final svg
+ *	@param {int} the height of the final svg
+ */
+function define_attributes_box(width, height) {
+	var svg = document.getElementById("svg");
+	svg.setAttribute("width",width);
+	svg.setAttribute("height",height);
+	var stringViewBox = "0 0 " + width + " " + height; 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
+	svg.setAttribute("viewBox",stringViewBox);
+	var stringTranslate = "translate(" + ( width / 2.7 ) + " " + ( height / 2.7 ) + ")";
+	svg.setAttribute("transform","scale(3.779528)" + stringTranslate); // dpi problems, scale px in mm
+}
+
+/**
+ *	encode the data from the svg tag into URI data, and then set those information directly to the a tag.
+ *	then we use the magic function click that simulate a human click on this a tag, which open the download yes/no window.
+ */
+function generate_svg_file() {
+	// Use XMLSerializer to convert the DOM to a string
+	var s = new XMLSerializer();
+	var d = document.getElementById("svg");
+	var str = s.serializeToString(d); // the svg tag with its contents 
+	// and then btoa can convert that to base64
+	var encodedData = "data:image/svg+xml;base64," + window.btoa("<?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
+	// we set the uri content
+	document.getElementById("filesvg").setAttribute("href", encodedData);
+	// we set the file name downloaded
+	document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
+	// our a tag is hidden, so we use the click function as we would click on it usualy
+	document.getElementById("filesvg").click();
+}
 
 /** 
  * 	creates the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
@@ -57,7 +92,8 @@ function draw_line(Ax, Ay, Bx, By) {
  * return the tab_coordinate which contains all the cuple (x,y) to draw a path
  * @param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
  * @param size {int} is the length for which we have to make a path
- * @param rotate_case {int} is the case we want to use, there is 8 differents, @see rotate
+ * @param rotate_case {int} is the case we want to use, there is 8 differents
+ * @see <a href="#.rotate" >rotate()</a>
  * @param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
  * @param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
  */
@@ -72,7 +108,8 @@ function draw_path(wooden_plate_thickness, size, rotate_case, draw_origin_x, dra
  * function that do the same as draw_path, but change the total size to make it able to be used for the left and right piece of the box which are tinier on the sides
  * @param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
  * @param size {int} is the length for which we have to make a path
- * @param rotate_case {int} is the case we want to use, there is 8 differents, @see rotate
+ * @param rotate_case {int} is the case we want to use, there is 8 differents
+ * @see <a href="#.rotate" >rotate()</a>
  * @param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
  * @param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
  */
@@ -156,7 +193,8 @@ function get_number_notch(wooden_plate_thickness, size) {
 /**
  *	for all the scheme "value1,value2" inside splited_tab, it does the rotate_case rotation
  *	@param tab_coordinate {string[]} the values (x,y) of the different path position
- *	@param rotate_case {int} is the case we want to use, there is 8 differents, @see rotate
+ *	@param rotate_case {int} is the case we want to use, there is 8 differents
+ * 	@see <a href="#.rotate" >rotate()</a>
  *	@return {string[]} which contains the schemes "value1,value2" at each index
  */
 function rotate_path(tab_coordinate, rotate_case) {
@@ -171,7 +209,7 @@ function rotate_path(tab_coordinate, rotate_case) {
  *	function that modify the direction of the drawing path using things like this scheme : "value1,value2"
  * 	@example it can switch "value1,value2" into "value2,value1"
  *	@param scheme {string} which is like "value1,value2"
- * 	@param rotate_case {int} is the case we want to use, there is 8 differents, @see rotate
+ * 	@param rotate_case {int} is the case we want to use, there is 8 differents
  *	@return {string} the scheme with the rotation we want
  */
 function rotate(scheme, rotate_case) {
@@ -258,36 +296,80 @@ var Box_with_top = {
 var Box_without_top = {
 	
 	/**
+	 *	function that draws the part 'number_part' of the Box_without_top
+	 *	@param number_part {int} the number of the part of the Box_without_top
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
+	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
+	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
+	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
+	 */
+	draw_single_part: function (number_part, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
+		if(number_part == 1) {
+			if(bool_top)	 draw_line(origin_x, origin_y, width_box, 0);
+			if(bool_right) 	draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
+			if(bool_bot) 	draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
+			if(bool_left) 	draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
+		} else if(number_part == 2) {
+			if(bool_top) 	draw_path(wooden_plate_thickness, width_box, 0, origin_x, origin_y + height_box);
+			if(bool_right) 	draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y + height_box);
+			if(bool_bot) 	draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box + depth_box);
+			if(bool_left) 	draw_path(wooden_plate_thickness, depth_box, 6, origin_x, origin_y + height_box + depth_box);
+		} else if(number_part == 3) {
+			if(bool_top) 	draw_path(wooden_plate_thickness, width_box, 1, origin_x, origin_y + height_box + depth_box);
+			if(bool_right) 	draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y + height_box + depth_box);
+			if(bool_bot) 	draw_line(origin_x + width_box, origin_y + height_box * 2 + depth_box, -width_box, 0);
+			if(bool_left) 	draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box * 2 + depth_box);
+		} else if(number_part == 4) {
+			if(bool_top) 	draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);
+			if(bool_right)	draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
+			if(bool_bot) 	draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + depth_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
+			if(bool_left) 	draw_path(wooden_plate_thickness, height_box, 7, origin_x + width_box, origin_y + height_box);
+		} else if(number_part == 5) {
+			if(bool_top)	draw_path_right_left_correction(wooden_plate_thickness, depth_box, 1, origin_x + width_box, origin_y + depth_box + height_box);
+			if(bool_right) 	draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box);
+			if(bool_bot) 	draw_line(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box * 2, - depth_box + wooden_plate_thickness * 2, 0);
+			if(bool_left)	draw_path(wooden_plate_thickness, height_box, 7, origin_x + width_box, origin_y + depth_box + height_box * 2);
+		}
+	},
+	
+	/**
 	 *	function that draws at a (x,y) position the box without top which is the best to economize both wood and laser path.
-	 * 	bool_top, bool_right, bool_bot, bool_left are boolean values which tell us if or not we have to draw the relative part
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
+	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
+	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
+	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
 	economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
-		// part 1
-		if(bool_top) draw_line(origin_x, origin_y, width_box, 0);
-		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
-		draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
-		if(bool_left) draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
-		// part 2
-		draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y + height_box);
-		draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box + depth_box);
-		draw_path(wooden_plate_thickness, depth_box, 6, origin_x, origin_y + height_box + depth_box);
-		// part 3
-		draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y + height_box + depth_box);
-		if(bool_bot) draw_line(origin_x + width_box, origin_y + height_box * 2 + depth_box, -width_box, 0);
-		if(bool_left) draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box * 2 + depth_box);
-		// part 4		
-		if(bool_top) draw_line(origin_x + width_box, origin_y, depth_box - wooden_plate_thickness * 2, 0);
-		if(bool_right) draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y);
-		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 3, origin_x + depth_box - wooden_plate_thickness * 2 + width_box, origin_y + height_box);
-		// part 5
-		draw_path_right_left_correction(wooden_plate_thickness, depth_box, 1, origin_x + width_box, origin_y + depth_box + height_box);
-		if(bool_right) draw_path(wooden_plate_thickness, height_box, 5, origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box);
-		if(bool_bot) draw_line(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + depth_box + height_box * 2, - depth_box + wooden_plate_thickness * 2, 0);
+		Box_without_top.draw_single_part(1, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, true, true, bool_left);
+		Box_without_top.draw_single_part(2, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
+		Box_without_top.draw_single_part(3, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true, bool_bot, bool_left);
+		Box_without_top.draw_single_part(4, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, true, false);
+		Box_without_top.draw_single_part(5, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, bool_right, bool_bot, false);
 		define_attributes_box(width_box + depth_box + 10, height_box * 2 + depth_box + 10);
 	},
 	
 	/**
-	 *
+	 *	function that draws at a (x,y) position of two boxes without top which is the best to economize both wood and laser path.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
 	economize_laser_and_wood_two_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 		Box_without_top.economize_laser_and_wood_one_box(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
@@ -296,7 +378,14 @@ var Box_without_top = {
 	},
 	
 	/**
-	 *
+	 *	function that draws at a (x,y) position four boxes without top which is the best to economize both wood and laser path.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a> to get the parameters informations
 	 */
 	economize_laser_and_wood_four_boxes: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
 		Box_without_top.economize_laser_and_wood_two_boxes(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box);
@@ -308,6 +397,13 @@ var Box_without_top = {
 
 /**
  * function that check is the constraint of our initial parameters are respected or not, return a value depending on the error, 0 is no error.
+	 *	@param wooden_plate_width {int} its the width of the wooden plate
+	 *	@param wooden_plate_length {int} its the length of the wooden plate
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 *	@param notch_size {int} its the length of a notch
  */
 function check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
 	if( width_box < depth_box ){ return 1; } // width_box is the actually the length, and depth_box is the width, which means length must be >= than depth_box
@@ -328,6 +424,10 @@ function check_mod() {
 
 /**
  * function used for testing the project for now on
+ *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+ *	@param width_box {int} its the width of the box
+ *	@param depth_box {int} its the depth of the box
+ *	@param height_box {int} its the height of the box
  */
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	document.getElementById("previsualisation").click();
@@ -376,39 +476,4 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	// on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
 	var svg = document.getElementById("svg");
 	svg.removeAttribute("transform");
-}
-
-/**
- *	function that defines properly the width, height and the viewbox of the final svg object depending on the box the user choose
- *	it allows the svg file to be consider with the units 'mm' milimeters.
- *	@param {int} the width of the final svg
- *	@param {int} the height of the final svg
- */
-function define_attributes_box(width, height) {
-	var svg = document.getElementById("svg");
-	svg.setAttribute("width",width);
-	svg.setAttribute("height",height);
-	var stringViewBox = "0 0 " + width + " " + height; 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
-	svg.setAttribute("viewBox",stringViewBox);
-	var stringTranslate = "translate(" + ( width / 2.7 ) + " " + ( height / 2.7 ) + ")";
-	svg.setAttribute("transform","scale(3.779528)" + stringTranslate); // dpi problems, scale px in mm
-}
-
-/**
- *	encode the data from the svg tag into URI data, and then set those information directly to the a tag.
- *	then we use the magic function click that simulate a human click on this a tag, which open the download yes/no window.
- */
-function generate_svg_file() {
-	// Use XMLSerializer to convert the DOM to a string
-	var s = new XMLSerializer();
-	var d = document.getElementById("svg");
-	var str = s.serializeToString(d); // the svg tag with its contents 
-	// and then btoa can convert that to base64
-	var encodedData = "data:image/svg+xml;base64," + window.btoa("<?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
-	// we set the uri content
-	document.getElementById("filesvg").setAttribute("href", encodedData);
-	// we set the file name downloaded
-	document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
-	// our a tag is hidden, so we use the click function as we would click on it usualy
-	document.getElementById("filesvg").click();
 }
