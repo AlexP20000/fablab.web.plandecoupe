@@ -48,7 +48,7 @@ function updateSelectPlank(array){
   removeOptions(document.getElementById("selectP"));
   var i = 0;
   for(i = select.options.lenght - 1; i >=0; i--){
-    console.log("ça remove");
+    console.log("ï¿½a remove");
     selectBox.remove(i);
   }
   for(i = 0;i<array.length;i++){
@@ -136,7 +136,7 @@ function fileChangeEvent(){
 
 
 /*
-* Function that's check if the data is numéric
+* Function that's check if the data is numï¿½ric
 * @param Value - The value we want to check
 * @return {Boolean} Return True or False
 */
