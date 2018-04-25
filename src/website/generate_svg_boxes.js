@@ -445,7 +445,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	if( !( notch_size >= 3 ) || !( notch_size < ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct the value if the notch size given isnt good
 	else { NOTCH_SIZE = notch_size; }
 	
-	var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
+	/*var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
 		switch( error_id ) {
 			case 1 : 	console.log("erreur : la largeur est supérieur à la longueur !"); 
 						return;
@@ -454,7 +454,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 			case 3 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
 						return;
 			default : 	console.log("pas de problème, y'a point S");
-		}
+		}*/
 		
 	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
 	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); }

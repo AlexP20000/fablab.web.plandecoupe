@@ -67,7 +67,7 @@ function addPlank(){
           var Planche = (function(){
             /** @member{integer} NextId - value for the next plank Id */
             var nextId = 1;
-            return function Planche(name,width,height,thickness){
+            return function Planche(name,width,length,thickness){
               this.name = name;
               this.width = width;
               this.length  = length;
