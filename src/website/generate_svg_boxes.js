@@ -5,6 +5,14 @@
  *	@module generate_svg_boxes
  */
  
+var checkboxes = document.getElementsByTagName('input');
+
+for (var i=0; i<checkboxes.length; i++)  {
+  if (checkboxes[i].type == 'checkbox')   {
+	checkboxes[i].checked = false;
+  }
+}
+	
 /** the default size of a notch
  *  @constant
  *  @type {string}
@@ -71,17 +79,15 @@ var svg_builder = {
 	},
 	
 	/**
-	 *
-	 * @param {boolean} show if true the layer 2 will be display, else it wont.
+	 *	function called by a checkbox, it display or hide the second layout for our svg.
+	 *	@param {boolean} show if true the layer 2 will be display, else it wont.
 	 */
-	show_layer2(show) {
-		var layer = document.getElementById(svgLayer2);
-		if(show) {
-			layer.setAttribute("opacity", 1);  
-			//define_attributes_box(selectPlanche[indexSelection].width,selectPlanche[indexSelection].length);
-		} else {
-			layer.setAttribute("opacity", 0);  
-			//define_attributes_box();
+	show_layer2() {
+		var layer = document.getElementById("svgLayer2");
+		if (document.getElementById("formCheck-2").checked) { // on affiche
+			layer.setAttribute("opacity", "0");  
+		} else { // on efface
+			layer.setAttribute("opacity", "1");  
 		}
 	},
 	
@@ -488,6 +494,7 @@ function check_mod() {
  *	@param height_box {int} its the height of the box
  */
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
+
 	document.getElementById("previsualisation").click();
 	svg_builder.clear_svg("svgLayer1");
 	svg_builder.clear_svg("svgLayer2");
@@ -515,13 +522,13 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 			default : 	console.log("pas de problème, y'a point S");
 		}*/
 		
-	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness * 2, wooden_plate_thickness, width_box, depth_box, height_box); }
+	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
 	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); }
 		
 	//svg_builder.define_attributes_box(300,600);
 		
-	// to draw the wooden plate we use, behind the shape we want to cut inside.
-	svg_builder.draw_rectangle(1,1,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
+	// to draw (in a second layout) the wooden plate we use and his length/width dimension, above the shape we want to cut inside.
+	svg_builder.draw_rectangle(0.5,0.5,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
 	svg_builder.draw_text(wooden_plate_thickness + 50, wooden_plate_thickness + 15, selectPlanche[indexSelection].width, "svgLayer2");
 	svg_builder.draw_text(wooden_plate_thickness + 5, wooden_plate_thickness + 50, selectPlanche[indexSelection].length, "svgLayer2");
 	
