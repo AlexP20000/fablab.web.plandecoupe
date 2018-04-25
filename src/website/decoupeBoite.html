@@ -53,7 +53,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="tab-1">
-                                <img src="assets/img/closed_box_front_page.JPG" style="width:100%;">
+                                <img id="myImg" src="assets/img/closed_box_front_page.JPG" style="width:100%;">
                                 <p><br>Ce formulaire permet de générer le plan de découpe d'une boîte fermée, ce plan est au format '.svg'. Le but principal est d'économiser au 
                                   maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
                                   de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
@@ -157,10 +157,21 @@
             </div>
         </div>
     </div>
-    <script src="ihm.js"></script>
-    <script src="generate_svg_boxes.js"></script>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <div id="myModal2" class="modal-image">
+
+      <!-- The Close Button -->
+      <button onclick="modal.style.display = 'none'" class="close" type="button" data-dismiss="modal-image">&times;</button>
+
+      <!-- Modal Content (The Image) -->
+      <img class="modal-content-image" id="img01">
+
+      <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
+  </div>
+  <script src="ihm.js"></script>
+  <script src="generate_svg_boxes.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
