@@ -70,6 +70,21 @@ var svg_builder = {
 		parentElement.appendChild(emptySvg);
 	},
 	
+	/**
+	 *
+	 * @param {boolean} show if true the layer 2 will be display, else it wont.
+	 */
+	show_layer2(show) {
+		var layer = document.getElementById(svgLayer2);
+		if(show) {
+			layer.setAttribute("opacity", 1);  
+			//define_attributes_box(selectPlanche[indexSelection].width,selectPlanche[indexSelection].length);
+		} else {
+			layer.setAttribute("opacity", 0);  
+			//define_attributes_box();
+		}
+	},
+	
 	/** 
 	 * 	draw the text parameter inside the svg tag at the (x,y) position
 	 *	@param {string} text is the text you want to draw/write
@@ -500,12 +515,15 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 			default : 	console.log("pas de problème, y'a point S");
 		}*/
 		
-	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
+	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness * 2, wooden_plate_thickness, width_box, depth_box, height_box); }
 	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); }
-	 
+		
+	//svg_builder.define_attributes_box(300,600);
+		
 	// to draw the wooden plate we use, behind the shape we want to cut inside.
-	svg_builder.draw_rectangle(0,0,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
-	//svg_builder.draw_text(100, 100, "147 mm", "svgLayer1");
+	svg_builder.draw_rectangle(1,1,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
+	svg_builder.draw_text(wooden_plate_thickness + 50, wooden_plate_thickness + 15, selectPlanche[indexSelection].width, "svgLayer2");
+	svg_builder.draw_text(wooden_plate_thickness + 5, wooden_plate_thickness + 50, selectPlanche[indexSelection].length, "svgLayer2");
 	
 	// box with top :
 		//Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
