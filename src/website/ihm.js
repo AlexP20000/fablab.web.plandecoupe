@@ -104,6 +104,7 @@ img.onclick = function(){
   captionText.innerHTML = this.alt;
 }
 
+
 /*
 *Function to load the values in the form after uploading an user model
 */
