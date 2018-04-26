@@ -203,5 +203,6 @@ function getSelectedPlankIndex(){
       indexSelection = i;
     }
   }
+  svg_builder.show_layer2(); // to dynamicly change the blue wooden plate we draw when we select an other one in the list
 }
 //checkValue();

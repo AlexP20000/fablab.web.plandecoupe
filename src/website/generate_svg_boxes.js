@@ -27,11 +27,33 @@ const NOTCH_SIZE_DEFAULT = 10;
 var NOTCH_SIZE = 10;
 
 /**
+ * 	global value for the length of the box shape/scheme (svg) the user choosed
+ * 	@type {int}
+ */
+var BOX_SCHEME_LENGTH = 0;
+
+/**
+ * 	global value for the width of the box shape/scheme (svg) the user choosed
+ * 	@type {int}
+ */
+var BOX_SCHEME_WIDTH = 0;
+
+/**
  *	@class contains the functions needed to create the svg tag, to make it downloadable, to build it ( the idea is to set multiple path tag inside the g tag of the svg tag, all those path will be the side of your shape at the end ) 
  *	@exemple <svg> <g> <path d="m 10,10 20,20" ></path> </g> </svg>
  */
 var svg_builder = {
 		
+	/**
+	 *	function that set the values of BOX_SCHEME_LENGTH and BOX_SCHEME_WIDTH for the algorithm
+	 *	@param length the length size you want to set
+	 *	@param width the width size you want to set
+	 */
+	define_box_width_and_length(width, length) {
+		BOX_SCHEME_WIDTH = width;
+		BOX_SCHEME_LENGTH = length;
+	},
+	
 	/**
 	 *	function that defines properly the width, height and the viewbox of the final svg object depending on the type of box/parts the user choose. 
 	 *	it also allows the svg file to use the units 'mm' milimeters.
@@ -42,7 +64,7 @@ var svg_builder = {
 		var svg = document.getElementById("svg");
 		svg.setAttribute("width",width);
 		svg.setAttribute("height",height);
-		var stringViewBox = "0 0 " + width + " " + height; 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
+		var stringViewBox = "0 0 " + ( width + 10 ) + " " + ( height + 10 ); 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
 		svg.setAttribute("viewBox",stringViewBox);
 		var stringTranslate = "translate(" + ( width / 2.7 ) + " " + ( height / 2.7 ) + ")";
 		svg.setAttribute("transform","scale(3.779528)" + stringTranslate); // dpi problems, scale : 1 px == 3.779528 mm
@@ -53,6 +75,8 @@ var svg_builder = {
 	 *	then we use the magic function click that simulate a human click on this a tag, which open the download yes/no window.
 	 */
 	generate_svg_file: function () {
+		// resetting the viewbox
+		svg_builder.set_viewbox();
 		// Use XMLSerializer to convert the DOM to a string
 		var s = new XMLSerializer();
 		var d = document.getElementById("svg");
@@ -69,6 +93,7 @@ var svg_builder = {
 
 	/** 
 	 *	clear the svg tag so that it will be up for new parameters/shapes to be drawn in.
+	 *	@param layer {string} the id of the layer g tag you want to clear the components
 	 */
 	clear_svg: function (layer){
 		var svg = document.getElementById(layer);
@@ -79,15 +104,53 @@ var svg_builder = {
 	},
 	
 	/**
+	 *	draws the wooden plate on the second layer "svgLayer2" id, also draws the text value of its width and length
+	 */
+	draw_layer2: function () {
+		svg_builder.clear_svg("svgLayer2");
+		// to draw (in a second g layout) the wooden plate we use and his length/width dimension, above the shape we want to cut inside.
+		svg_builder.draw_rectangle(0.5,0.5,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
+		svg_builder.draw_text(selectPlanche[indexSelection].thickness + 47,  selectPlanche[indexSelection].thickness + 15, BOX_SCHEME_WIDTH + " / " + selectPlanche[indexSelection].width, "svgLayer2");
+		svg_builder.draw_text(selectPlanche[indexSelection].thickness + 5, selectPlanche[indexSelection].thickness + 60, BOX_SCHEME_LENGTH + " / " + selectPlanche[indexSelection].length, "svgLayer2");
+	},
+	
+	/**
+	 *	function that set the values width, height and the viewbox of the svg tag, using the biggest value among the wooden plate (width/length) and
+	 *	the scheme you drawn (width/length). => it result in a good view of both of these items.
+	 */
+	set_viewbox: function () {
+		if( BOX_SCHEME_WIDTH > selectPlanche[indexSelection].width ) {
+			if ( BOX_SCHEME_LENGTH > selectPlanche[indexSelection].length ) {
+				svg_builder.define_attributes_box(BOX_SCHEME_WIDTH, BOX_SCHEME_LENGTH);
+			} else {
+				svg_builder.define_attributes_box(BOX_SCHEME_WIDTH, selectPlanche[indexSelection].length);
+			}
+		} else {
+			if ( BOX_SCHEME_LENGTH > selectPlanche[indexSelection].length ) {
+				svg_builder.define_attributes_box(selectPlanche[indexSelection].width, BOX_SCHEME_LENGTH);
+			} else {
+				svg_builder.define_attributes_box(selectPlanche[indexSelection].width, selectPlanche[indexSelection].length);
+			}
+		}
+	},
+	
+	/**
 	 *	function called by a checkbox, it display or hide the second layout for our svg.
 	 *	@param {boolean} show if true the layer 2 will be display, else it wont.
 	 */
-	show_layer2() {
+	show_layer2: function() {
 		var layer = document.getElementById("svgLayer2");
 		if (document.getElementById("formCheck-2").checked) { // on affiche
-			layer.setAttribute("opacity", "0");  
-		} else { // on efface
+			svg_builder.set_viewbox();
+			var svg = document.getElementById("svg");
+			svg.removeAttribute("transform");
 			layer.setAttribute("opacity", "1");  
+			svg_builder.draw_layer2();
+		} else { // on efface
+			svg_builder.define_attributes_box(BOX_SCHEME_WIDTH, BOX_SCHEME_LENGTH);
+			var svg = document.getElementById("svg");
+			svg.removeAttribute("transform");
+			layer.setAttribute("opacity", "0");  
 		}
 	},
 	
@@ -347,7 +410,8 @@ var Box_with_top = {
 		Box_with_top.draw_single_part(1,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
 		Box_with_top.draw_single_part(2,origin_x, origin_y + height_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, boolean_duplicate_bottom, true);
 		Box_with_top.draw_single_part(5,origin_x + width_box, origin_y + height_box, wooden_plate_thickness, width_box, depth_box, height_box, true, boolean_duplicate_right, true, false);
-		svg_builder.define_attributes_box(width_box + height_box + 10, depth_box + height_box + 10);
+		//svg_builder.define_attributes_box(width_box + height_box + 10, depth_box + height_box + 10);
+		svg_builder.define_box_width_and_length(width_box + height_box + 10, depth_box + height_box + 10);
 	},
 	
 	/**
@@ -537,7 +601,7 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	wooden_plate_width = selectPlanche[indexSelection].width;
 	wooden_plate_length = selectPlanche[indexSelection].length;
 	wooden_plate_thickness = selectPlanche[indexSelection].thickness; // = 5;
-	console.log(wooden_plate_length + " " + wooden_plate_thickness + " " + wooden_plate_width);
+	//console.log(wooden_plate_length + " " + wooden_plate_thickness + " " + wooden_plate_width);
 	width_box = Number(document.getElementById("longueur").value); // = 200;
 	depth_box = Number(document.getElementById("largeur").value); // = 50;
 	height_box = Number(document.getElementById("hauteur").value); // = 50;
@@ -556,21 +620,19 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 			default : 	console.log("pas de problème, y'a point S");
 		}
 		
-	if( document.getElementById("formCheck-1").checked ) { 
-		Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); 
+	/*if( document.getElementById("formCheck-1").checked ) { 
+		Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness * 2, wooden_plate_thickness, width_box, depth_box, height_box); 
 	}
 	else { 
 		Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); 
-	}
+	}*/
 		
-	// to draw (in a second layout) the wooden plate we use and his length/width dimension, above the shape we want to cut inside.
-	svg_builder.draw_rectangle(0.5,0.5,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
-	svg_builder.draw_text(wooden_plate_thickness + 50, wooden_plate_thickness + 15, selectPlanche[indexSelection].width, "svgLayer2");
-	svg_builder.draw_text(wooden_plate_thickness + 5, wooden_plate_thickness + 50, selectPlanche[indexSelection].length, "svgLayer2");
 	
+		//svg_builder.draw_layer2();
+			
 	// box with top :
-		//Box_with_top.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-		//Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+		//Box_with_top.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+		Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		//Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		//Box_with_top.economize_laser_and_wood_column_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		//Box_with_top.economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
@@ -579,7 +641,9 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 		//Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
 		//Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
 		//Box_without_top.economize_laser_and_wood_four_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		
+	
+	//svg_builder.define_attributes_box(BOX_SCHEME_WIDTH, BOX_SCHEME_LENGTH);
+	svg_builder.show_layer2();
 	svg_builder.generate_svg_file();
 	
 	// on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
