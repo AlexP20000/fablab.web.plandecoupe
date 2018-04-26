@@ -103,7 +103,7 @@ img.onclick = function(){
   modalImg.src = this.src;
   captionText.innerHTML = this.alt;
 }
-
+onCheckboxChange();
 
 /*
 *Function to load the values in the form after uploading an user model
@@ -204,5 +204,20 @@ function getSelectedPlankIndex(){
     }
   }
   svg_builder.show_layer2(); // to dynamicly change the blue wooden plate we draw when we select an other one in the list
+}
+
+function onCheckboxChange(){
+  console.log("checkChanged");
+  console.log(document.getElementById("formCheck-1").checked);
+  if(document.getElementById("formCheck-1").checked){
+    document.getElementById("groupWithoutTop").style.display = "none";
+    document.getElementById("groupWithTop").style.display = "block";
+    
+  }
+  else{
+    document.getElementById("groupWithTop").style.display = "none";
+    document.getElementById("groupWithoutTop").style.display = "block";
+    
+  }
 }
 //checkValue();
