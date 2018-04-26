@@ -240,11 +240,13 @@ var svg_builder = {
 	/** 
 	 * 	creates the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
 	 *	@param {string[]} tab_coordinate the values (x,y) of the different path position 
+	 *  @param {integer} [angle=0] - Angle of the path (optional parameter, default value = 0)
 	 */
-	create_path: function (tab_coordinate) {
+	create_path: function (tab_coordinate, angle=0) {
 		var svg = document.getElementById("svgLayer1");
 		var newpath = document.createElementNS(svg.namespaceURI,"path");  
-		newpath.setAttribute("d", tab_coordinate);  
+		newpath.setAttribute("d", tab_coordinate);
+		newpath.setAttribute("transform", "rotate("+angle+")");  
 		svg.appendChild(newpath);
 	},
 	
