@@ -5,6 +5,14 @@
  *	@module generate_svg_boxes
  */
  
+var checkboxes = document.getElementsByTagName('input');
+
+for (var i=0; i<checkboxes.length; i++)  {
+  if (checkboxes[i].type == 'checkbox')   {
+	checkboxes[i].checked = false;
+  }
+}
+	
 /** the default size of a notch
  *  @constant
  *  @type {string}
@@ -68,6 +76,19 @@ var svg_builder = {
 		var emptySvg = svg.cloneNode(false);
 		parentElement.removeChild(svg);
 		parentElement.appendChild(emptySvg);
+	},
+	
+	/**
+	 *	function called by a checkbox, it display or hide the second layout for our svg.
+	 *	@param {boolean} show if true the layer 2 will be display, else it wont.
+	 */
+	show_layer2() {
+		var layer = document.getElementById("svgLayer2");
+		if (document.getElementById("formCheck-2").checked) { // on affiche
+			layer.setAttribute("opacity", "0");  
+		} else { // on efface
+			layer.setAttribute("opacity", "1");  
+		}
 	},
 	
 	/** 
@@ -277,57 +298,105 @@ var svg_builder = {
  */
 var Box_with_top = {
 	
+	/**
+	 *	function that draws the part 'number_part' of the Box_with_top
+	 *	@param number_part {int} the number of the part of the Box_with_top
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
+	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
+	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
+	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
+	 */
+	draw_single_part: function (number_part, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
+		if( (number_part == 1) || (number_part == 3) ) {
+			if(bool_top) svg_builder.draw_path(wooden_plate_thickness, width_box, 1, origin_x , origin_y);
+			if(bool_right) svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
+			if(bool_bot) svg_builder.draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
+			if(bool_left) svg_builder.draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
+		} else if( (number_part == 2) || (number_part == 6) ) {
+			if(bool_top) svg_builder.draw_path(wooden_plate_thickness, width_box, 0, origin_x, origin_y);
+			if(bool_right) svg_builder.draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y);
+			if(bool_bot) svg_builder.draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + depth_box);
+			if(bool_left) svg_builder.draw_path(wooden_plate_thickness, depth_box, 6, origin_x, origin_y + depth_box);
+		} else if( (number_part == 5) || (number_part == 4) ) {
+			if(bool_top) svg_builder.draw_path(wooden_plate_thickness, height_box, 1, origin_x, origin_y + wooden_plate_thickness);
+			if(bool_right) svg_builder.draw_path_right_left_correction(wooden_plate_thickness, depth_box, 5, origin_x + height_box, origin_y + wooden_plate_thickness);
+			if(bool_bot) svg_builder.draw_path(wooden_plate_thickness, height_box, 3, origin_x + height_box, origin_y + depth_box - wooden_plate_thickness);
+			if(bool_left) svg_builder.draw_path_right_left_correction(wooden_plate_thickness, depth_box, 7, origin_x, origin_y + depth_box - wooden_plate_thickness);
+		}
+	},
+	
 	/** 
 	 *	function that draws at a (x,y) position the basic scheme ( 3 pieces bounds perfecly ) which is the best
 	 *	to economize both wood and laser path.
-	 * 	@boolean_duplicate_right, boolean_duplicate_bottom are boolean values which tell us wether a side mustnt be drawn to avoid duplicate
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 * 	@param boolean_duplicate_right {boolean} tell us whether the right part of the basic scheme must be drawn ( to avoid duplicate ) if 2 basic scheme are stick together.
+	 *	@param boolean_duplicate_bottom {boolean} tell us whether the bottom part of the basic scheme must be drawn ( to avoid duplicate ) if 2 basic scheme are stick together.
 	 */
 	economize_laser_and_wood_basic_scheme: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, boolean_duplicate_right, boolean_duplicate_bottom) {
-		// part 1 == part 3
-		svg_builder.draw_path(wooden_plate_thickness, width_box, 1, origin_x , origin_y);
-		svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y);
-		svg_builder.draw_path(wooden_plate_thickness, width_box, 3, origin_x + width_box, origin_y + height_box);
-		svg_builder.draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
-		// part 2 == part 6
-		svg_builder.draw_path(wooden_plate_thickness, depth_box, 4, origin_x + width_box, origin_y + height_box);
-		if(!boolean_duplicate_bottom) { svg_builder.draw_path(wooden_plate_thickness, width_box, 2, origin_x + width_box, origin_y + height_box + depth_box); }
-		svg_builder.draw_path(wooden_plate_thickness, depth_box, 6, origin_x, origin_y + height_box + depth_box);
-		// part 5 == part 4
-		svg_builder.draw_path(wooden_plate_thickness, height_box, 1, origin_x + width_box, origin_y + height_box + wooden_plate_thickness);
-		if(!boolean_duplicate_right) { svg_builder.draw_path_right_left_correction(wooden_plate_thickness, depth_box, 5, origin_x + height_box + width_box, origin_y + height_box + wooden_plate_thickness); }
-		svg_builder.draw_path(wooden_plate_thickness, height_box, 3, origin_x + height_box + width_box, origin_y + height_box + depth_box - wooden_plate_thickness);
+		Box_with_top.draw_single_part(1,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+		Box_with_top.draw_single_part(2,origin_x, origin_y + height_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, boolean_duplicate_bottom, true);
+		Box_with_top.draw_single_part(5,origin_x + width_box, origin_y + height_box, wooden_plate_thickness, width_box, depth_box, height_box, true, boolean_duplicate_right, true, false);
 		svg_builder.define_attributes_box(width_box + height_box + 10, depth_box + height_box + 10);
 	},
 	
 	/**
-	 *	draws at a (x,y) position the line model which is the best to economize both wood and laser path
-	 * line model means it use the basic scheme 2 times in line.
+	 *	function that draws at a (x,y) position the line model which is the best to economize both wood and laser path
+	 * 	line model means it use the basic scheme 2 times in line.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
 	 */
 	economize_laser_and_wood_line_model: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		svg_builder.define_attributes_box(width_box * 2 + height_box * 2 + 10, depth_box + height_box + 10);
 	},
 
 	/** 
-	 *	draws at a (x,y) position the column model which is the best to economize both wood and laser path
+	 *	function that draws at a (x,y) position the column model which is the best to economize both wood and laser path
 	 *	column model means it use the basic scheme 2 times in column.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
 	 */
 	economize_laser_and_wood_column_model: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		svg_builder.define_attributes_box(width_box + height_box + 10, depth_box * 2 + height_box * 2 + 10);
 	},
 
 	/**
-	 *	draws at (x,y) position 4 basic scheme which is the best to economize both wood and laser path
-	 * this is of couse used to draw two boxes, and have them inside the same svg.
+	 *	function that draws at (x,y) position 4 basic scheme ( == 2 entire boxes ) which is the best to economize both wood and laser path
+	 * 	this is of couse used to draw two boxes, and have them inside the same svg.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
 	 */
 	economize_laser_and_wood_square_model: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box) {
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
-		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, false, false);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, false);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
+		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		svg_builder.define_attributes_box(width_box * 2 + height_box * 2 + 10, depth_box * 2 + height_box * 2 + 10);
 	}
 };
@@ -449,20 +518,8 @@ var Box_without_top = {
 	 *	@param notch_size {int} its the length of a notch
  */
 function check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
-	if( width_box < depth_box ){ return 1; } // width_box is the actually the length, and depth_box is the width, which means length must be >= than depth_box
-	if( !(wooden_plate_thickness <= ( 0.20 * Math.min(depth_box, height_box)) ) ){ return 2; } // thickness too big
-	if( wooden_plate_thickness < 1 ) { return 3; } // thickness < 1 milimeter
-}
-
-/**
- * function that check the mod selected, and return a value depending on the error, 0 if no error.
- */
-function check_mod() {
-	// a simple piece
-	// basic scheme
-	// line_model
-	// column_model
-	// square_model
+	if( !(wooden_plate_thickness <= ( 0.20 * Math.min(depth_box, height_box)) ) ){ return 1; } // thickness too big
+	if( wooden_plate_thickness < 1 ) { return 2; } // thickness < 1 milimeter
 }
 
 /**
@@ -473,6 +530,7 @@ function check_mod() {
  *	@param height_box {int} its the height of the box
  */
 function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
+
 	document.getElementById("previsualisation").click();
 	svg_builder.clear_svg("svgLayer1");
 	svg_builder.clear_svg("svgLayer2");
@@ -489,29 +547,33 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	if( !( notch_size >= 3 ) || !( notch_size < ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct the value if the notch size given isnt good
 	else { NOTCH_SIZE = notch_size; }
 	
-	/*var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
+	var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
 		switch( error_id ) {
-			case 1 : 	console.log("erreur : la largeur est supérieur à la longueur !"); 
+			case 1 : 	console.log("erreur : l'épaisseur est trop grande"); 
 						return;
-			case 2 : 	console.log("erreur : l'épaisseur est trop grande"); 
-						return;
-			case 3 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
+			case 2 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
 						return;
 			default : 	console.log("pas de problème, y'a point S");
-		}*/
+		}
 		
-	if( document.getElementById("formCheck-1").checked ) { Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); }
-	else { Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); }
-	 
-	// to draw the wooden plate we use, behind the shape we want to cut inside.
-	svg_builder.draw_rectangle(0,0,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
-	//svg_builder.draw_text(100, 100, "147 mm", "svgLayer1");
+	if( document.getElementById("formCheck-1").checked ) { 
+		Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box); 
+	}
+	else { 
+		Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true); 
+	}
+		
+	// to draw (in a second layout) the wooden plate we use and his length/width dimension, above the shape we want to cut inside.
+	svg_builder.draw_rectangle(0.5,0.5,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
+	svg_builder.draw_text(wooden_plate_thickness + 50, wooden_plate_thickness + 15, selectPlanche[indexSelection].width, "svgLayer2");
+	svg_builder.draw_text(wooden_plate_thickness + 5, wooden_plate_thickness + 50, selectPlanche[indexSelection].length, "svgLayer2");
 	
 	// box with top :
-		//Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		//Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		//Box_with_top.economize_laser_and_wood_column_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-		//Box_with_top.economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+		//Box_with_top.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+		//Box_with_top.economize_laser_and_wood_basic_scheme(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+		//Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+		//Box_with_top.economize_laser_and_wood_column_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+		//Box_with_top.economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 	
 	// box without top :
 		//Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
