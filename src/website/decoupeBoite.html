@@ -28,13 +28,17 @@
                                 <button
                                 class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
                             </div>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Modèle :</label><select onchange="tafunctionAlphonse()" id="selectP"><optgroup id="groupWithTop" label="With_Top"><option >Partie 1</option><option>Partie 2</option><option>Partie 3</option><option>Partie 4</option><option>Partie 5</option><option>Partie 6</option><option>Boite colonne</option><option>Boite ligne</option><option>double boite</option></optgroup><optgroup id="groupWithoutTop" label="Without_Top"><option>Partie 1</option><option>Partie 2</option><option>Partie 3</option><option>Partie 4</option><option>Partie 5</option><option>Boite entière</option><option>2 boites entière</option><option>4 boites entière</option></optgroup></select>
+                                <button
+                                class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
+                            </div>
                             <div
                             class="form-group"><label class="d-block float-left" style="width:150px;">Longueur (mm) :&nbsp;</label><input onkeyup ="checkValue()" id="longueur" type="number" placeholder="mm"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Largeur (mm) :&nbsp;</label><input onkeyup ="checkValue()" id="largeur" type="number" placeholder="mm"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="checkValue()" id="hauteur" type="number" placeholder="mm"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Encoches (mm) :&nbsp;</label><input onkeyup ="checkValue()" id="encoche" type="number" placeholder="mm"></div>
                             <div class="form-group">
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Boite fermée</label></div>
+                                <div class="form-check"><input onchange="onCheckboxChange()" class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Boite fermée</label></div>
                                 <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label onchange="show_layer2()" class="form-check-label" for="formCheck-2">Afficher Planche</label></div>
                             </div>
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Sauver modèle</button>
@@ -61,84 +65,84 @@
                                   ou deux boîte entière, ou un sous-ensemble, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
                               </div>
                               <div class="tab-pane" role="tabpanel" id="tab-2">
-                                 <br>
-                                 <a id="filesvg" >
-                                 </a>
-                                 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-                                 <svg
-                                 xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-                                 xmlns:dc="http://purl.org/dc/elements/1.1/"
-                                 xmlns:cc="http://creativecommons.org/ns#"
-                                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                                 xmlns:svg="http://www.w3.org/2000/svg"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-                                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-                                 width="100%"
-                                 height="100%"
-                                 version="1.1"
-                                 id="svg"
-                                 inkscape:version="0.92.3 (2405546, 2018-03-11)"
-                                 sodipodi:docname="inkscape1test.svg"
-                                 stroke="#ff0000" fill="#ffffff" fill-opacity="0">
-                                 <defs
-                                 id="defs3727">
-                                 <linearGradient
-                                 inkscape:collect="always"
-                                 id="linearGradient4578"
-                                 osb:paint="gradient">
-                                 <stop
-                                 style="stop-color:#000000;stop-opacity:1;"
-                                 offset="0"
-                                 id="stop4574" />
-                                 <stop
-                                 style="stop-color:#000000;stop-opacity:0;"
-                                 offset="1"
-                                 id="stop4576" />
-                             </linearGradient>
-                         </defs>
-                         <sodipodi:namedview
-                         id="base"
-                         pagecolor="#ffffff"
-                         bordercolor="#666666"
-                         borderopacity="1.0"
-                         inkscape:pageopacity="0.0"
-                         inkscape:pageshadow="2"
-                         inkscape:zoom="0.7"
-                         inkscape:cx="280.75598"
-                         inkscape:cy="674.9179"
-                         inkscape:document-units="mm" 
-                         units="mm"
-                         inkscape:current-layer="layer1"
-                         showgrid="false"
-                         inkscape:window-width="1600"
-                         inkscape:window-height="837"
-                         inkscape:window-x="-8"
-                         inkscape:window-y="-8"
-                         inkscape:window-maximized="1" />
-                         <metadata
-                         id="metadata3730">
-                         <rdf:RDF>
-                         <cc:Work
-                         rdf:about="">
-                         <dc:format>image/svg+xml</dc:format>
-                         <dc:type
-                         rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-                         <dc:title></dc:title>
-                     </cc:Work>
-                 </rdf:RDF>
-             </metadata>
-             <g id="svgLayer1" inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1">
-                 <!-- your path goes here my dear -->
-             </g>
-             <g id="svgLayer2" inkscape:label="Calque 2" inkscape:groupmode="layer" id="layer2" opacity="0">
-                 <!-- your path goes here my dear -->
-             </g>
-         </svg>
-     </div>
-     <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br> <img src="assets/img/shema_boite_ferme.png" alt="shema_boite_ferme" height="100%" width="100%"></p>
-    </div>
+                               <br>
+                               <a id="filesvg" >
+                               </a>
+                               <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                               <svg
+                               xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+                               xmlns:dc="http://purl.org/dc/elements/1.1/"
+                               xmlns:cc="http://creativecommons.org/ns#"
+                               xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                               xmlns:svg="http://www.w3.org/2000/svg"
+                               xmlns="http://www.w3.org/2000/svg"
+                               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                               xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                               width="100%"
+                               height="100%"
+                               version="1.1"
+                               id="svg"
+                               inkscape:version="0.92.3 (2405546, 2018-03-11)"
+                               sodipodi:docname="inkscape1test.svg"
+                               stroke="#ff0000" fill="#ffffff" fill-opacity="0">
+                               <defs
+                               id="defs3727">
+                               <linearGradient
+                               inkscape:collect="always"
+                               id="linearGradient4578"
+                               osb:paint="gradient">
+                               <stop
+                               style="stop-color:#000000;stop-opacity:1;"
+                               offset="0"
+                               id="stop4574" />
+                               <stop
+                               style="stop-color:#000000;stop-opacity:0;"
+                               offset="1"
+                               id="stop4576" />
+                           </linearGradient>
+                       </defs>
+                       <sodipodi:namedview
+                       id="base"
+                       pagecolor="#ffffff"
+                       bordercolor="#666666"
+                       borderopacity="1.0"
+                       inkscape:pageopacity="0.0"
+                       inkscape:pageshadow="2"
+                       inkscape:zoom="0.7"
+                       inkscape:cx="280.75598"
+                       inkscape:cy="674.9179"
+                       inkscape:document-units="mm" 
+                       units="mm"
+                       inkscape:current-layer="layer1"
+                       showgrid="false"
+                       inkscape:window-width="1600"
+                       inkscape:window-height="837"
+                       inkscape:window-x="-8"
+                       inkscape:window-y="-8"
+                       inkscape:window-maximized="1" />
+                       <metadata
+                       id="metadata3730">
+                       <rdf:RDF>
+                       <cc:Work
+                       rdf:about="">
+                       <dc:format>image/svg+xml</dc:format>
+                       <dc:type
+                       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                       <dc:title></dc:title>
+                   </cc:Work>
+               </rdf:RDF>
+           </metadata>
+           <g id="svgLayer1" inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1">
+               <!-- your path goes here my dear -->
+           </g>
+           <g id="svgLayer2" inkscape:label="Calque 2" inkscape:groupmode="layer" id="layer2" opacity="0">
+               <!-- your path goes here my dear -->
+           </g>
+       </svg>
+   </div>
+   <div class="tab-pane" role="tabpanel" id="tab-3">
+    <p><br> <img src="assets/img/shema_boite_ferme.png" alt="shema_boite_ferme" height="100%" width="100%"></p>
+</div>
 </div>
 </div>
 </div>

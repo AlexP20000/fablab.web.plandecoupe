@@ -103,7 +103,7 @@ img.onclick = function(){
   modalImg.src = this.src;
   captionText.innerHTML = this.alt;
 }
-
+onCheckboxChange();
 
 /*
 *Function to load the values in the form after uploading an user model
@@ -202,6 +202,23 @@ function getSelectedPlankIndex(){
     if(selectPlanche[i].id == plankId){
       indexSelection = i;
     }
+  }
+}
+
+function onCheckboxChange(){
+  console.log("checkChanged");
+  console.log(document.getElementById("formCheck-1").checked);
+  if(document.getElementById("formCheck-1").checked){
+    console.log("vrai");
+    document.getElementById("groupWithoutTop").style.display = "none";
+    document.getElementById("groupWithTop").style.display = "block";
+    
+  }
+  else{
+    console.log("faux");
+    document.getElementById("groupWithTop").style.display = "none";
+    document.getElementById("groupWithoutTop").style.display = "block";
+    
   }
 }
 //checkValue();
