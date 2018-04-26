@@ -209,13 +209,11 @@ function onCheckboxChange(){
   console.log("checkChanged");
   console.log(document.getElementById("formCheck-1").checked);
   if(document.getElementById("formCheck-1").checked){
-    console.log("vrai");
     document.getElementById("groupWithoutTop").style.display = "none";
     document.getElementById("groupWithTop").style.display = "block";
     
   }
   else{
-    console.log("faux");
     document.getElementById("groupWithTop").style.display = "none";
     document.getElementById("groupWithoutTop").style.display = "block";
     
