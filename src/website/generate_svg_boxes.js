@@ -110,14 +110,12 @@ var svg_builder = {
 	},
 	
 	/**
-	 *	draws the wooden plate on the second layer "svgLayer2" id, also draws the text value of its width and length
+	 *	draws the wooden plate on the second layer "svgLayer2" id
 	 */
 	draw_layer2: function () {
 		svg_builder.clear_svg("svgLayer2");
-		// to draw (in a second g layout) the wooden plate we use and his length/width dimension, above the shape we want to cut inside.
+		// to draw (in a second g layout) the wooden plate we use above the shape we want to cut inside.
 		svg_builder.draw_rectangle(0.5,0.5,selectPlanche[indexSelection].width,selectPlanche[indexSelection].length,"svgLayer2");
-		svg_builder.draw_text(selectPlanche[indexSelection].thickness + 45,  selectPlanche[indexSelection].thickness - 15, BOX_SCHEME_WIDTH + " / " + selectPlanche[indexSelection].width, "svgLayer2");
-		svg_builder.draw_text(selectPlanche[indexSelection].thickness + 5, selectPlanche[indexSelection].thickness + 60, BOX_SCHEME_LENGTH + " / " + selectPlanche[indexSelection].length, "svgLayer2");
 	},
 	
 	/**
@@ -635,14 +633,14 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 	else { NOTCH_SIZE = notch_size; }*/ 
 	NOTCH_SIZE = notch_size;
 	
-	var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
+	/*var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
 		switch( error_id ) {
 			case 1 : 	console.log("erreur : l'épaisseur est trop grande"); 
 						return;
 			case 2 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
 						return;
 			default : 	console.log("pas de problème, y'a point S");
-		}
+		}*/
 		
 	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
 		switch( Number(selectedModel()) ) {

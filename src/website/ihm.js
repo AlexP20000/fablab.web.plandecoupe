@@ -219,12 +219,14 @@ function onCheckboxChange(){
   if(document.getElementById("formCheck-1").checked){
     document.getElementById("groupWithoutTop").style.display = "none";
     document.getElementById("groupWithTop").style.display = "block";
-    
+    document.getElementById("img_shema_boite_ouverte").style.display = "none";
+	document.getElementById("img_shema_boite_ferme").style.display = "block";
   }
   else{
     document.getElementById("groupWithTop").style.display = "none";
     document.getElementById("groupWithoutTop").style.display = "block";
-    
+    document.getElementById("img_shema_boite_ferme").style.display = "none";
+	document.getElementById("img_shema_boite_ouverte").style.display = "block";
   }
 }
 //checkValue();
