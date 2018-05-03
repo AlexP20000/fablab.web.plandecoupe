@@ -529,6 +529,38 @@ var Box_with_top = {
 		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true);
 		Box_with_top.economize_laser_and_wood_basic_scheme(origin_x + width_box + height_box, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
 		svg_builder.define_box_width_and_length(width_box * 2 + height_box * 2 + 10, depth_box * 2 + height_box * 2 + 10);
+	},
+	
+	/**
+	 *	function that draws the box/part of box which is selected in the option listStyleType
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 */
+	draw_selected_item: function (wooden_plate_thickness, width_box, depth_box, height_box) {
+		switch( Number(selectedModel()) ) {
+			case 1 : 	Box_with_top.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 2 : 	Box_with_top.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 3 : 	Box_with_top.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 4 : 	Box_with_top.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;			
+			case 5 : 	Box_with_top.draw_single_part(5,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 6 : 	Box_with_top.draw_single_part(6,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;			
+			case 7 : 	Box_with_top.economize_laser_and_wood_column_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+						break;
+			case 8 : 	Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+						break;	
+			case 9 :	Box_with_top.economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
+						break;
+			default : 	
+						
+		}
 	}
 };
 
@@ -640,6 +672,35 @@ var Box_without_top = {
 		Box_without_top.economize_laser_and_wood_one_box(origin_x, origin_y + height_box * 2 +  depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
 		Box_without_top.economize_laser_and_wood_one_box(origin_x + width_box + depth_box - wooden_plate_thickness * 2, origin_y + height_box * 2 +  depth_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, false);
 		svg_builder.define_box_width_and_length(width_box * 2 + depth_box * 2 + 10, height_box * 4 + depth_box *2 + 10);		
+	},
+	
+	/**
+	 *	function that draws the box/part of box which is selected in the option listStyleType
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 */
+	draw_selected_item: function (wooden_plate_thickness, width_box, depth_box, height_box) {
+		switch( Number(selectedModel()) ) {
+			case 1 : 	Box_without_top.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 2 : 	Box_without_top.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 3 : 	Box_without_top.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 4 : 	Box_without_top.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;			
+			case 5 : 	Box_without_top.draw_single_part(5,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;
+			case 6 : 	Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+						break;			
+			case 7 : 	Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+						break;
+			case 8 :	Box_without_top.economize_laser_and_wood_four_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
+						break;
+			default : 	
+		}
 	}
 };
 
@@ -880,7 +941,7 @@ function check_parameters_constraint(wooden_plate_width, wooden_plate_length, wo
  *	@param depth_box {int} its the depth of the box
  *	@param height_box {int} its the height of the box
  */
-function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
+function app1_close_or_open_box(wooden_plate_thickness, width_box, depth_box, height_box) {
 	
 	document.getElementById("previsualisation").click();
 	svg_builder.clear_svg("svgLayer1");
@@ -910,48 +971,9 @@ function tests(wooden_plate_thickness, width_box, depth_box, height_box) {
 		}*/
 		
 	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
-		switch( Number(selectedModel()) ) {
-			case 1 : 	Box_with_top.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 2 : 	Box_with_top.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 3 : 	Box_with_top.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 4 : 	Box_with_top.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;			
-			case 5 : 	Box_with_top.draw_single_part(5,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 6 : 	Box_with_top.draw_single_part(6,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;			
-			case 7 : 	Box_with_top.economize_laser_and_wood_column_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
-						break;
-			case 8 : 	Box_with_top.economize_laser_and_wood_line_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
-						break;	
-			case 9 :	Box_with_top.economize_laser_and_wood_square_model(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true);
-						break;
-			default : 	
-						
-		}
+		Box_with_top.draw_selected_item(wooden_plate_thickness, width_box, depth_box, height_box);
 	} else { // the openned boxes ( without top )
-		switch( Number(selectedModel()) ) {
-			case 1 : 	Box_without_top.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 2 : 	Box_without_top.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 3 : 	Box_without_top.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 4 : 	Box_without_top.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;			
-			case 5 : 	Box_without_top.draw_single_part(5,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;
-			case 6 : 	Box_without_top.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-						break;			
-			case 7 : 	Box_without_top.economize_laser_and_wood_two_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-						break;
-			case 8 :	Box_without_top.economize_laser_and_wood_four_boxes(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box);
-						break;
-			default : 	
-		}
+		Box_without_top.draw_selected_item(wooden_plate_thickness, width_box, depth_box, height_box);
 	}
 	
 	svg_builder.generate_svg_file();
