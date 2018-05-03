@@ -647,34 +647,65 @@ var Box_without_top = {
  *	@class contains the functions needed to create a Box_paper_stand, entirely, two in the same svg file, only a single part of it, etc...
  */
 var Box_paper_stand = {
+	
 	/**
-	 *	geometry parameters we will need to perform our drawing, @see the web site info tab  for more details
+	 *	instance parameters
 	 */
-	tiny_triangle_adjacent_side : 0,	// C'
-	triangle_adjacent_side : 0,			// C
-	triangle_hypotenuse_side : 0,		// B
-	triangle_opposite_side : 0,			// A
+	wooden_plate_width : 0,
+	wooden_plate_length : 0,
+	wooden_plate_thickness : 0,
+	width_box : 0,
+	depth_box : 0,
+	height_box : 0,
 	size_stand_front_part : 0,
 	size_between_stand : 0,
 	stand_number : 0,
 	angle_degre : 0,
 	
 	/**
+	 *	geometry parameters we will need to perform our drawing using trigonometry, @see the web site info tab  for more details
+	 */
+	tiny_triangle_adjacent_side : 0,	// C'
+	triangle_adjacent_side : 0,			// C
+	triangle_hypotenuse_side : 0,		// B
+	triangle_opposite_side : 0,			// A
+	
+	/**
+	 *	function that checks if the initial parameters for building a part/entire Box_paper_stand is correct or not, return 0 if no problem,
+	 *	and return a integer value depending on the issue found
+	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+	 *	@param width_box {int} its the width of the box
+	 *	@param depth_box {int} its the depth of the box
+	 *	@param height_box {int} its the height of the box
+	 */
+	init_parameters: function(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle_degre) {
+		this.wooden_plate_width = wooden_plate_width,
+		this.wooden_plate_length = wooden_plate_length,
+		this.wooden_plate_thickness = wooden_plate_thickness,
+		this.width_box = width_box,
+		this.depth_box = depth_box,
+		this.height_box = height_box,
+		this.size_stand_front_part = size_stand_front_part,
+		this.size_between_stand = size_between_stand,
+		this.stand_number = stand_number,
+		this.angle_degre = angle_degre
+	},
+	 
+	check_parameters: function() {
+		
+	},
+	
+	/**
 	 *	function that initialize the different parameters we will need to use for our drawing/creating path
 	 *	@see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
 	 */
-	init_geometry_parameters(wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle_degre) {
-		this.size_stand_front_part = size_stand_front_part;
-		this.stand_number = stand_number;
-		this.size_between_stand = size_between_stand;
-		this.angle_degre = angle_degre;
+	init_geometry_parameters: function () {
 		// geometry calculation, see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
 		// Math.cos sin tan in javascript works with radians not degrees so we need the "* (Math.PI / 180))" conversion"
-		this.tiny_triangle_adjacent_side = Math.cos((180 - 90 - angle_degre) * (Math.PI / 180) ) * size_stand_front_part;	// C'
-		this.triangle_adjacent_side = depth_box - this.tiny_triangle_adjacent_side;											// C
-		this.triangle_hypotenuse_side = ( this.triangle_adjacent_side / Math.cos(angle_degre * (Math.PI / 180)) );			// B
-		this.triangle_opposite_side = Math.sin(angle_degre * (Math.PI / 180) ) * this.triangle_hypotenuse_side;				// A
-		
+		this.tiny_triangle_adjacent_side = Math.cos((180 - 90 - this.angle_degre) * (Math.PI / 180) ) * this.size_stand_front_part;	// C'
+		this.triangle_adjacent_side = this.depth_box - this.tiny_triangle_adjacent_side;											// C
+		this.triangle_hypotenuse_side = ( this.triangle_adjacent_side / Math.cos(this.angle_degre * (Math.PI / 180)) );			// B
+		this.triangle_opposite_side = Math.sin(this.angle_degre * (Math.PI / 180) ) * this.triangle_hypotenuse_side;				// A
 	},
 	
 	/**
@@ -691,30 +722,30 @@ var Box_paper_stand = {
 	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
 	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
 	 */
-	draw_single_part: function (number_part, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
+	draw_single_part: function (number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
 		if( (number_part == 1) || (number_part == 2) ){
-			if(bool_top)	svg_builder.draw_line(origin_x, origin_y, depth_box, 0);
-			if(bool_right)	svg_builder.draw_line(origin_x + depth_box, origin_y, 0, height_box);
-			if(bool_bot)	svg_builder.draw_line(origin_x + depth_box, origin_y + height_box, -depth_box, 0);
-			if(bool_left)	svg_builder.draw_line(origin_x, origin_y + height_box, 0, -height_box);
+			if(bool_top)	svg_builder.draw_line(origin_x, origin_y, this.depth_box, 0);
+			if(bool_right)	svg_builder.draw_line(origin_x + this.depth_box, origin_y, 0, this.height_box);
+			if(bool_bot)	svg_builder.draw_line(origin_x + this.depth_box, origin_y + this.height_box, -this.depth_box, 0);
+			if(bool_left)	svg_builder.draw_line(origin_x, origin_y + this.height_box, 0, -this.height_box);
 			// we draw as much as we need stands
 			for(var i = 0 ; i < this.stand_number ; i++ ) {
-				svg_builder.draw_path_rectangle(wooden_plate_thickness,this.triangle_hypotenuse_side, 180 + angle, origin_x + this.triangle_adjacent_side , origin_y + height_box - wooden_plate_thickness - ( i * this.size_between_stand));
-				svg_builder.draw_path_rectangle(wooden_plate_thickness,this.size_stand_front_part, 270 + angle, origin_x + this.triangle_adjacent_side, origin_y + height_box - wooden_plate_thickness - ( i * this.size_between_stand));
+				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.triangle_hypotenuse_side, 180 + this.angle_degre, origin_x + this.triangle_adjacent_side , origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
+				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.size_stand_front_part, 270 + this.angle_degre, origin_x + this.triangle_adjacent_side, origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
 			}
-			svg_builder.define_box_width_and_length(depth_box + 10, height_box + 10);
+			svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box + 10);
 		} else if(number_part == 3) {
-			if(bool_top) 	svg_builder.draw_line(origin_x + wooden_plate_thickness, origin_y, width_box - (2 * wooden_plate_thickness), 0);
-			if(bool_right) 	svg_builder.draw_path(wooden_plate_thickness, this.triangle_hypotenuse_side, 5, origin_x + width_box - wooden_plate_thickness, origin_y);
-			if(bool_bot) 	svg_builder.draw_path(wooden_plate_thickness, width_box  - (2 * wooden_plate_thickness), 3, origin_x + width_box - wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
-			if(bool_left) 	svg_builder.draw_path(wooden_plate_thickness, this.triangle_hypotenuse_side, 7, origin_x + wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
-			svg_builder.define_box_width_and_length(width_box + 10, this.triangle_hypotenuse_side + 10);
+			if(bool_top) 	svg_builder.draw_line(origin_x + this.wooden_plate_thickness, origin_y, this.width_box - (2 * this.wooden_plate_thickness), 0);
+			if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.triangle_hypotenuse_side, 5, origin_x + this.width_box - this.wooden_plate_thickness, origin_y);
+			if(bool_bot) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box  - (2 * this.wooden_plate_thickness), 3, origin_x + this.width_box - this.wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
+			if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.triangle_hypotenuse_side, 7, origin_x + this.wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
+			svg_builder.define_box_width_and_length(this.width_box + 10, this.triangle_hypotenuse_side + 10);
 		} else if(number_part == 4) {
-			if(bool_top) 	svg_builder.draw_path(wooden_plate_thickness, width_box - (2 * wooden_plate_thickness), 0, origin_x + wooden_plate_thickness, origin_y );
-			if(bool_right) 	svg_builder.draw_path(wooden_plate_thickness, this.size_stand_front_part, 5, origin_x + width_box - wooden_plate_thickness, origin_y);
-			if(bool_bot) 	svg_builder.draw_line(origin_x + width_box - wooden_plate_thickness, origin_y + this.size_stand_front_part, -width_box + (2 * wooden_plate_thickness), 0);
-			if(bool_left) 	svg_builder.draw_path(wooden_plate_thickness, this.size_stand_front_part, 7, origin_x + wooden_plate_thickness, origin_y + this.size_stand_front_part);
-			svg_builder.define_box_width_and_length(width_box + 10, this.size_stand_front_part + 10);
+			if(bool_top) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box - (2 * this.wooden_plate_thickness), 0, origin_x + this.wooden_plate_thickness, origin_y );
+			if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.size_stand_front_part, 5, origin_x + this.width_box - this.wooden_plate_thickness, origin_y);
+			if(bool_bot) 	svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness, origin_y + this.size_stand_front_part, -this.width_box + (2 * this.wooden_plate_thickness), 0);
+			if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.size_stand_front_part, 7, origin_x + this.wooden_plate_thickness, origin_y + this.size_stand_front_part);
+			svg_builder.define_box_width_and_length(this.width_box + 10, this.size_stand_front_part + 10);
 		}
 	},
 	
@@ -722,99 +753,107 @@ var Box_paper_stand = {
 	 *	function that draws at a (x,y) position the Box_paper_stand side parts in a line model which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
-	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
-	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
-	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
-	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
-	economize_laser_and_wood_side_parts_line: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
-		Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-		Box_paper_stand.draw_single_part(2,wooden_plate_thickness + depth_box, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false);
-		svg_builder.define_box_width_and_length((depth_box * 2) + 10, height_box + 10);
+	economize_laser_and_wood_side_parts_line: function (origin_x, origin_y) {
+		this.draw_single_part(1,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(2,origin_x + this.depth_box, origin_y, true, true, true, false);
+		svg_builder.define_box_width_and_length((this.depth_box * 2) + 10, this.height_box + 10);
 	},
 	
 	/**
 	 *	function that draws at a (x,y) position the Box_paper_stand side parts in a column model which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
-	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
-	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
-	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
-	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
-	economize_laser_and_wood_side_parts_column: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
-		Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-		Box_paper_stand.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness + height_box, wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);	
-		svg_builder.define_box_width_and_length(depth_box + 10, height_box * 2 + 10);
+	economize_laser_and_wood_side_parts_column: function (origin_x, origin_y) {
+		this.draw_single_part(1,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(2,origin_x, origin_y + this.height_box, false, true, true, true);	
+		svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box * 2 + 10);
 	},
 	
 	/**
-	 *	function that draws at a (x,y) position the Box_paper_stand in a line model which is the best to economize both wood and laser path.
+	 *	function that draws at a (x,y) position the Box_paper_stand in a line model with one line which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
-	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
-	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
-	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
-	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
-	economize_laser_and_wood_all_parts_line: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
-		Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-		Box_paper_stand.draw_single_part(2,wooden_plate_thickness + depth_box, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false);
+	economize_laser_and_wood_all_parts_one_line: function (origin_x, origin_y) {
+		this.economize_laser_and_wood_side_parts_line(origin_x,origin_y);
 		// we draw as much as we need stands
 		for(var i = 0 ; i < this.stand_number ; i++ ) {
-			Box_paper_stand.draw_single_part(3,wooden_plate_thickness + (depth_box * 2) + (i * width_box), wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-			Box_paper_stand.draw_single_part(4,wooden_plate_thickness + (depth_box * 2) + (i * width_box), wooden_plate_thickness + (this.triangle_hypotenuse_side), wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
+			this.draw_single_part(3,origin_x + (this.depth_box * 2) + (i * this.width_box), origin_y, true, true, true, true);
+			this.draw_single_part(4,origin_x + (this.depth_box * 2) + (i * this.width_box), origin_y + (this.triangle_hypotenuse_side), false, true, true, true);
 		}
-		svg_builder.define_box_width_and_length((depth_box * (2+i)) + 10, Math.max(height_box + (this.size_stand_front_part), (this.triangle_hypotenuse_side) + (this.size_stand_front_part))  + 10);
+		svg_builder.define_box_width_and_length((this.depth_box * (2+i)) + 10, Math.max(this.height_box + (this.size_stand_front_part), (this.triangle_hypotenuse_side) + (this.size_stand_front_part))  + 10);
 	},
 	
 	/**
-	 *	function that draws at a (x,y) position the Box_paper_stand in a column model which is the best to economize both wood and laser path.
+	 *	function that draws at a (x,y) position the Box_paper_stand in a line model with two line which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
-	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
-	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
-	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
-	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
-	economize_laser_and_wood_all_parts_column: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left) {
-		Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-		Box_paper_stand.draw_single_part(2,wooden_plate_thickness + depth_box, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false);
+	economize_laser_and_wood_all_parts_two_line: function (origin_x, origin_y) {
+		this.economize_laser_and_wood_side_parts_column(origin_x,origin_y);
 		// we draw as much as we need stands
 		var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
 		var todo = Math.floor(this.stand_number/2);
 		for( var i = 0 ; i < todo ; i++ ) {
-			Box_paper_stand.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness + height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-			Box_paper_stand.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness + height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
-			Box_paper_stand.draw_single_part(3,wooden_plate_thickness + depth_box, wooden_plate_thickness + height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-			Box_paper_stand.draw_single_part(4,wooden_plate_thickness + depth_box, wooden_plate_thickness + height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
+			this.draw_single_part(3,origin_x + this.depth_box + (i * this.width_box), origin_y, true, true, true, true);
+			this.draw_single_part(4,origin_x + this.depth_box + (i * this.width_box), origin_y + this.triangle_hypotenuse_side, false, true, true, true);
+			this.draw_single_part(3,origin_x + this.depth_box + (i * this.width_box), origin_y + this.triangle_hypotenuse_side + this.size_stand_front_part, true, true, true, true);
+			this.draw_single_part(4,origin_x + this.depth_box + (i * this.width_box), origin_y + (2 * this.triangle_hypotenuse_side) + this.size_stand_front_part, false, true, true, true);
 		} 
 		if(is_pair == 0) { // if impair 
-			Box_paper_stand.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness + height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-			Box_paper_stand.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness + height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), wooden_plate_thickness, width_box, depth_box, height_box, false, true, true, true);
+			this.draw_single_part(3,origin_x + this.depth_box + (i * this.width_box), origin_y, true, true, true, true);
+			this.draw_single_part(4,origin_x + this.depth_box + (i * this.width_box), origin_y + this.triangle_hypotenuse_side, false, true, true, true);
 		}
-		var width_all_items = Math.max((depth_box * 2), (width_box * 2));
-		var height_all_items =  ((this.stand_number % 2) == 0 ) ? height_box + ((Math.floor(this.stand_number/2)) * (this.triangle_hypotenuse_side + this.size_stand_front_part)) : height_box + ((Math.floor(this.stand_number/2) + 1) * (this.triangle_hypotenuse_side + this.size_stand_front_part));
+		var width_all_items =  ((this.stand_number % 2) == 0 ) ? this.depth_box + ((Math.floor(this.stand_number/2)) * this.width_box) : this.depth_box + ((Math.floor(this.stand_number/2) + 1) * this.width_box);
+		var height_all_items = Math.max((this.height_box * 2), ((this.triangle_hypotenuse_side + this.size_stand_front_part) * 2));	
+		svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
+	},
+	
+	/**
+	 *	function that draws at a (x,y) position the Box_paper_stand in a column model with one column which is the best to economize both wood and laser path.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 */
+	economize_laser_and_wood_all_parts_one_column: function (origin_x, origin_y) {
+		this.economize_laser_and_wood_side_parts_column(origin_x,origin_y);
+		// we draw as much as we need stands
+		for(var i = 0 ; i < this.stand_number ; i++ ) {
+			this.draw_single_part(3,origin_x, origin_y + (this.height_box * 2) + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+			this.draw_single_part(4,origin_x, origin_y + (this.triangle_hypotenuse_side) + (this.height_box * 2) + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
+		}
+		svg_builder.define_box_width_and_length(Math.max(this.depth_box, this.width_box) + 10, (this.height_box * 2) + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part))  + 10);
+	},
+	
+	/**
+	 *	function that draws at a (x,y) position the Box_paper_stand in a column model with two column which is the best to economize both wood and laser path.
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 */
+	economize_laser_and_wood_all_parts_two_column: function (origin_x, origin_y) {
+		this.economize_laser_and_wood_side_parts_line(origin_x,origin_y);
+		// we draw as much as we need stands
+		var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
+		var todo = Math.floor(this.stand_number/2);
+		for( var i = 0 ; i < todo ; i++ ) {
+			this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+			this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
+			this.draw_single_part(3,origin_x + this.depth_box, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+			this.draw_single_part(4,origin_x + this.depth_box, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
+		} 
+		if(is_pair == 0) { // if impair 
+			this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+			this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
+		}
+		var width_all_items = Math.max((this.depth_box * 2), (this.width_box * 2));
+		var height_all_items =  ((this.stand_number % 2) == 0 ) ? this.height_box + ((Math.floor(this.stand_number/2)) * (this.triangle_hypotenuse_side + this.size_stand_front_part)) : this.height_box + ((Math.floor(this.stand_number/2) + 1) * (this.triangle_hypotenuse_side + this.size_stand_front_part));
 		svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
 	}
 };
@@ -942,20 +981,26 @@ function app3_paper_stand(wooden_plate_thickness, width_box, depth_box, height_b
 	
 	NOTCH_SIZE = notch_size;
 	
-	angle = 40;
-	size_stand_front_part = 50;
-	size_between_stand = 120; // 12 cm minimum
-	stand_number = 3;
+	size_stand_front_part = 50;	// is at 90 degree of his associated stand
+	size_between_stand = 120; 	// 12 cm minimum
+	stand_number = 3;			// at least 1 please
+	angle_degre = 40;			// the angle of rotation for each stands
 	
-	Box_paper_stand.init_geometry_parameters(wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle); 
-	//Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	//Box_paper_stand.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	//Box_paper_stand.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	//Box_paper_stand.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	//Box_paper_stand.economize_laser_and_wood_side_parts_line(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	//Box_paper_stand.economize_laser_and_wood_side_parts_column(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	Box_paper_stand.economize_laser_and_wood_all_parts_line(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
-	//Box_paper_stand.economize_laser_and_wood_all_parts_column(wooden_plate_thickness, wooden_plate_thickness, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true);
+	var app3_paper_stand_Box_paper_stand = Object.create(Box_paper_stand);
+	app3_paper_stand_Box_paper_stand.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle_degre);
+	app3_paper_stand_Box_paper_stand.check_parameters();
+	app3_paper_stand_Box_paper_stand.init_geometry_parameters(); 
+	
+	//app3_paper_stand_Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
+	//app3_paper_stand_Box_paper_stand.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
+	//app3_paper_stand_Box_paper_stand.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
+	//app3_paper_stand_Box_paper_stand.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
+	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_side_parts_line(wooden_plate_thickness, wooden_plate_thickness);
+	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_side_parts_column(wooden_plate_thickness, wooden_plate_thickness);
+	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_line(wooden_plate_thickness, wooden_plate_thickness);
+	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_two_line(wooden_plate_thickness, wooden_plate_thickness);
+	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_column(wooden_plate_thickness, wooden_plate_thickness);
+	app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_two_column(wooden_plate_thickness, wooden_plate_thickness);
 	
 	
 	svg_builder.generate_svg_file();

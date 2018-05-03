@@ -77,8 +77,8 @@ var Planche = (function(){
 
 })();
 
-var planche1 = new Planche("planche1",120,70,1);
-var planche2 = new Planche("planche2",120,70,3);
+var planche1 = new Planche("planche1",1200,700,1);
+var planche2 = new Planche("planche2",1200,700,3);
 /** Store the selected index in the plank select*/
 var indexSelection = 0;
 /** Array of planks */
