@@ -762,7 +762,8 @@ var Box_paper_stand = {
 		//if( this.size_between_stand < 120 ) return 4; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
 		if( 40 < this.angle_degre ) return 5; // if angle_degre too big
 		if( this.angle_degre < 0 ) return 6; // if angle_degre too tiny
-		if( this.triangle_opposite_side >= (this.height_box / this.stand_number) ) return 7; // for a stand_number correct
+		if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 7; // for a stand_number correct
+		console.log(this.triangle_opposite_side > (this.height_box / this.stand_number));
 		return 0; // no problem
 	},
 	
@@ -862,7 +863,7 @@ var Box_paper_stand = {
 			this.draw_single_part(3,origin_x + (this.depth_box * 2) + (i * this.width_box), origin_y, true, true, true, true);
 			this.draw_single_part(4,origin_x + (this.depth_box * 2) + (i * this.width_box), origin_y + (this.triangle_hypotenuse_side), false, true, true, true);
 		}
-		svg_builder.define_box_width_and_length((this.depth_box * (2+i)) + 10, Math.max(this.height_box + (this.size_stand_front_part), (this.triangle_hypotenuse_side) + (this.size_stand_front_part))  + 10);
+		svg_builder.define_box_width_and_length((this.depth_box * 2) + (this.width_box * i) + 10, Math.max(this.height_box, (this.triangle_hypotenuse_side) + (this.size_stand_front_part))  + 10);
 	},
 	
 	/**
@@ -992,7 +993,7 @@ function app1_close_or_open_box(wooden_plate_thickness, width_box, depth_box, he
 /**
  *  function used by the third application which creates a paper stand
  */
-function app3_paper_stand() {
+function app3_paper_stand(download) {
 	
 	document.getElementById("previsualisation").click();
 	svg_builder.clear_svg("svgLayer1");
@@ -1022,10 +1023,10 @@ function app3_paper_stand() {
 	else if( app3_paper_stand_Box_paper_stand.check_parameters() != 0 ) { 
 		console.log("error, à détailler : " + app3_paper_stand_Box_paper_stand.check_parameters()); 
 		return;
-	}/* else {
+	} else {
 		app3_paper_stand_Box_paper_stand.init_geometry_parameters(); 
-	}*/
-	app3_paper_stand_Box_paper_stand.init_geometry_parameters(); 
+	}
+	//app3_paper_stand_Box_paper_stand.init_geometry_parameters(); 
 	
 	switch( selectedModel() ) {
 		case "1" : 	app3_paper_stand_Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
@@ -1046,19 +1047,7 @@ function app3_paper_stand() {
 					break;
 		default : 	console.log("pas de problème, y'a point S");
 	}
-		
-	//
-	//app3_paper_stand_Box_paper_stand.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-	//app3_paper_stand_Box_paper_stand.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-	//app3_paper_stand_Box_paper_stand.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_side_parts_line(wooden_plate_thickness, wooden_plate_thickness);
-	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_side_parts_column(wooden_plate_thickness, wooden_plate_thickness);
-	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_line(wooden_plate_thickness, wooden_plate_thickness);
-	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_two_line(wooden_plate_thickness, wooden_plate_thickness);
-	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_column_model_1(wooden_plate_thickness, wooden_plate_thickness);
-	//app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_column_model_2(wooden_plate_thickness, wooden_plate_thickness);
 	
-	
-	//svg_builder.generate_svg_file();
+	if( download == "download" ) svg_builder.generate_svg_file();
 	svg_builder.show_layer2();
 }
