@@ -177,17 +177,20 @@ function checkValueModal(){
   document.getElementById("pButton").disabled = !valid;
 
 }
-/*
-* Function that's check the values within the form of the box and allow or not the user to click on the button to generate a svg 
-*/
+
+/**
+ * Function that's check the values within the form of the box and allow or not the user to click on the button to generate a svg 
+ */
 function checkValue() {
-	var length = document.getElementById("longueur").value;
-	var witdh = document.getElementById("largeur").value;
-	var height = document.getElementById("hauteur").value;
-	var notch = document.getElementById("encoche").value;
-	var valid = isNumeric(length) && isNumeric(witdh) && isNumeric(height) && isNumeric(notch) && length > 0 && witdh > 0 && height > 0 && notch > 0;
+	var valid = true;
+	for( var i = 0 ; i <  arguments.length ; i++ ) {
+		var currentParameter = document.getElementById(arguments[i]).value;
+		valid = valid && isNumeric(currentParameter) && currentParameter > 0;
+	}
 	document.getElementById("genButton").disabled = !valid;
+	return valid;
 }
+
 /*
 * Function to set the var IndexSelection to the selected index of the plank select
 */
