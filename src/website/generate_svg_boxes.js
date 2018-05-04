@@ -882,7 +882,7 @@ var Box_paper_stand = {
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
-	economize_laser_and_wood_all_parts_one_column: function (origin_x, origin_y) {
+	economize_laser_and_wood_all_parts_one_column_model_1: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_column(origin_x,origin_y);
 		// we draw as much as we need stands
 		for(var i = 0 ; i < this.stand_number ; i++ ) {
@@ -894,27 +894,20 @@ var Box_paper_stand = {
 	
 	/**
 	 *	function that draws at a (x,y) position the Box_paper_stand in a column model with two column which is the best to economize both wood and laser path.
+	 *	-> perfect for the form ( length 300, width 150, height 300 )
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
-	economize_laser_and_wood_all_parts_two_column: function (origin_x, origin_y) {
+	economize_laser_and_wood_all_parts_one_column_model_2: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_line(origin_x,origin_y);
 		// we draw as much as we need stands
-		var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
-		var todo = Math.floor(this.stand_number/2);
-		for( var i = 0 ; i < todo ; i++ ) {
-			this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
-			this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
-			this.draw_single_part(3,origin_x + this.depth_box, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
-			this.draw_single_part(4,origin_x + this.depth_box, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
-		} 
-		if(is_pair == 0) { // if impair 
+		for( var i = 0 ; i < this.stand_number ; i++ ) {
 			this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
 			this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
 		}
-		var width_all_items = Math.max((this.depth_box * 2), (this.width_box * 2));
-		var height_all_items =  ((this.stand_number % 2) == 0 ) ? this.height_box + ((Math.floor(this.stand_number/2)) * (this.triangle_hypotenuse_side + this.size_stand_front_part)) : this.height_box + ((Math.floor(this.stand_number/2) + 1) * (this.triangle_hypotenuse_side + this.size_stand_front_part));
+		var width_all_items = Math.max((this.depth_box * 2), this.width_box);
+		var height_all_items =  this.height_box + ( this.stand_number * (this.triangle_hypotenuse_side + this.size_stand_front_part));
 		svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
 	}
 };
