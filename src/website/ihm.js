@@ -77,15 +77,13 @@ var Planche = (function(){
 
 })();
 
-var planche1 = new Planche("planche1",120,70,1);
-var planche2 = new Planche("planche2",120,70,3);
+var planche1 = new Planche("planche1",600,800,3);
 /** Store the selected index in the plank select*/
 var indexSelection = 0;
 /** Array of planks */
 var selectPlanche = [];
 selectPlanche = [];
 selectPlanche.push(planche1);
-selectPlanche.push(planche2);
 updateSelectPlank(selectPlanche);
 
 document.getElementById("genButton").disabled = true;
@@ -179,17 +177,20 @@ function checkValueModal(){
   document.getElementById("pButton").disabled = !valid;
 
 }
-/*
-* Function that's check the values within the form of the box and allow or not the user to click on the button to generate a svg 
-*/
-function checkValue(){
-  var length = document.getElementById("longueur").value;
-  var witdh = document.getElementById("largeur").value;
-  var height = document.getElementById("hauteur").value;
-  var notch = document.getElementById("encoche").value;
-  var valid = isNumeric(length) && isNumeric(witdh) && isNumeric(height) && isNumeric(notch) && length > 0 && witdh > 0 && height > 0 && notch > 0;
-  document.getElementById("genButton").disabled = !valid;
+
+/**
+ * Function that's check the values within the form of the box and allow or not the user to click on the button to generate a svg 
+ */
+function checkValue() {
+	var valid = true;
+	for( var i = 0 ; i <  arguments.length ; i++ ) {
+		var currentParameter = document.getElementById(arguments[i]).value;
+		valid = valid && isNumeric(currentParameter) && currentParameter > 0;
+	}
+	document.getElementById("genButton").disabled = !valid;
+	return valid;
 }
+
 /*
 * Function to set the var IndexSelection to the selected index of the plank select
 */
@@ -206,13 +207,26 @@ function getSelectedPlankIndex(){
   svg_builder.show_layer2(); // to dynamicly change the blue wooden plate we draw when we select an other one in the list
 }
 
+/**
+ *	function that return the value of the current selected option
+ */
 function selectedModel() {
 	var select = document.getElementById('selectP2');
 	selectedOption = select.options[select.selectedIndex].value;
-	//console.log(selectedOption);
 	return selectedOption;
 }
 	
+/**
+ *	function that draws a model depending of the item selected in the list
+ */
+function draw_item_box_with_without_top() {
+	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
+		Box_with_top.draw_selected_item(wooden_plate_thickness, width_box, depth_box, height_box);
+	} else { // the openned boxes ( without top )
+		Box_without_top.draw_selected_item(wooden_plate_thickness, width_box, depth_box, height_box);
+	}
+}
+
 function onCheckboxChange(){
   //console.log("checkChanged");
  // console.log(document.getElementById("formCheck-1").checked);
@@ -221,12 +235,14 @@ function onCheckboxChange(){
     document.getElementById("groupWithTop").style.display = "block";
     document.getElementById("img_shema_boite_ouverte").style.display = "none";
 	document.getElementById("img_shema_boite_ferme").style.display = "block";
+	document.getElementById("groupWithTop_selected").selected = "selected";
   }
   else{
     document.getElementById("groupWithTop").style.display = "none";
     document.getElementById("groupWithoutTop").style.display = "block";
     document.getElementById("img_shema_boite_ferme").style.display = "none";
 	document.getElementById("img_shema_boite_ouverte").style.display = "block";
+	document.getElementById("groupWithoutTop_selected").selected = "selected";
   }
 }
 //checkValue();
