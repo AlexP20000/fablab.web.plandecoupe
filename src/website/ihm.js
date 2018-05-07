@@ -217,17 +217,6 @@ function selectedModel() {
 	selectedOption = select.options[select.selectedIndex].value;
 	return selectedOption;
 }
-	
-/**
- *	function that draws a model depending of the item selected in the list
- */
-function draw_item_box_with_without_top() {
-	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
-		Box_with_top.draw_selected_item(wooden_plate_thickness, width_box, depth_box, height_box);
-	} else { // the openned boxes ( without top )
-		Box_without_top.draw_selected_item(wooden_plate_thickness, width_box, depth_box, height_box);
-	}
-}
 
 function onCheckboxChange(){
   //console.log("checkChanged");
