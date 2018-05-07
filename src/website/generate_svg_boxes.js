@@ -133,7 +133,7 @@
 	 },
 
 	/**
-	 *	function called by a checkbox, it display or hide the second layout for our svg.
+	 *	function called by a checkbox, it display or hide the second layout for our svg. This second layout represent the wooden plate the user is using.
 	 *	@param {boolean} show if true the layer 2 will be display, else it wont.
 	 */
 	 show_layer2: function() {
@@ -942,12 +942,13 @@ var Box_paper_stand = {
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
-		if( this.size_stand_front_part >= this.notch_size ) return 1; // for compatibility between size_stand_front_part and notch_size
-		if( 60 < this.size_stand_front_part ) return 2; // if size_stand_front_part too big
-		if( this.size_stand_front_part < 10 ) return 3; // if size_stand_front_part too tiny
-		//if( this.size_between_stand < 120 ) return 4; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
-		if( 40 < this.angle_degre ) return 5; // if angle_degre too big
-		if( this.angle_degre < 0 ) return 6; // if angle_degre too tiny
+		if( this.size_stand_front_part < 2 * NOTCH_SIZE ) return 1; // for compatibility between size_stand_front_part and NOTCH_SIZE
+		if( NOTCH_SIZE < 5 ) return 2; // if the notch_size is too tiny, below 5 milimeters
+		if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
+		if( this.size_stand_front_part < 10 ) return 4; // if size_stand_front_part too tiny
+		if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
+		if( 40 < this.angle_degre ) return 6; // if angle_degre too big
+		if( this.angle_degre < 0 ) return 7; // if angle_degre too tiny
 		return 0; // no problem
 	},
 	
@@ -956,7 +957,7 @@ var Box_paper_stand = {
 	 *	@see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
 	 */
 	init_geometry_parameters: function () {
-		// geometry calculation, see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
+		// geometry/trigonometry calculation, see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
 		// Math.cos sin tan in javascript works with radians not degrees so we need the "* (Math.PI / 180))" conversion"
 		this.tiny_triangle_adjacent_side = Math.cos((180 - 90 - this.angle_degre) * (Math.PI / 180) ) * this.size_stand_front_part + this.wooden_plate_thickness;	// C'
 		this.triangle_adjacent_side = this.depth_box - this.tiny_triangle_adjacent_side;											// C
@@ -995,11 +996,8 @@ var Box_paper_stand = {
 			if(bool_left)	svg_builder.draw_line(origin_x, origin_y + this.height_box, 0, -this.height_box);
 			// we draw as much as we need stands
 			for(var i = 0 ; i < this.stand_number ; i++ ) {
-				// function(wooden_plate_thickness, size, angle, draw_origin_x, draw_origin_y) {
 				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.triangle_hypotenuse_side, 180 + this.angle_degre, origin_x + this.triangle_adjacent_side , origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
-				var tempo = NOTCH_SIZE;	NOTCH_SIZE = NOTCH_SIZE / 2;	// the front part of a stand must have a tynier notch to be drawn correctly
 				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.size_stand_front_part, 270 + this.angle_degre, origin_x + this.triangle_adjacent_side, origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
-				NOTCH_SIZE = tempo;	// the front part of a stand must have a tynier notch to be drawn correctly
 			}
 			svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box + 10);
 		} else if(number_part == 3) {
@@ -1009,13 +1007,11 @@ var Box_paper_stand = {
 			if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.triangle_hypotenuse_side, 7, origin_x + this.wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
 			svg_builder.define_box_width_and_length(this.width_box + 10, this.triangle_hypotenuse_side + 10);
 		} else if(number_part == 4) {
-			var tempo = NOTCH_SIZE;	NOTCH_SIZE = NOTCH_SIZE / 2;	// the front part of a stand must have a tynier notch to be drawn correctly
 			if(bool_top) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box - (2 * this.wooden_plate_thickness), 0, origin_x + this.wooden_plate_thickness, origin_y );
 			if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.size_stand_front_part, 5, origin_x + this.width_box - this.wooden_plate_thickness, origin_y);
 			if(bool_bot) 	svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness, origin_y + this.size_stand_front_part, -this.width_box + (2 * this.wooden_plate_thickness), 0);
 			if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.size_stand_front_part, 7, origin_x + this.wooden_plate_thickness, origin_y + this.size_stand_front_part);
 			svg_builder.define_box_width_and_length(this.width_box + 10, this.size_stand_front_part + 10);
-			NOTCH_SIZE = tempo;	// the front part of a stand must have a tynier notch to be drawn correctly
 		}
 	},
 	
@@ -1118,6 +1114,28 @@ var Box_paper_stand = {
 		var width_all_items = Math.max((this.depth_box * 2), this.width_box);
 		var height_all_items =  this.height_box + ( this.stand_number * (this.triangle_hypotenuse_side + this.size_stand_front_part));
 		svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
+	},
+	
+	draw_selected_item: function() {
+		switch( selectedModel() ) {
+			case "1" : 	this.draw_single_part(1,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case "2" : 	this.draw_single_part(2,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case "3" : 	this.draw_single_part(3,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case "4" : 	this.draw_single_part(4,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case "5" : 	this.economize_laser_and_wood_all_parts_one_line(this.wooden_plate_thickness, this.wooden_plate_thickness);
+						break;
+			case "6" : 	this.economize_laser_and_wood_all_parts_two_line(this.wooden_plate_thickness, this.wooden_plate_thickness);
+						break;
+			case "7" : 	this.economize_laser_and_wood_all_parts_one_column_model_1(this.wooden_plate_thickness, this.wooden_plate_thickness);
+						break;
+			case "8" : 	this.economize_laser_and_wood_all_parts_one_column_model_2(this.wooden_plate_thickness, this.wooden_plate_thickness);
+						break;
+			default : 	console.log("pas de problème, y'a point S");
+		}
 	}
 };
 
@@ -1186,6 +1204,8 @@ function app3_paper_stand(download) {
 	document.getElementById("previsualisation").click();
 	svg_builder.clear_svg("svgLayer1");
 	svg_builder.clear_svg("svgLayer2");
+	
+	// parameters
 	wooden_plate_width = selectPlanche[indexSelection].width;
 	wooden_plate_length = selectPlanche[indexSelection].length;
 	wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
@@ -1204,38 +1224,24 @@ function app3_paper_stand(download) {
 	var app3_paper_stand_Box_paper_stand = Object.create(Box_paper_stand);
 	app3_paper_stand_Box_paper_stand.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle_degre);
 	
+	// we initialize the parameters and check them if error / invalid values are found
 	if( !checkValue("longueur","largeur","hauteur","encoche","hauteurPartieAvant","hauteurSeparation","nombreEtage","angle") ) {
-		console.log("error, il n'y a pas que des nombres positifs" ); 
+		console.log("error parameters, there is not only positive integer" );
 		return;
 	}
 	else if( app3_paper_stand_Box_paper_stand.check_parameters() != 0 ) { 
-		console.log("error, à détailler : " + app3_paper_stand_Box_paper_stand.check_parameters()); 
+		console.log("error, to detail : " + app3_paper_stand_Box_paper_stand.check_parameters()); 
 		return;
 	} else {
 		app3_paper_stand_Box_paper_stand.init_geometry_parameters(); 
-	}
-	//app3_paper_stand_Box_paper_stand.init_geometry_parameters(); 
-	
-	switch( selectedModel() ) {
-		case "1" : 	app3_paper_stand_Box_paper_stand.draw_single_part(1,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-					break;
-		case "2" : 	app3_paper_stand_Box_paper_stand.draw_single_part(2,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-					break;
-		case "3" : 	app3_paper_stand_Box_paper_stand.draw_single_part(3,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-					break;
-		case "4" : 	app3_paper_stand_Box_paper_stand.draw_single_part(4,wooden_plate_thickness, wooden_plate_thickness, true, true, true, true);
-					break;
-		case "5" : 	app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_line(wooden_plate_thickness, wooden_plate_thickness);
-					break;
-		case "6" : 	app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_two_line(wooden_plate_thickness, wooden_plate_thickness);
-					break;
-		case "7" : 	app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_column_model_1(wooden_plate_thickness, wooden_plate_thickness);
-					break;
-		case "8" : 	app3_paper_stand_Box_paper_stand.economize_laser_and_wood_all_parts_one_column_model_2(wooden_plate_thickness, wooden_plate_thickness);
-					break;
-		default : 	console.log("pas de problème, y'a point S");
+		if( app3_paper_stand_Box_paper_stand.check_geometry_parameters() != 0 ) {
+			console.log("error geometry parameters, to detail : " + app3_paper_stand_Box_paper_stand.check_geometry_parameters()); 
+			return;
+		}
 	}
 	
-	if( download == "download" ) svg_builder.generate_svg_file();
+	app3_paper_stand_Box_paper_stand.draw_selected_item();
+	
+	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
 	svg_builder.show_layer2();
 }
