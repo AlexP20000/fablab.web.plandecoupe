@@ -1346,8 +1346,9 @@ function app2_toolbox(){
   Toolbox.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
   //Toolbox.draw_single_part(5,wooden_plate_thickness+40, wooden_plate_thickness+40, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
  
+ 
+  svg_builder.generate_svg_file();  
   svg_builder.show_layer2();
-  //svg_builder.generate_svg_file();  
   
   // on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
   //var svg = document.getElementById("svg");
