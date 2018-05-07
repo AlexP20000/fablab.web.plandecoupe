@@ -762,8 +762,6 @@ var Box_paper_stand = {
 		//if( this.size_between_stand < 120 ) return 4; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
 		if( 40 < this.angle_degre ) return 5; // if angle_degre too big
 		if( this.angle_degre < 0 ) return 6; // if angle_degre too tiny
-		if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 7; // for a stand_number correct
-		console.log(this.triangle_opposite_side > (this.height_box / this.stand_number));
 		return 0; // no problem
 	},
 	
@@ -778,6 +776,15 @@ var Box_paper_stand = {
 		this.triangle_adjacent_side = this.depth_box - this.tiny_triangle_adjacent_side;											// C
 		this.triangle_hypotenuse_side = ( this.triangle_adjacent_side / Math.cos(this.angle_degre * (Math.PI / 180)) );				// B
 		this.triangle_opposite_side = Math.sin(this.angle_degre * (Math.PI / 180) ) * this.triangle_hypotenuse_side;				// A
+	},
+	
+	/**
+	 *	function that check if the geometry parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 */
+	check_geometry_parameters: function() {
+		if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 7; // for a stand_number correct
+		console.log(this.triangle_opposite_side + ">" + "(" + this.height_box + "/" + this.stand_number + ")" );
+		return 0; // no problem
 	},
 	
 	/**
