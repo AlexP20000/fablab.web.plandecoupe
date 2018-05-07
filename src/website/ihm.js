@@ -77,13 +77,15 @@ var Planche = (function(){
 
 })();
 
-var planche1 = new Planche("planche1",600,800,3);
+var planche1 = new Planche("planche1",700,800,3);
+var planche2 = new Planche("planche2",700,800,5);
 /** Store the selected index in the plank select*/
 var indexSelection = 0;
 /** Array of planks */
 var selectPlanche = [];
 selectPlanche = [];
 selectPlanche.push(planche1);
+selectPlanche.push(planche2);
 updateSelectPlank(selectPlanche);
 
 document.getElementById("genButton").disabled = true;
