@@ -1065,7 +1065,7 @@ var Box_paper_stand = {
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
 		if( this.size_stand_front_part < 2 * NOTCH_SIZE ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
-		if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
+		//if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
 		if( this.size_stand_front_part < 10 ) return 4; // if size_stand_front_part too tiny
 		//if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
 		if( 40 < this.angle_degre ) return 6; // if angle_degre too big
@@ -1219,21 +1219,43 @@ var Box_paper_stand = {
 	
 	/**
 	 *	function that draws at a (x,y) position the Box_paper_stand in a column model with two column which is the best to economize both wood and laser path.
-	 *	-> perfect for the form ( length 300, width 150, height 350 )
+	 *	-> perfect for the form ( length 300, width 150, height 350 ) and dynamically (  length 150, width 150, height 350 )
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
 	 */
 	economize_laser_and_wood_all_parts_one_column_model_2: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_line(origin_x,origin_y);
-		// we draw as much as we need stands
-		for( var i = 0 ; i < this.stand_number ; i++ ) {
-			this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
-			this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
+		// we draw the stands in 1 column
+		if( this.depth_box < this.width_box ) {
+			// we draw as much as we need stands
+			for( var i = 0 ; i < this.stand_number ; i++ ) {
+				this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+				this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
+			}
+			var width_all_items = Math.max((this.depth_box * 2), this.width_box);
+			var height_all_items =  this.height_box + ( this.stand_number * (this.triangle_hypotenuse_side + this.size_stand_front_part));
+			svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
+		} 
+		// we draw the stands in 2 column
+		else { 
+			// we draw as much as we need stands
+			var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
+			var todo = Math.floor(this.stand_number/2);
+			for( var i = 0 ; i < todo ; i++ ) {
+				this.draw_single_part(3,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
+				this.draw_single_part(4,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
+				this.draw_single_part(3,origin_x + this.width_box, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
+				this.draw_single_part(4,origin_x + this.width_box, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
+			} 
+			if(is_pair == 0) { // if impair 
+				this.draw_single_part(3,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+				this.draw_single_part(4,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
+			}
+			var width_all_items =  Math.max(this.depth_box * 2, this.width_box);
+			var height_all_items = this.height_box + ((Math.ceil(this.stand_number/2)) * (this.triangle_hypotenuse_side + this.size_stand_front_part))// Math.max((this.height_box * 2), ((this.triangle_hypotenuse_side + this.size_stand_front_part) * 2));	
+			svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
 		}
-		var width_all_items = Math.max((this.depth_box * 2), this.width_box);
-		var height_all_items =  this.height_box + ( this.stand_number * (this.triangle_hypotenuse_side + this.size_stand_front_part));
-		svg_builder.define_box_width_and_length(width_all_items + 10, height_all_items + 10);
 	},
 	
 	/**
@@ -1263,26 +1285,8 @@ var Box_paper_stand = {
 };
 
 /**
- * function that check is the constraint of our initial parameters are respected or not, return a value depending on the error, 0 is no error.
-	 *	@param wooden_plate_width {int} its the width of the wooden plate
-	 *	@param wooden_plate_length {int} its the length of the wooden plate
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
-	 *	@param notch_size {int} its the length of a notch
-	 */
-	 function check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size) {
-	if( !(wooden_plate_thickness <= ( 0.20 * Math.min(depth_box, height_box)) ) ){ return 1; } // thickness too big
-	if( wooden_plate_thickness < 1 ) { return 2; } // thickness < 1 milimeter
-}
-
-/**
  * function used for testing the project for now on
- *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
- *	@param width_box {int} its the width of the box
- *	@param depth_box {int} its the depth of the box
- *	@param height_box {int} its the height of the box
+ *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done
  */
 function app1_close_or_open_box(download) {
 	
@@ -1309,39 +1313,7 @@ function app1_close_or_open_box(download) {
 	} else {
 		var app1_close_or_open_box = Object.create(Box_without_top);
 	}
-	app1_close_or_open_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
-	
-	
-	
-	// we initialize the parameters and check them if error / invalid values are found
-	/*if( !checkValue("longueur","largeur","hauteur","encoche","hauteurPartieAvant","hauteurSeparation","nombreEtage","angle") ) {
-		console.log("error parameters, there is not only positive integer" );
-		return;
-	}
-	else if( app3_paper_stand.check_parameters() != 0 ) { 
-		console.log("error, to detail : " + app3_paper_stand.check_parameters()); 
-		return;
-	} else {
-		app3_paper_stand.init_geometry_parameters(); 
-		if( app3_paper_stand.check_geometry_parameters() != 0 ) {
-			console.log("error geometry parameters, to detail : " + app3_paper_stand.check_geometry_parameters()); 
-			return;
-		}
-	}*/
-	// how to handle the size of the notch parameter ?
-	/*if( !( notch_size >= 3 ) || !( notch_size < ( 0.40 * Math.min(depth_box, height_box)) ) ) { NOTCH_SIZE = NOTCH_SIZE_DEFAULT; } // to correct the value if the notch size given isnt good
-	else { NOTCH_SIZE = notch_size; }*/ 
-	
-	/*var error_id = check_parameters_constraint(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, notch_size)
-		switch( error_id ) {
-			case 1 : 	console.log("erreur : l'épaisseur est trop grande"); 
-						return;
-			case 2 : 	console.log("erreur : l'épaisseur est trop petite ( < 3 milimètres )"); 
-						return;
-			default : 	console.log("pas de problème, y'a point S");
-		}*/
-		
-		
+	app1_close_or_open_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);		
 		
 	// whether it is checked, we draw the corresponding with/without top box
 	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
