@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Box_without_top</title>
+    <title>JSDoc: Class: Box_with_top</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Box_without_top</h1>
+    <h1 class="page-title">Class: Box_with_top</h1>
 
     
 
@@ -29,9 +29,9 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-generate_svg_boxes.html">generate_svg_boxes</a>~</span>Box_without_top<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="module-generate_svg_boxes.html">generate_svg_boxes</a>~</span>Box_with_top<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">contains the functions needed to create a box_without_top, entirely, two in the same svg file, only a single part of it, etc...</div>
+            <div class="class-description">contains the functions needed to create a box_with_top, entirely, two in the same svg file, only a single part of it, etc...</div>
         
     
 </header>
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="Box_without_top"><span class="type-signature"></span>new Box_without_top<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Box_with_top"><span class="type-signature"></span>new Box_with_top<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -94,7 +94,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line261">line 261</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line424">line 424</a>
     </li></ul></dd>
     
 
@@ -138,6 +138,72 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".wooden_plate_width"><span class="type-signature">(static) </span>wooden_plate_width<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    instance parameters
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line429">line 429</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -148,7 +214,7 @@
     
 
     
-    <h4 class="name" id=".draw_single_part"><span class="type-signature">(static) </span>draw_single_part<span class="signature">(number_part, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".draw_selected_item"><span class="type-signature">(static) </span>draw_selected_item<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -156,7 +222,93 @@
 
 
 <div class="description">
-    function that draws the part 'number_part' of the Box_without_top
+    function that draws the box/part of box which is selected in the option listStyleType
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line543">line 543</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".draw_single_part"><span class="type-signature">(static) </span>draw_single_part<span class="signature">(number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    function that draws the part 'number_part' of the Box_with_top
 </div>
 
 
@@ -208,7 +360,7 @@
 
             
 
-            <td class="description last">the number of the part of the Box_without_top</td>
+            <td class="description last">the number of the part of the Box_with_top</td>
         </tr>
 
     
@@ -255,98 +407,6 @@
             
 
             <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>wooden_plate_thickness</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the thickness of the wooden plate</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the width of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>depth_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the depth of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the height of the box</td>
         </tr>
 
     
@@ -479,7 +539,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line277">line 277</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line465">line 465</a>
     </li></ul></dd>
     
 
@@ -513,7 +573,7 @@
     
 
     
-    <h4 class="name" id=".economize_laser_and_wood_four_boxes"><span class="type-signature">(static) </span>economize_laser_and_wood_four_boxes<span class="signature">(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".economize_laser_and_wood_basic_scheme"><span class="type-signature">(static) </span>economize_laser_and_wood_basic_scheme<span class="signature">(origin_x, origin_y, boolean_duplicate_right, boolean_duplicate_bottom)</span><span class="type-signature"></span></h4>
     
 
     
@@ -521,7 +581,8 @@
 
 
 <div class="description">
-    function that draws at a (x,y) position four boxes without top which is the best to economize both wood and laser path.
+    function that draws at a (x,y) position the basic scheme ( 3 pieces bounds perfecly ) which is the best
+	to economize both wood and laser path.
 </div>
 
 
@@ -597,6 +658,688 @@
             
 
             <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>boolean_duplicate_right</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">tell us whether the right part of the basic scheme must be drawn ( to avoid duplicate ) if 2 basic scheme are stick together.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>boolean_duplicate_bottom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">tell us whether the bottom part of the basic scheme must be drawn ( to avoid duplicate ) if 2 basic scheme are stick together.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line495">line 495</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".economize_laser_and_wood_column_model"><span class="type-signature">(static) </span>economize_laser_and_wood_column_model<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    function that draws at a (x,y) position the column model which is the best to economize both wood and laser path
+	column model means it use the basic scheme 2 times in column.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>origin_x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the x (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>origin_y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line520">line 520</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".economize_laser_and_wood_line_model"><span class="type-signature">(static) </span>economize_laser_and_wood_line_model<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    function that draws at a (x,y) position the line model which is the best to economize both wood and laser path
+	line model means it use the basic scheme 2 times in line.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>origin_x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the x (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>origin_y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line508">line 508</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".economize_laser_and_wood_square_model"><span class="type-signature">(static) </span>economize_laser_and_wood_square_model<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    function that draws at (x,y) position 4 basic scheme ( == 2 entire boxes ) which is the best to economize both wood and laser path
+	this is of couse used to draw two boxes, and have them inside the same svg.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>origin_x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the x (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>origin_y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line532">line 532</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".init_parameters"><span class="type-signature">(static) </span>init_parameters<span class="signature">(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    function that checks if the initial parameters for building a part/entire Box_with_top is correct or not, return 0 if no problem,
+	and return a integer value depending on the issue found
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>wooden_plate_width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the width of the wooden plate</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>wooden_plate_length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">its the length of the wooden plate</td>
         </tr>
 
     
@@ -729,625 +1472,12 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line355">line 355</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line446">line 446</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="#.draw_single_part" >draw_single_part()</a> to get the parameters informations</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".economize_laser_and_wood_one_box"><span class="type-signature">(static) </span>economize_laser_and_wood_one_box<span class="signature">(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    function that draws at a (x,y) position the box without top which is the best to economize both wood and laser path.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>origin_x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the x (abscissa) origin of the drawing of this part</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>origin_y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>wooden_plate_thickness</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the thickness of the wooden plate</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the width of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>depth_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the depth of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the height of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_top</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the top side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_right</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the right side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_bot</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the bot side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_left</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the left side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line320">line 320</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="#.draw_single_part" >draw_single_part()</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".economize_laser_and_wood_two_boxes"><span class="type-signature">(static) </span>economize_laser_and_wood_two_boxes<span class="signature">(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    function that draws at a (x,y) position of two boxes without top which is the best to economize both wood and laser path.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>origin_x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the x (abscissa) origin of the drawing of this part</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>origin_y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>wooden_plate_thickness</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the thickness of the wooden plate</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the width of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>depth_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the depth of the box</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height_box</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">its the height of the box</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line339">line 339</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="#.draw_single_part" >draw_single_part()</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -1386,13 +1516,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-generate_svg_boxes.html">generate_svg_boxes</a></li></ul><h3>Classes</h3><ul><li><a href="module-generate_svg_boxes-Box_with_top.html">Box_with_top</a></li><li><a href="module-generate_svg_boxes-Box_without_top.html">Box_without_top</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-generate_svg_boxes.html">generate_svg_boxes</a></li></ul><h3>Classes</h3><ul><li><a href="module-generate_svg_boxes-Box_paper_stand.html">Box_paper_stand</a></li><li><a href="module-generate_svg_boxes-Box_with_top.html">Box_with_top</a></li><li><a href="module-generate_svg_boxes-Box_without_top.html">Box_without_top</a></li><li><a href="module-generate_svg_boxes-svg_builder.html">svg_builder</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 24 2018 16:37:21 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 14 2018 16:52:48 GMT+0200 (Paris, Madrid (heure d’été))
 </footer>
 
 <script> prettyPrint(); </script>

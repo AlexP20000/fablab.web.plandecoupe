@@ -1,5 +1,33 @@
-/**
- *	@author Axel Murat & Alexandre Mailliu
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: generate_svg_boxes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: generate_svg_boxes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *	@author Axel Murat &amp; Alexandre Mailliu
  *	@version 1.0
  * 	@date 24/04/2018
  *	@module generate_svg_boxes
@@ -7,7 +35,7 @@
  
  // uncheck every checkbox on the page
  var checkboxes = document.getElementsByTagName('input');
- for (var i=0; i<checkboxes.length; i++)  {
+ for (var i=0; i&lt;checkboxes.length; i++)  {
  	if (checkboxes[i].type == 'checkbox')   {
  		checkboxes[i].checked = false;
  	}
@@ -40,7 +68,7 @@
 
 /**
  *	@class contains the functions needed to create the svg tag, to make it downloadable, to build it ( the idea is to set multiple path tag inside the g tag of the svg tag, all those path will be the side of your shape at the end ) 
- *	@exemple <svg> <g> <path d="m 10,10 20,20" ></path> </g> </svg>
+ *	@exemple &lt;svg> &lt;g> &lt;path d="m 10,10 20,20" >&lt;/path> &lt;/g> &lt;/svg>
  */
  var svg_builder = {
 
@@ -87,7 +115,7 @@
 		var d = document.getElementById("svg");
 		var str = s.serializeToString(d); // the svg tag with its contents 
 		// and then btoa can convert that to base64
-		var encodedData = "data:image/svg+xml;base64," + window.btoa("<?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
+		var encodedData = "data:image/svg+xml;base64," + window.btoa("&lt;?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
 		// we set the uri content
 		document.getElementById("filesvg").setAttribute("href", encodedData);
 		// we set the file name downloaded
@@ -200,7 +228,7 @@
 	/**
 	 * 	function that draws a line of rectangle separated by space, using the same algo technic that the function draw_side(),
 	 *	the main purpose of this function is to draw triangle 'holes' in a line to match with the side of a box side ( first use is for paper stand )
-	 *	@see <a href="#.draw_side" >draw_side()</a>
+	 *	@see &lt;a href="#.draw_side" >draw_side()&lt;/a>
 	 * 	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
 	 * 	@param size {int} is the length for which we have to make a path
 	 * 	@param angle {int} is the angle you want to rotate your path
@@ -231,7 +259,7 @@
 	 * @param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
 	 * @param size {int} is the length for which we have to make a path
 	 * @param rotate_case {int} is the case we want to use, there is 8 differents
-	 * @see <a href="#.rotate" >rotate()</a>
+	 * @see &lt;a href="#.rotate" >rotate()&lt;/a>
 	 * @param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
 	 * @param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
 	 */
@@ -248,7 +276,7 @@
 	 * @param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
 	 * @param size {int} is the length for which we have to make a path
 	 * @param rotate_case {int} is the case we want to use, there is 8 differents
-	 * @see <a href="#.rotate" >rotate()</a>
+	 * @see &lt;a href="#.rotate" >rotate()&lt;/a>
 	 * @param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
 	 * @param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
 	 */
@@ -307,12 +335,12 @@
 		var tab_coordinate = [];
 		if( rectangle ) {
 			svg_builder.next_coordinate_move(tab_coordinate,size_rest_parts);
-			for( var i = 0 ; i < number_notch ; i++ ) {
+			for( var i = 0 ; i &lt; number_notch ; i++ ) {
 				svg_builder.next_coordinate_rectangle(tab_coordinate,wooden_plate_thickness);
 				svg_builder.next_coordinate_move(tab_coordinate, NOTCH_SIZE + size_rest_parts );
 			}
 		} else {
-			for( var i = 0 ; i < number_notch ; i++ ) {
+			for( var i = 0 ; i &lt; number_notch ; i++ ) {
 				svg_builder.next_coordinate_non_notch(tab_coordinate,size_rest_parts);
 				svg_builder.next_coordinate_notch(tab_coordinate,wooden_plate_thickness);
 			}
@@ -372,7 +400,7 @@
 	 */
 	get_number_notch: function (size) {
 		var number_notch = 1;
-		while ( number_notch < Math.trunc( size / ( 2 * NOTCH_SIZE ) ) ) {
+		while ( number_notch &lt; Math.trunc( size / ( 2 * NOTCH_SIZE ) ) ) {
 			number_notch++;
 		}
 		return number_notch;
@@ -382,12 +410,12 @@
 	 *	for all the scheme "value1,value2" inside splited_tab, it does the rotate_case rotation
 	 *	@param tab_coordinate {string[]} the values (x,y) of the different path position
 	 *	@param rotate_case {int} is the case we want to use, there is 8 differents
-	 * 	@see <a href="#.rotate" >rotate()</a>
+	 * 	@see &lt;a href="#.rotate" >rotate()&lt;/a>
 	 *	@return {string[]} which contains the schemes "value1,value2" at each index
 	 */
 	 rotate_path: function (tab_coordinate, rotate_case) {
 	 	var splited_tab = tab_coordinate.split(" ");
-	 	for( var i = 0 ; i < splited_tab.length ; i++ ) {
+	 	for( var i = 0 ; i &lt; splited_tab.length ; i++ ) {
 	 		splited_tab[i] = svg_builder.rotate(splited_tab[i], rotate_case);
 	 	}
 	 	return splited_tab;
@@ -653,7 +681,7 @@
 	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
 	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
 	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	 economize_laser_and_wood_one_box: function (origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
 	 	this.draw_single_part(1, origin_x, origin_y, bool_top, true, true, bool_left);
@@ -668,7 +696,7 @@
 	 *	function that draws at a (x,y) position of two boxes without top which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	 economize_laser_and_wood_two_boxes: function (origin_x, origin_y) {
 	 	this.economize_laser_and_wood_one_box(origin_x, origin_y, true, true, true, true);
@@ -680,7 +708,7 @@
 	 *	function that draws at a (x,y) position four boxes without top which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a> to get the parameters informations
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a> to get the parameters informations
 	 */
 	economize_laser_and_wood_four_boxes: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_two_boxes(origin_x, origin_y);
@@ -746,7 +774,7 @@
 			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
 			console.log("nbNotch : "+nbNotch);
-			for(i = 1;i<=nbNotch*2+1; i++){
+			for(i = 1;i&lt;=nbNotch*2+1; i++){
 				if(i%2 == 0){
 					NOTCH_SIZE = 10;
 					svg_builder.draw_line(l_origin_x, l_origin_y,sizeBigNotch, 0);
@@ -769,7 +797,7 @@
 			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
 			total = 0;
-			for(i = 1;i<=nbNotch*2+1; i++){
+			for(i = 1;i&lt;=nbNotch*2+1; i++){
 				if(i%2 == 0){
 					NOTCH_SIZE = 10;
 					svg_builder.draw_line(l_origin_x2, l_origin_y2 + depth_box,sizeBigNotch, 0);
@@ -798,7 +826,7 @@
 			console.log("sizeBetweenNotch : "+sizeBetweenBigNotch);
 			sizeBigNotch = NOTCH_SIZE * 2;
 			console.log("nbNotch : "+nbNotch);
-			for(i = 1;i<=nbNotch*2+1; i++){
+			for(i = 1;i&lt;=nbNotch*2+1; i++){
 				if(i%2 == 1){
 					//NOTCH_SIZE = 10;
 					//svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, 1, l_origin_x, l_origin_y);
@@ -821,7 +849,7 @@
 			var l_origin_y = origin_y;
 			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
-			for(i = 1;i<=nbNotch*2+1; i++){
+			for(i = 1;i&lt;=nbNotch*2+1; i++){
 				console.log("inFor");
 				if(i%2 == 1){
 					console.log("drawline");
@@ -923,7 +951,7 @@
 			l_origin_y = origin_y;
 			sizeBigNotch = NOTCH_SIZE * 2;
 			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
-			for(i = 1;i<=nbNotch*2+1; i++){
+			for(i = 1;i&lt;=nbNotch*2+1; i++){
 				if(i%2 == 0){
 					svg_builder.draw_line(l_origin_x, l_origin_y,sizeBigNotch, 0)
 					l_origin_x = l_origin_x + sizeBigNotch;
@@ -946,7 +974,7 @@
 			
 
 			if(oppose > nose){
-				if(nose < NOTCH_SIZE*2){
+				if(nose &lt; NOTCH_SIZE*2){
 					Toolbox.draw_single_part(4, origin_x + oppose - nose - NOTCH_SIZE, origin_y + (height_box-nose)/2 + nose, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
 				}
 				else{
@@ -1018,6 +1046,7 @@
 
 /**
  *	@class contains the functions needed to create a Box_paper_stand, entirely, two in the same svg file, only a single part of it, etc...
+ *	@see &lt;img id="img_paper_stand_jsdoc" src="../../src/assets/img/paper_stand/jsdoc.png" alt="img_paper_stand_jsdoc" height="100%" width="100%" >
  *	@property {int} wooden_plate_width (instance parameters) 
  *	@property {int} wooden_plate_length (instance parameters)
  *	@property {int} wooden_plate_thickness (instance parameters)
@@ -1032,7 +1061,7 @@
  *	@property {int} triangle_adjacent_side (geometry parameters) // C
  *	@property {int} triangle_hypotenuse_side (geometry parameters) // B
  *	@property {int} triangle_opposite_side (geometry parameters) // A
- *	@see <img id="img_paper_stand_jsdoc" src="../../src/assets/img/paper_stand/jsdoc.png" alt="img_paper_stand_jsdoc" height="100%" width="100%" >
+ *	@see &lt;img id="img_paper_stand_jsdoc" src="../../src/assets/img/paper_stand/jsdoc.png" alt="img_paper_stand_jsdoc" height="100%" width="100%" >
  */
 var Box_paper_stand = {
 	
@@ -1063,13 +1092,13 @@ var Box_paper_stand = {
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
-		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( this.size_stand_front_part < 2 * NOTCH_SIZE ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
-		//if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
-		if( this.size_stand_front_part < 10 ) return 4; // if size_stand_front_part too tiny
-		//if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
-		if( 40 < this.angle_degre ) return 6; // if angle_degre too big
-		if( this.angle_degre <= 0 ) return 7; // if angle_degre too tiny
+		if( NOTCH_SIZE &lt; 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( this.size_stand_front_part &lt; 2 * NOTCH_SIZE ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
+		//if( 60 &lt; this.size_stand_front_part ) return 3; // if size_stand_front_part too big
+		if( this.size_stand_front_part &lt; 10 ) return 4; // if size_stand_front_part too tiny
+		//if( this.size_between_stand &lt; 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
+		if( 40 &lt; this.angle_degre ) return 6; // if angle_degre too big
+		if( this.angle_degre &lt;= 0 ) return 7; // if angle_degre too tiny
 		return 0; // no problem
 	},
 	
@@ -1115,7 +1144,7 @@ var Box_paper_stand = {
 			if(bool_bot)	svg_builder.draw_line(origin_x + this.depth_box, origin_y + this.height_box, -this.depth_box, 0);
 			if(bool_left)	svg_builder.draw_line(origin_x, origin_y + this.height_box, 0, -this.height_box);
 			// we draw as much as we need stands
-			for(var i = 0 ; i < this.stand_number ; i++ ) {
+			for(var i = 0 ; i &lt; this.stand_number ; i++ ) {
 				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.triangle_hypotenuse_side, 180 + this.angle_degre, origin_x + this.triangle_adjacent_side , origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
 				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.size_stand_front_part, 270 + this.angle_degre, origin_x + this.triangle_adjacent_side, origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
 			}
@@ -1139,7 +1168,7 @@ var Box_paper_stand = {
 	 *	function that draws at a (x,y) position the Box_paper_stand side parts in a line model which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	economize_laser_and_wood_side_parts_line: function (origin_x, origin_y) {
 		this.draw_single_part(1,origin_x, origin_y, true, true, true, true);
@@ -1151,7 +1180,7 @@ var Box_paper_stand = {
 	 *	function that draws at a (x,y) position the Box_paper_stand side parts in a column model which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	economize_laser_and_wood_side_parts_column: function (origin_x, origin_y) {
 		this.draw_single_part(1,origin_x, origin_y, true, true, true, true);
@@ -1163,12 +1192,12 @@ var Box_paper_stand = {
 	 *	function that draws at a (x,y) position the Box_paper_stand in a line model with one line which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	economize_laser_and_wood_all_parts_one_line: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_line(origin_x,origin_y);
 		// we draw as much as we need stands
-		for(var i = 0 ; i < this.stand_number ; i++ ) {
+		for(var i = 0 ; i &lt; this.stand_number ; i++ ) {
 			this.draw_single_part(3,origin_x + (this.depth_box * 2) + (i * this.width_box), origin_y, true, true, true, true);
 			this.draw_single_part(4,origin_x + (this.depth_box * 2) + (i * this.width_box), origin_y + (this.triangle_hypotenuse_side), false, true, true, true);
 		}
@@ -1179,14 +1208,14 @@ var Box_paper_stand = {
 	 *	function that draws at a (x,y) position the Box_paper_stand in a line model with two line which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	economize_laser_and_wood_all_parts_two_line: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_column(origin_x,origin_y);
 		// we draw as much as we need stands
 		var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
 		var todo = Math.floor(this.stand_number/2);
-		for( var i = 0 ; i < todo ; i++ ) {
+		for( var i = 0 ; i &lt; todo ; i++ ) {
 			this.draw_single_part(3,origin_x + this.depth_box + (i * this.width_box), origin_y, true, true, true, true);
 			this.draw_single_part(4,origin_x + this.depth_box + (i * this.width_box), origin_y + this.triangle_hypotenuse_side, false, true, true, true);
 			this.draw_single_part(3,origin_x + this.depth_box + (i * this.width_box), origin_y + this.triangle_hypotenuse_side + this.size_stand_front_part, true, true, true, true);
@@ -1205,12 +1234,12 @@ var Box_paper_stand = {
 	 *	function that draws at a (x,y) position the Box_paper_stand in a column model with one column which is the best to economize both wood and laser path.
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	economize_laser_and_wood_all_parts_one_column_model_1: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_column(origin_x,origin_y);
 		// we draw as much as we need stands
-		for(var i = 0 ; i < this.stand_number ; i++ ) {
+		for(var i = 0 ; i &lt; this.stand_number ; i++ ) {
 			this.draw_single_part(3,origin_x, origin_y + (this.height_box * 2) + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
 			this.draw_single_part(4,origin_x, origin_y + (this.triangle_hypotenuse_side) + (this.height_box * 2) + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
 		}
@@ -1222,14 +1251,14 @@ var Box_paper_stand = {
 	 *	-> perfect for the form ( length 300, width 150, height 350 ) and dynamically (  length 150, width 150, height 350 )
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 * 	@see &lt;a href="#.draw_single_part" >draw_single_part()&lt;/a>
 	 */
 	economize_laser_and_wood_all_parts_one_column_model_2: function (origin_x, origin_y) {
 		this.economize_laser_and_wood_side_parts_line(origin_x,origin_y);
 		// we draw the stands in 1 column
-		if( this.depth_box < this.width_box ) {
+		if( this.depth_box &lt; this.width_box ) {
 			// we draw as much as we need stands
-			for( var i = 0 ; i < this.stand_number ; i++ ) {
+			for( var i = 0 ; i &lt; this.stand_number ; i++ ) {
 				this.draw_single_part(3,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
 				this.draw_single_part(4,origin_x, origin_y + this.height_box + (i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + (this.triangle_hypotenuse_side), false, true, true, true);
 			}
@@ -1242,7 +1271,7 @@ var Box_paper_stand = {
 			// we draw as much as we need stands
 			var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
 			var todo = Math.floor(this.stand_number/2);
-			for( var i = 0 ; i < todo ; i++ ) {
+			for( var i = 0 ; i &lt; todo ; i++ ) {
 				this.draw_single_part(3,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
 				this.draw_single_part(4,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
 				this.draw_single_part(3,origin_x + this.width_box, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
@@ -1403,4 +1432,26 @@ function app2_toolbox(){
   // on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
   //var svg = document.getElementById("svg");
   //svg.removeAttribute("transform");
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-generate_svg_boxes.html">generate_svg_boxes</a></li></ul><h3>Classes</h3><ul><li><a href="module-generate_svg_boxes-Box_paper_stand.html">Box_paper_stand</a></li><li><a href="module-generate_svg_boxes-Box_with_top.html">Box_with_top</a></li><li><a href="module-generate_svg_boxes-Box_without_top.html">Box_without_top</a></li><li><a href="module-generate_svg_boxes-svg_builder.html">svg_builder</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 14 2018 16:52:48 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
