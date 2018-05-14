@@ -75,6 +75,11 @@
 	 *	then we use the magic function click that simulate a human click on this tag, which open the download yes/no window.
 	 */
 	 generate_svg_file: function () {
+		// we delete our second layout and make a copie for re-putting it after the download operation
+		var svg = document.getElementById("svgLayer2");
+	 	var parentElement = svg.parentElement;
+	 	var emptySvg = svg.cloneNode(false);
+	 	parentElement.removeChild(svg);
 		// resetting the viewbox
 		svg_builder.set_viewbox();
 		// Use XMLSerializer to convert the DOM to a string
@@ -89,6 +94,8 @@
 		document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
 		// our a tag is hidden, so we use the click function as we would click on it usualy
 		document.getElementById("filesvg").click();
+		// we re-put our second layout
+	 	parentElement.appendChild(emptySvg);
 	},
 
 	/** 
@@ -1313,7 +1320,7 @@ function app1_close_or_open_box(download) {
 	} else {
 		var app1_close_or_open_box = Object.create(Box_without_top);
 	}
-	app1_close_or_open_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);		
+	app1_close_or_open_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
 		
 	// whether it is checked, we draw the corresponding with/without top box
 	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
