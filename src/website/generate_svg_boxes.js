@@ -5,8 +5,8 @@
  *	@module generate_svg_boxes
  */
  
+ // uncheck every checkbox on the page
  var checkboxes = document.getElementsByTagName('input');
-
  for (var i=0; i<checkboxes.length; i++)  {
  	if (checkboxes[i].type == 'checkbox')   {
  		checkboxes[i].checked = false;
@@ -71,8 +71,8 @@
 	},
 
 	/**
-	 *	encode the data from the svg tag into URI data, and then set those information directly to the a tag.
-	 *	then we use the magic function click that simulate a human click on this a tag, which open the download yes/no window.
+	 *	encode the data from the svg tag into URI data, and then set those information directly to the tag.
+	 *	then we use the magic function click that simulate a human click on this tag, which open the download yes/no window.
 	 */
 	 generate_svg_file: function () {
 		// resetting the viewbox
@@ -154,9 +154,10 @@
 	
 	/** 
 	 * 	draw the text parameter inside the svg tag at the (x,y) position
-	 *	@param {string} text is the text you want to draw/write
 	 *	@param {int} positionX is the x (abscissa) position of the text
 	 *	@param {int} positionY is the y (ordinate) position of the text
+	 *	@param {string} text is the text you want to draw/write
+	 *	@param {string} layer is the layer you want to use
 	 */
 	 draw_text: function (positionX, positionY, text, layer) {
 	 	var svg = document.getElementById(layer);
@@ -171,11 +172,12 @@
 
 	/** 
 	 * 	draw the rectangle inside the svg tag at the (x,y) : (positionX,positionY) position and for the size (sizeX,sizeY)
-	 *	@param {string} text is the text you want to draw/write
 	 *	@param {int} positionX is the x (abscissa) position of the rectangle
 	 *	@param {int} positionY is the y (ordinate) position of the rectangle
 	 *	@param {int} sizeX is the x (abscissa) size of the rectangle
-	 *	@param {int} sizeY is the y (ordinate) size of the rectangle
+	 *	@param {int} sizeY is the y (ordinate) size of the rectanglewrite
+	 *	@param {string} layer is the layer you want to use
+	 *	@param {string} color is the color you want to use
 	 */
 	draw_rectangle: function (positionX, positionY, sizeX, sizeY, layer, color) {
 		var svg = document.getElementById(layer);
@@ -996,11 +998,11 @@ var Box_paper_stand = {
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
-		if( this.size_stand_front_part < 2 * NOTCH_SIZE ) return 1; // for compatibility between size_stand_front_part and NOTCH_SIZE
-		if( NOTCH_SIZE < 5 ) return 2; // if the notch_size is too tiny, below 5 milimeters
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( this.size_stand_front_part < 2 * NOTCH_SIZE ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
 		if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
 		if( this.size_stand_front_part < 10 ) return 4; // if size_stand_front_part too tiny
-		if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
+		//if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
 		if( 40 < this.angle_degre ) return 6; // if angle_degre too big
 		if( this.angle_degre < 0 ) return 7; // if angle_degre too tiny
 		return 0; // no problem
@@ -1023,7 +1025,7 @@ var Box_paper_stand = {
 	 *	function that check if the geometry parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_geometry_parameters: function() {
-		if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 1; // for a stand_number correct
+		//if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 1; // for a stand_number correct
 		return 0; // no problem
 	},
 	
@@ -1297,7 +1299,7 @@ function app3_paper_stand(download) {
 	svg_builder.clear_svg("svgLayer1");
 	svg_builder.clear_svg("svgLayer2");
 	
-	// parameters
+	// parameters from the form
 	wooden_plate_width = selectPlanche[indexSelection].width;
 	wooden_plate_length = selectPlanche[indexSelection].length;
 	wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
@@ -1305,7 +1307,6 @@ function app3_paper_stand(download) {
 	depth_box = Number(document.getElementById("largeur").value); 		// = 50;
 	height_box = Number(document.getElementById("hauteur").value); 		// = 50;
 	var notch_size = Number(document.getElementById("encoche").value); 	// = 10;
-	
 	NOTCH_SIZE = notch_size;
 	
 	size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);	// = 50;	// is at 90 degree of his associated stand
