@@ -15,7 +15,7 @@
 
 /** the default size of a notch
  *  @constant
- *  @type {string}
+ *  @type {int}
  *  @default
  */
  const NOTCH_SIZE_DEFAULT = 10;
@@ -27,13 +27,13 @@
  var NOTCH_SIZE = 10;
 
 /**
- * 	global value for the length of the box shape/scheme (svg) the user choosed
+ * 	global value for the length of the total box shape/scheme (svg) the user choosed
  * 	@type {int}
  */
  var BOX_SCHEME_LENGTH = 0;
 
 /**
- * 	global value for the width of the box shape/scheme (svg) the user choosed
+ * 	global value for the width of the total box shape/scheme (svg) the user choosed
  * 	@type {int}
  */
  var BOX_SCHEME_WIDTH = 0;
@@ -46,8 +46,8 @@
 
 	/**
 	 *	function that set the values of BOX_SCHEME_LENGTH and BOX_SCHEME_WIDTH for the algorithm
-	 *	@param length the length size you want to set
-	 *	@param width the width size you want to set
+	 *	@param length the length size of the total box shape/scheme
+	 *	@param width the width size of the total box shape/scheme
 	 */
 	 define_box_width_and_length(width, length) {
 	 	BOX_SCHEME_WIDTH = width;
@@ -55,13 +55,11 @@
 	 },
 
 	/**
-	 *	function that defines properly the width, height and the viewbox of the final svg object depending on the type of box/parts the user choose. 
-	 *	it also allows the svg file to use the units 'mm' milimeters.
-	 *	@param {int} the width of the final svg
-	 *	@param {int} the height of the final sv
-	 *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done in the good scaling on the website page.
+	 *	function that defines properly the width, height and the viewbox of the svg object depending on the type of box/parts the user choose. 
+	 *	@param {int} the width of the svg object
+	 *	@param {int} the height of the svg object
 	 */
-	 define_attributes_box: function (width, height, download) {
+	 define_attributes_box: function (width, height) {
 	 	var svg = document.getElementById("svg");
 		svg.setAttribute("width",width + "");
 		svg.setAttribute("height",height + "");
@@ -70,8 +68,8 @@
 	},
 
 	/**
-	 *	encode the data from the svg tag into URI data, and then set those information directly to the tag.
-	 *	then we use the magic function click that simulate a human click on this tag, which open the download yes/no window.
+	 *	encode the data from the svg tag into URI data, and then set those information directly to the a tag as "href".
+	 *	then we use the magic function "click()" that simulate a human click on this tag, which open the download yes/no window.
 	 */
 	 generate_svg_file: function () {
 		// we delete our second layout and make a copie for re-putting it after the download operation
@@ -79,8 +77,8 @@
 	 	var parentElement = svgLayer2.parentElement;
 	 	var clone_svgLayer2 = svgLayer2.cloneNode(false);
 	 	parentElement.removeChild(svgLayer2);
-		// resetting the viewbox
-		svg_builder.set_viewbox();
+		// resizing correctly the viewbox of the svg tag
+		svg_builder.define_attributes_box(BOX_SCHEME_WIDTH,BOX_SCHEME_LENGTH);
 		// putting milimeters to download in the good scale
 		var svg = document.getElementById("svg");
 		var svg_width = svg.getAttribute("width");
@@ -104,10 +102,12 @@
 		// removing milimeters to show the box on the website in the good scale
 		svg.setAttribute("width", svg_width + "");
 		svg.setAttribute("height", svg_height + "");
+		// reseting the viewbox
+		svg_builder.set_viewbox();
 	},
 
 	/** 
-	 *	clear the svg tag so that it will be up for new parameters/shapes to be drawn in.
+	 *	clear the g tag of the svg tag so that it will be up for new parameters/shapes to be drawn in.
 	 *	@param layer {string} the id of the layer g tag you want to clear the components
 	 */
 	 clear_svg: function (layer){
@@ -408,7 +408,6 @@
 	 	var stringTab = scheme.split(",");
 	 	var value1 = stringTab[0];
 	 	var value2 = stringTab[1];
-
 		switch( rotate_case ) { // by default it draws the top side/path from left to right
 			case 1: return value1 + "," + -value2 + " ";	// draw from left to right reversed == default reversed
 			case 2: return -value1 + "," + -value2 + " ";	// draw from right to left
@@ -424,28 +423,24 @@
 
 /**
  *	@class contains the functions needed to create a box_with_top, entirely, two in the same svg file, only a single part of it, etc...
+ *	@property {int} wooden_plate_width the width of the wooden plate the user is using
+ *	@property {int} wooden_plate_length the length of the wooden plate the user is using
+ *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
+ *	@property {int} width_box the width of the box
+ *	@property {int} depth_box the depth of the box
+ *	@property {int} height_box the height of the box
  */
  var Box_with_top = {
 	 	
 	/**
-	 *	instance parameters
-	 */
-	wooden_plate_width : 0,
-	wooden_plate_length : 0,
-	wooden_plate_thickness : 0,
-	width_box : 0,
-	depth_box : 0,
-	height_box : 0,
-	
-	/**
 	 *	function that checks if the initial parameters for building a part/entire Box_with_top is correct or not, return 0 if no problem,
 	 *	and return a integer value depending on the issue found
-	 *	@param wooden_plate_width {int} its the width of the wooden plate
-	 *	@param wooden_plate_length {int} its the length of the wooden plate
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
+	 *	@param wooden_plate_width {int} the width of the wooden plate
+	 *	@param wooden_plate_length {int} the length of the wooden plate
+	 *	@param wooden_plate_thickness {int} the thickness of the wooden plate
+	 *	@param width_box {int} the width of the box
+	 *	@param depth_box {int} the depth of the box
+	 *	@param height_box {int} the height of the box
 	 */
 	init_parameters: function (wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box) {
 		this.wooden_plate_width = wooden_plate_width,
@@ -570,31 +565,26 @@
 	}
 };
 
-
 /**
  *	@class contains the functions needed to create a box_without_top, entirely, two in the same svg file, only a single part of it, etc...
+ *	@property {int} wooden_plate_width the width of the wooden plate the user is using
+ *	@property {int} wooden_plate_length the length of the wooden plate the user is using
+ *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
+ *	@property {int} width_box the width of the box
+ *	@property {int} depth_box the depth of the box
+ *	@property {int} height_box the height of the box
  */
  var Box_without_top = {
- 	
-	/**
-	 *	instance parameters
-	 */
-	wooden_plate_width : 0,
-	wooden_plate_length : 0,
-	wooden_plate_thickness : 0,
-	width_box : 0,
-	depth_box : 0,
-	height_box : 0,
 	
 	/**
 	 *	function that checks if the initial parameters for building a part/entire Box_without_top is correct or not, return 0 if no problem,
 	 *	and return a integer value depending on the issue found
-	 *	@param wooden_plate_width {int} its the width of the wooden plate
-	 *	@param wooden_plate_length {int} its the length of the wooden plate
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
+	 *	@param wooden_plate_width {int} the width of the wooden plate
+	 *	@param wooden_plate_length {int} the length of the wooden plate
+	 *	@param wooden_plate_thickness {int} the thickness of the wooden plate
+	 *	@param width_box {int} the width of the box
+	 *	@param depth_box {int} the depth of the box
+	 *	@param height_box {int} the height of the box
 	 */
 	init_parameters: function (wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box) {
 		this.wooden_plate_width = wooden_plate_width,
@@ -1018,20 +1008,20 @@
 
 /**
  *	@class contains the functions needed to create a Box_paper_stand, entirely, two in the same svg file, only a single part of it, etc...
- *	@property {int} wooden_plate_width (instance parameters) 
- *	@property {int} wooden_plate_length (instance parameters)
- *	@property {int} wooden_plate_thickness (instance parameters)
- *	@property {int} width_box (instance parameters)
- *	@property {int} depth_box (instance parameters)
- *	@property {int} height_box (instance parameters)
- *	@property {int} size_stand_front_part (instance parameters)
- *	@property {int} size_between_stand (instance parameters)
- *	@property {int} stand_number (instance parameters)
- *	@property {int} angle_degre (instance parameters)
- *	@property {int} tiny_triangle_adjacent_side (geometry parameters) // C' @see the below to understand the meaning of this trigonometry parameters
- *	@property {int} triangle_adjacent_side (geometry parameters) // C
- *	@property {int} triangle_hypotenuse_side (geometry parameters) // B
- *	@property {int} triangle_opposite_side (geometry parameters) // A
+ *	@property {int} wooden_plate_width the width of the wooden plate the user is using
+ *	@property {int} wooden_plate_length the length of the wooden plate the user is using
+ *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
+ *	@property {int} width_box the width of the box
+ *	@property {int} depth_box the depth of the box
+ *	@property {int} height_box the height of the box
+ *	@property {int} size_stand_front_part the size of the front part of a stand
+ *	@property {int} size_between_stand  the size between stands
+ *	@property {int} stand_number the number of stands
+ *	@property {int} angle_degre the angle of inclination of each stands
+ *	@property {int} tiny_triangle_adjacent_side (geometry parameters) // C' @see below to understand the meaning of this trigonometry parameters
+ *	@property {int} triangle_adjacent_side (geometry parameters) // C @see below
+ *	@property {int} triangle_hypotenuse_side (geometry parameters) // B @see below
+ *	@property {int} triangle_opposite_side (geometry parameters) // A @see below
  *	@see <img id="img_paper_stand_jsdoc" src="../../src/assets/img/paper_stand/jsdoc.png" alt="img_paper_stand_jsdoc" height="100%" width="100%" >
  */
 var Box_paper_stand = {
@@ -1039,12 +1029,16 @@ var Box_paper_stand = {
 	/**
 	 *	function that checks if the initial parameters for building a part/entire Box_paper_stand is correct or not, return 0 if no problem,
 	 *	and return a integer value depending on the issue found
-	 *	@param wooden_plate_width {int} its the width of the wooden plate
-	 *	@param wooden_plate_length {int} its the length of the wooden plate
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
+	 *	@param wooden_plate_width {int} the width of the wooden plate the user is using
+	 *	@param wooden_plate_length {int} the length of the wooden plate the user is using
+	 *	@param wooden_plate_thickness {int} the thickness of the wooden plate the user is using
+	 *	@param width_box {int} the width of the box
+	 *	@param depth_box {int} the depth of the box
+	 *	@param height_box {int} the height of the box
+	 *	@param size_stand_front_part {int} the size of the front part of a stand
+	 *	@param size_between_stand {int} the size between stands
+	 *	@param stand_number {int} the number of stands
+	 *	@param angle_degre {int} the angle of inclination of each stands
 	 */
 	init_parameters: function(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle_degre) {
 		this.wooden_plate_width = wooden_plate_width,
@@ -1075,7 +1069,7 @@ var Box_paper_stand = {
 	
 	/**
 	 *	function that initialize the different parameters we will need to use for our drawing/creating path
-	 *	@see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
+	 *	@see <a href="#img_paper_stand_jsdoc" >img_paper_stand_jsdoc</a>
 	 */
 	init_geometry_parameters: function () {
 		// geometry/trigonometry calculation, see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
@@ -1088,6 +1082,7 @@ var Box_paper_stand = {
 	
 	/**
 	 *	function that check if the geometry parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 *	@see <a href="#img_paper_stand_jsdoc" >img_paper_stand_jsdoc</a>
 	 */
 	check_geometry_parameters: function() {
 		//if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 1; // for a stand_number correct
@@ -1099,10 +1094,6 @@ var Box_paper_stand = {
 	 *	@param number_part {int} the number of the part of the Box_paper_stand
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
-	 *	@param width_box {int} its the width of the box
-	 *	@param depth_box {int} its the depth of the box
-	 *	@param height_box {int} its the height of the box
 	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
 	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
 	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
@@ -1285,7 +1276,7 @@ var Box_paper_stand = {
 };
 
 /**
- * function used for testing the project for now on
+ *  function used for testing the project for now on
  *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done
  */
 function app1_close_or_open_box(download) {
@@ -1313,8 +1304,14 @@ function app1_close_or_open_box(download) {
 	} else {
 		var app1_close_or_open_box = Object.create(Box_without_top);
 	}
+	
+	// we initialize the parameters and check them if error / invalid values are found
 	app1_close_or_open_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
-		
+	if( !checkValue("longueur","largeur","hauteur","encoche") ) {
+		console.log("error parameters, there is not only positive integer" );
+		return;
+	}
+	
 	// whether it is checked, we draw the corresponding with/without top box
 	if ( document.getElementById("formCheck-1").checked ) { // the closed boxes ( with top )
 		app1_close_or_open_box.draw_selected_item();

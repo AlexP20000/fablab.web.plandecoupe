@@ -1,7 +1,7 @@
 :: author : alexandre mailliu
 :: date   : 14/05/2018
 
-:: this script ask the user whether he wants to generate the jsdoc for our box generator applications, it result in a new folder "out" next to this file
+:: this script ask the user whether he wants to generate the jsdoc for our box generator applications, it result in a new folder "out" next to this file, containing the docs
 :: it's a batch script, so it must be called with windows
 
 @echo This script is going to generate/re-generate the javascript documentation (jsdoc)
