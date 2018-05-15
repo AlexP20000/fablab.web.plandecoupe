@@ -58,16 +58,15 @@
 	 *	function that defines properly the width, height and the viewbox of the final svg object depending on the type of box/parts the user choose. 
 	 *	it also allows the svg file to use the units 'mm' milimeters.
 	 *	@param {int} the width of the final svg
-	 *	@param {int} the height of the final svg
+	 *	@param {int} the height of the final sv
+	 *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done in the good scaling on the website page.
 	 */
-	 define_attributes_box: function (width, height) {
+	 define_attributes_box: function (width, height, download) {
 	 	var svg = document.getElementById("svg");
-	 	svg.setAttribute("width",width);
-	 	svg.setAttribute("height",height);
-		var stringViewBox = "0 0 " + ( width + 10 ) + " " + ( height + 10 ); 	//var stringViewBox = "0 0 " + Number(svg.getAttribute("width").replace(/[^\d]/g, "")) + " " + Number(svg.getAttribute("height").replace(/[^\d]/g, ""));
+		svg.setAttribute("width",width + "");
+		svg.setAttribute("height",height + "");
+		var stringViewBox = "0 0 " + ( width + 10 ) + " " + ( height + 10 ); 
 		svg.setAttribute("viewBox",stringViewBox);
-		var stringTranslate = "translate(" + ( width / 2.7 ) + " " + ( height / 2.7 ) + ")";
-		svg.setAttribute("transform","scale(3.779528)" + stringTranslate); // dpi problems, scale : 1 px == 3.779528 mm
 	},
 
 	/**
@@ -76,12 +75,18 @@
 	 */
 	 generate_svg_file: function () {
 		// we delete our second layout and make a copie for re-putting it after the download operation
-		var svg = document.getElementById("svgLayer2");
-	 	var parentElement = svg.parentElement;
-	 	var emptySvg = svg.cloneNode(false);
-	 	parentElement.removeChild(svg);
+		var svgLayer2 = document.getElementById("svgLayer2");
+	 	var parentElement = svgLayer2.parentElement;
+	 	var clone_svgLayer2 = svgLayer2.cloneNode(false);
+	 	parentElement.removeChild(svgLayer2);
 		// resetting the viewbox
 		svg_builder.set_viewbox();
+		// putting milimeters to download in the good scale
+		var svg = document.getElementById("svg");
+		var svg_width = svg.getAttribute("width");
+		var svg_height = svg.getAttribute("height");
+		svg.setAttribute("width", svg_width + "mm");
+		svg.setAttribute("height", svg_height + "mm");
 		// Use XMLSerializer to convert the DOM to a string
 		var s = new XMLSerializer();
 		var d = document.getElementById("svg");
@@ -95,7 +100,10 @@
 		// our a tag is hidden, so we use the click function as we would click on it usualy
 		document.getElementById("filesvg").click();
 		// we re-put our second layout
-	 	parentElement.appendChild(emptySvg);
+	 	parentElement.appendChild(clone_svgLayer2);
+		// removing milimeters to show the box on the website in the good scale
+		svg.setAttribute("width", svg_width + "");
+		svg.setAttribute("height", svg_height + "");
 	},
 
 	/** 
@@ -147,14 +155,10 @@
 	 	var layer = document.getElementById("svgLayer2");
 		if (document.getElementById("formCheck-2").checked) { // we show
 			svg_builder.set_viewbox();
-			var svg = document.getElementById("svg");
-			svg.removeAttribute("transform");
 			layer.setAttribute("opacity", "1");  
 			svg_builder.draw_layer2();
 		} else { // we hide
 			svg_builder.define_attributes_box(BOX_SCHEME_WIDTH, BOX_SCHEME_LENGTH);
-			var svg = document.getElementById("svg");
-			svg.removeAttribute("transform");
 			layer.setAttribute("opacity", "0");  
 		}
 	},
