@@ -145,13 +145,13 @@
 	 */
 	 show_layer2: function() {
 	 	var layer = document.getElementById("svgLayer2");
-		if (document.getElementById("formCheck-2").checked) { // on affiche
+		if (document.getElementById("formCheck-2").checked) { // we show
 			svg_builder.set_viewbox();
 			var svg = document.getElementById("svg");
 			svg.removeAttribute("transform");
 			layer.setAttribute("opacity", "1");  
 			svg_builder.draw_layer2();
-		} else { // on efface
+		} else { // we hide
 			svg_builder.define_attributes_box(BOX_SCHEME_WIDTH, BOX_SCHEME_LENGTH);
 			var svg = document.getElementById("svg");
 			svg.removeAttribute("transform");
