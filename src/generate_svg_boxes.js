@@ -717,7 +717,17 @@
 
 	var Toolbox = {
  
- 
+ 		/**
+		 *	function that checks if the initial parameters for building a part/entire Box_without_top is correct or not, return 0 if no problem,
+		 *	and return a integer value depending on the issue found
+		 *	@param wooden_plate_width {int} its the width of the wooden plate
+		 *	@param wooden_plate_length {int} its the length of the wooden plate
+		 *	@param wooden_plate_thickness {int} its the thickness of the wooden plate
+		 *	@param width_box {int} its the width of the box
+		 *	@param depth_box {int} its the depth of the box
+		 *	@param height_box {int} its the height of the box
+		 *	@param nose {int} it's the length of the nose
+		 */
 	    init_parameters: function (wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, nose) {
 	      this.wooden_plate_width = wooden_plate_width,
 	      this.wooden_plate_length = wooden_plate_length,
@@ -727,13 +737,28 @@
 	      this.height_box = height_box,
 	      this.nose = nose
 	    },
-	 
+	 	
+
+	 	/**
+		 *	function that initialize the different parameters we will need to use for our drawing/creating path
+		 *	@see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
+		 */
 	    init_geometry_parameters: function () {
 	      this.oppose =   (Math.tan(45*(Math.PI /180))*(height_box-nose)/2);
 	      this.hypothenuse =   Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  this.oppose * this.oppose);  
 	    },
 
-
+	    /**
+	     *	small modification of the function draw_path from svg_builder to add angle
+	     *	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
+		 *	@param size {int} is the length for which we have to make a path
+		 *	@param rotate_case {int} is the case we want to use, there is 8 differents
+		 *	@see <a href="#.rotate" >rotate()</a>
+		 *	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 	 *	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 	 *	@param angle {int} is the angle we want to rotate the path
+	     *	@see <a href="#.draw_path" >draw_path()</a>
+	     */
 		draw_path2: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle) {
 			var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
 			tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case); 				// rotate them if need be
@@ -741,6 +766,18 @@
 			
 			svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
 		},
+
+		/**
+	     *	small modification of the function draw_path_right_left_correction to add angle
+	     *	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
+		 *	@param size {int} is the length for which we have to make a path
+		 *	@param rotate_case {int} is the case we want to use, there is 8 differents
+		 *	@see <a href="#.rotate" >rotate()</a>
+		 *	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 	 *	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 	 *	@param angle {int} is the angle we want to rotate the path
+	     *	@see <a href="#.draw_path_right_left_correction" >draw_path_right_left_correction()</a>
+	     */
 		draw_path_right_left_correction2: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle=0) {
 			var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
 			tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case) 				// rotate them if need be
@@ -751,7 +788,16 @@
 		},
 
 
-
+		/**
+		 *	Function to draw the top side of the piece 1
+		 *	@param origin_x {int} it's the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} it's the y (abscissa) origin of the drawing of this part
+		 *	@param nbNotch {int} it's the number of notch that's have to be drawn on the side of the par
+		 *	@param width_box {int} its the width of the box
+		 *	@param depth_box {int} its the depth of the box
+		 *	@param height_box {int} its the height of the box
+		 *	@param nose {int} it's the length of the nose
+		 */
 		draw_base_side: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box){
 			var l_origin_x = origin_x;
 			var l_origin_y = origin_y;
@@ -775,6 +821,16 @@
 			}
 		},
 
+		/**
+		 *	Function to draw the bot side of the piece 1
+		 *	@param origin_x {int} it's the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} it's the y (abscissa) origin of the drawing of this part
+		 *	@param nbNotch {int} it's the number of notch that's have to be drawn on the side of the par
+		 *	@param width_box {int} its the width of the box
+		 *	@param depth_box {int} its the depth of the box
+		 *	@param height_box {int} its the height of the box
+		 *	@param nose {int} it's the length of the nose
+		 */
 		draw_base_side2:function(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box){
 			var l_origin_x2 = origin_x;
 			var l_origin_y2 = origin_y;
@@ -792,7 +848,6 @@
 				else{
 					NOTCH_SIZE = 10;
 					svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, 0, l_origin_x2, origin_y + depth_box);
-					//svg_builder.draw_line(l_origin_x, l_origin_y,sizeBetweenBigNotch, 0)
 					l_origin_x2 = l_origin_x2 + sizeBetweenBigNotch;
 					total += sizeBigNotch;
 					
@@ -800,7 +855,16 @@
 				
 			}
 		},
-
+		/**
+		 *	function that's draw the top side of the piece 2 and 6 of the Toolbox
+		 *	@param origin_x {int} it's the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} it's the y (abscissa) origin of the drawing of this part
+		 *	@param nbNotch {int} it's the number of notch that's have to be drawn on the side of the part
+		 *	@param height_box {int} its the height of the box
+		 *	@param width_box {int} its the width of the box
+		 *	@param nose {int} it's the length of the nose
+		 *	@param rotate {int} Direction to take from origin point
+		*/
 		draw_top: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, rotate){
 			
 			var l_origin_x = origin_x + this.oppose;
@@ -809,8 +873,6 @@
 			sizeBigNotch = NOTCH_SIZE * 2;
 			for(i = 1;i<=nbNotch*2+1; i++){
 				if(i%2 == 1){
-					//NOTCH_SIZE = 10;
-					//svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, 1, l_origin_x, l_origin_y);
 					svg_builder.draw_line(l_origin_x, l_origin_y,sizeBetweenBigNotch, 0)
 					l_origin_x = l_origin_x + sizeBetweenBigNotch;
 				}
@@ -823,7 +885,16 @@
 				
 			}
 		},
-
+		/**
+		 *	function that's draw the bot side of the piece 2 and 6 of the Toolbox
+		 *	@param origin_x {int} it's the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} it's the y (abscissa) origin of the drawing of this part
+		 *	@param nbNotch {int} it's the number of notch that's have to be drawn on the side of the part
+		 *	@param height_box {int} its the height of the box
+		 *	@param width_box {int} its the width of the box
+		 *	@param nose {int} it's the length of the nose
+		 *	@param rotate {int} Direction to take from origin point
+		*/
 		draw_bot: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, rotate){
 			var l_origin_x = origin_x;
 			var l_origin_y = origin_y;
@@ -833,7 +904,6 @@
 				if(i%2 == 1){
 					NOTCH_SIZE = 10;
 					svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, rotate, l_origin_x, origin_y -(height_box-nose)/2);
-					//svg_builder.draw_line(l_origin_x, l_origin_y,sizeBetweenBigNotch, 0)
 					l_origin_x = l_origin_x - sizeBetweenBigNotch;
 				}
 				else{
@@ -845,16 +915,19 @@
 			}
 
 		},
-
+		/**
+		 *	function that draws the part 'number_part' of the Box_without_top
+		 *	@param number_part {int} the number of the part of the Box_without_top
+		 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+		 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
+		 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
+		 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
+		 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
+		 */
 		draw_single_part: function (number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
-			//svg_builder.draw_line(origin_x, origin_y, this.oppose, -(height_box-nose)/2);
-			/*
-			
-			Toolbox.draw_base_side(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box);
-			svg_builder.draw_line(origin_x,origin_y,0,depth_box);
-			svg_builder.draw_line(origin_x + (width_box - this.oppose),origin_y,0,depth_box);*/
-
 			nbNotch = Math.round((width_box - Math.tan(45*(Math.PI /180))*((this.height_box-this.nose)/2))/70);
+
 			if(number_part == 1) {
 		        if(bool_top)  Toolbox.draw_base_side(origin_x, origin_y, nbNotch, this.height_box, this.width_box 	- this.wooden_plate_thickness, this.nose, this.depth_box);  
 		        if(bool_right)   svg_builder.draw_line(origin_x + (this.width_box - this.oppose) - this.wooden_plate_thickness, origin_y, 0, this.depth_box);
@@ -903,21 +976,16 @@
 		        if(bool_left)  /*svg_builder.draw_path(wooden_plate_thickness, hypothenuse, 7, origin_x, origin_y+hypothenuse);*/svg_builder.draw_line(origin_x, origin_y + this.depth_box, 0, -this.depth_box);
 		        svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box*2 + 10);
 		    }
-			/*
-			;
-			console.log(nbNotch);
-			Toolbox.draw_top(origin_x, origin_y, nbNotch, height_box, width_box, nose);
-			svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y -(height_box-nose)/2);
-			Toolbox.draw_bot(origin_x + width_box, origin_y + height_box, nbNotch, height_box, width_box, nose);
-			svg_builder.draw_line(origin_x, origin_y+nose, this.oppose, (height_box-nose)/2);
-			svg_builder.draw_path(wooden_plate_thickness, nose, 5, origin_x, origin_y);*/
-			//svg_builder.draw_line(origin_x, origin_y, this.oppose, -(height_box-nose)/2);
-			//svg_builder.draw_path(wooden_plate_thickness, width_box-this.oppose, 1, origin_x + this.oppose, origin_y -(height_box-nose)/2,0,3);
-			//svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y -(height_box-nose)/2);
-			//svg_builder.draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
-			//svg_builder.define_box_width_and_length(width_box + 10, height_box + 10);
 		},
 
+		/**
+		 *	function to add missing line on all face drawing when we assemble piece 2 and piece 1 together and piece 6 and piece 1
+		 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+		 *	@param height_box {int} its the height of the box
+		 *	@param width_box {int} its the width of the box
+		 *	@param nose {int} it's the length of the nose
+		 */
 		optimize_part_1_add_line: function(origin_x, origin_y, height_box, width_box, nose){
 			nbNotch = Math.round((width_box - this.oppose)/70);
 			l_origin_x = origin_x;
@@ -935,16 +1003,18 @@
 			}
 		},
 
-		economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, nose) {
-			//oppose = (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)
-			//hypothenuse = Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)*(Math.tan(45*(Math.PI /180))*(height_box-nose)/2));
-			
+		/**
+		 *	Main function of the Toolbox drawing, it's draw and choose the better placement of pieces depend on parameters value
+		 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+		 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+		 */
+
+		economize_laser_and_wood_one_box: function (origin_x, origin_y) {
 			Toolbox.draw_single_part(2, origin_x, origin_y, true, true, true, true);
 			Toolbox.optimize_part_1_add_line(origin_x + this.oppose, origin_y + (this.height_box-this.nose)/2 + this.nose,this.height_box, this.width_box, this.nose)
 			Toolbox.draw_single_part(1, origin_x + this.oppose, origin_y + (this.height_box-this.nose)/2 + this.nose, false, true, false, true);
 			Toolbox.optimize_part_1_add_line(origin_x + this.oppose, origin_y + (this.height_box-this.nose)/2 + this.nose + this.depth_box,this.height_box, this.width_box, this.nose)
 			Toolbox.draw_single_part(6, origin_x, origin_y + this.height_box + this.depth_box, true, true, true, true);
-			
 
 			if(this.oppose > this.nose){
 		        if(this.nose < NOTCH_SIZE*2){
@@ -974,23 +1044,11 @@
         		}
 			}
 			svg_builder.define_box_width_and_length(this.width_box + this.depth_box + this.height_box/2 + 10,this.height_box*3 + this.depth_box*2 + 10);
-			//svg_builder.define_box_width_and_length(width_box + depth_box + 10, height_box * 2 + depth_box*2 + 10);
-
 		},
 
-		economize_laser_and_wood_one_box_nose_oppose: function(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, nose){
-			hypothenuse = Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)*(Math.tan(45*(Math.PI /180))*(height_box-nose)/2));
-			Toolbox.draw_single_part(2, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-			Toolbox.optimize_part_1_add_line(origin_x +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2),origin_y + (height_box-nose)/2 + nose,height_box, width_box, nose)
-			Toolbox.draw_single_part(1, origin_x +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2), origin_y + (height_box-nose)/2 + nose, wooden_plate_thickness, width_box, depth_box, height_box, false, true, false, true, nose);
-			Toolbox.optimize_part_1_add_line(origin_x +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2),origin_y + (height_box-nose)/2 + nose + depth_box,height_box, width_box, nose)
-			Toolbox.draw_single_part(6, origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-			Toolbox.draw_single_part(4, origin_x, origin_y + (height_box-nose)/2 + nose, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-			Toolbox.draw_single_part(3, origin_x + hypothenuse, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2	, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-			Toolbox.draw_single_part(5, origin_x, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-			svg_builder.define_box_width_and_length(width_box + depth_box + 10,height_box*2+depth_box*2 + 50);
-		},
-
+		/**
+		 *	function that draws the box/part of box which is selected in the option listStyleType
+		 */
 		draw_selected_item: function() {
 			switch( selectedModel() ) {
 				case "1" : 	this.draw_single_part(1, this.wooden_plate_thickness,this.wooden_plate_thickness+100, true, true, true, true);
