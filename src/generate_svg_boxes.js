@@ -709,6 +709,19 @@
 	}
 };
 
+
+
+
+	/**
+	 *	@class contains the functions needed to create a Toolbox, entirely, two in the same svg file, only a single part of it, etc...
+	 *	@property {int} wooden_plate_width the width of the wooden plate the user is using
+	 *	@property {int} wooden_plate_length the length of the wooden plate the user is using
+	 *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
+	 *	@property {int} width_box the width of the box
+	 *	@property {int} depth_box the depth of the box
+	 *	@property {int} height_box the height of the box
+	 *	@property {int} nose the length of the nose
+	 */
 	var Toolbox = {
  
  		/**
