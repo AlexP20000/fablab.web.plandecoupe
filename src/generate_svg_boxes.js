@@ -720,40 +720,52 @@
 };
 
 	var Toolbox = {
+ 
+ 
+	    init_parameters: function (wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, nose) {
+	      this.wooden_plate_width = wooden_plate_width,
+	      this.wooden_plate_length = wooden_plate_length,
+	      this.wooden_plate_thickness = wooden_plate_thickness,
+	      this.width_box = width_box,
+	      this.depth_box = depth_box,
+	      this.height_box = height_box,
+	      this.nose = nose
+	    },
+	 
+	    init_geometry_parameters: function () {
+	      this.oppose =   (Math.tan(45*(Math.PI /180))*(height_box-nose)/2);
+	      this.hypothenuse =   Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  this.oppose * this.oppose);  
+	    },
 
 
 		draw_path2: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle) {
-		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
-		tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case); 				// rotate them if need be
-		tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
-		svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
-	},
-		draw_path_right_left_correction2: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y,angle) {
-		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
-		tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case) 				// rotate them if need be
-		tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
-		tab_coordinate = tab_coordinate.split(" ");
-		tab_coordinate[3] = ""; tab_coordinate[tab_coordinate.length - 2] = "";
-		svg_builder.create_path(tab_coordinate.join(' '),angle, draw_origin_x, draw_origin_y);
-	},
+			var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
+			tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case); 				// rotate them if need be
+			tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
+			
+			svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
+		},
+		draw_path_right_left_correction2: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle=0) {
+			var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
+			tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case) 				// rotate them if need be
+			tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
+			tab_coordinate = tab_coordinate.split(" ");
+			tab_coordinate[3] = ""; tab_coordinate[tab_coordinate.length - 2] = "";
+			svg_builder.create_path(tab_coordinate.join(' '), angle, draw_origin_x, draw_origin_y);
+		},
 
 
 
 		draw_base_side: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box){
 			var l_origin_x = origin_x;
 			var l_origin_y = origin_y;
-
-			console.log("size debut : "+l_origin_x);
-
 			
-
-			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
+			sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
-			console.log("nbNotch : "+nbNotch);
 			for(i = 1;i<=nbNotch*2+1; i++){
 				if(i%2 == 0){
 					NOTCH_SIZE = 10;
-					svg_builder.draw_line(l_origin_x, l_origin_y,sizeBigNotch, 0);
+					svg_builder.draw_line(l_origin_x, l_origin_y, sizeBigNotch, 0);
 					l_origin_x = l_origin_x + sizeBigNotch;
 				}
 				else{
@@ -770,7 +782,7 @@
 		draw_base_side2:function(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box){
 			var l_origin_x2 = origin_x;
 			var l_origin_y2 = origin_y;
-			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
+			sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
 			total = 0;
 			for(i = 1;i<=nbNotch*2+1; i++){
@@ -795,13 +807,10 @@
 
 		draw_top: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, rotate){
 			
-			var l_origin_x = origin_x + Math.tan(45*(Math.PI /180))*((height_box-nose)/2);
+			var l_origin_x = origin_x + this.oppose;
 			var l_origin_y = origin_y -(height_box-nose)/2;
-			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
-			console.log("width : "+width_box);
-			console.log("sizeBetweenNotch : "+sizeBetweenBigNotch);
+			sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
-			console.log("nbNotch : "+nbNotch);
 			for(i = 1;i<=nbNotch*2+1; i++){
 				if(i%2 == 1){
 					//NOTCH_SIZE = 10;
@@ -820,24 +829,18 @@
 		},
 
 		draw_bot: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, rotate){
-			console.log("In DrawBot");
 			var l_origin_x = origin_x;
 			var l_origin_y = origin_y;
-			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
+			sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			sizeBigNotch = NOTCH_SIZE * 2;
 			for(i = 1;i<=nbNotch*2+1; i++){
-				console.log("inFor");
 				if(i%2 == 1){
-					console.log("drawline");
 					NOTCH_SIZE = 10;
 					svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, rotate, l_origin_x, origin_y -(height_box-nose)/2);
 					//svg_builder.draw_line(l_origin_x, l_origin_y,sizeBetweenBigNotch, 0)
 					l_origin_x = l_origin_x - sizeBetweenBigNotch;
-					console.log(l_origin_x);
 				}
 				else{
-					console.log("drawpath");
-					console.log(l_origin_x);
 					NOTCH_SIZE = 15;
 					svg_builder.draw_path(wooden_plate_thickness, sizeBigNotch, rotate, l_origin_x, origin_y -(height_box-nose)/2);
 					l_origin_x = l_origin_x - sizeBigNotch;
@@ -847,43 +850,42 @@
 
 		},
 
-		draw_single_part: function (number_part, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, bool_top, bool_right, bool_bot, bool_left, nose) {
-			//svg_builder.draw_line(origin_x, origin_y, Math.tan(45*(Math.PI /180))*((height_box-nose)/2), -(height_box-nose)/2);
+		draw_single_part: function (number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
+			//svg_builder.draw_line(origin_x, origin_y, this.oppose, -(height_box-nose)/2);
 			/*
 			
 			Toolbox.draw_base_side(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box);
 			svg_builder.draw_line(origin_x,origin_y,0,depth_box);
-			svg_builder.draw_line(origin_x + (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2)),origin_y,0,depth_box);*/
+			svg_builder.draw_line(origin_x + (width_box - this.oppose),origin_y,0,depth_box);*/
 
-			nbNotch = Math.round((width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2))/70);
-			hypothenuse = Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)*(Math.tan(45*(Math.PI /180))*(height_box-nose)/2));
+			nbNotch = Math.round((width_box - Math.tan(45*(Math.PI /180))*((this.height_box-this.nose)/2))/70);
 			if(number_part == 1) {
-				if(bool_top)	Toolbox.draw_base_side(origin_x, origin_y, nbNotch, height_box, width_box-wooden_plate_thickness, nose, depth_box);	
-				if(bool_right) 	svg_builder.draw_line(origin_x + (width_box - Math.tan(45*(Math.PI / 180))*((height_box-nose)/2))-wooden_plate_thickness,origin_y,0,depth_box);
-				if(bool_bot) 	Toolbox.draw_base_side2(origin_x, origin_y, nbNotch, height_box, width_box-wooden_plate_thickness, nose, depth_box);
-				if(bool_left)	svg_builder.draw_line(origin_x,origin_y,0,depth_box); 	
-				svg_builder.define_box_width_and_length(width_box, depth_box + height_box/2 + 10);
-			} else if(number_part == 6) {
-				Toolbox.draw_path2(wooden_plate_thickness,hypothenuse,0,origin_x, origin_y,-45);
-				if(bool_top)	Toolbox.draw_bot(origin_x+width_box, origin_y, nbNotch, height_box, width_box, nose,3);
-				if(bool_right) 	svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y -(height_box-nose)/2);
-				if(bool_bot) 	Toolbox.draw_top(origin_x, origin_y + height_box, nbNotch, height_box, width_box, nose,0);
-				if(bool_left) 	svg_builder.draw_path(wooden_plate_thickness, nose, 5, origin_x, origin_y);
-				svg_builder.draw_line(origin_x, origin_y+nose, Math.tan(45*(Math.PI /180))*((height_box-nose)/2), (height_box-nose)/2);
-				svg_builder.define_box_width_and_length(width_box + 10, height_box + 10);
-			} else if(number_part == 2) {
-				svg_builder.draw_line(origin_x, origin_y, Math.tan(45*(Math.PI /180))*((height_box-nose)/2), -(height_box-nose)/2);
-				if(bool_top)	Toolbox.draw_top(origin_x, origin_y, nbNotch, height_box, width_box, nose,1);
-				if(bool_right) 	svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y -(height_box-nose)/2);
-				if(bool_bot) 	Toolbox.draw_bot(origin_x + width_box, origin_y + height_box, nbNotch, height_box, width_box, nose,2);
-				if(bool_left) 	svg_builder.draw_path(wooden_plate_thickness, nose, 5, origin_x, origin_y);
-				Toolbox.draw_path2(wooden_plate_thickness,hypothenuse,1,origin_x, origin_y+nose,45);
-				svg_builder.define_box_width_and_length(width_box + 10, height_box + height_box/2 + 10);
-			} else if(number_part == 3) {
-				if(bool_top)	svg_builder.draw_path(wooden_plate_thickness, depth_box, 1, origin_x, origin_y);
-				if(bool_right)	svg_builder.draw_path(wooden_plate_thickness, height_box, 5, origin_x+depth_box, origin_y);
-				if(bool_bot) 	svg_builder.draw_path(wooden_plate_thickness, depth_box, 2, origin_x+depth_box, origin_y+height_box);
-				if(bool_left) 	svg_builder.draw_path(wooden_plate_thickness, height_box, 7, origin_x, origin_y+height_box);
+		        if(bool_top)  Toolbox.draw_base_side(origin_x, origin_y, nbNotch, this.height_box, this.width_box 	- this.wooden_plate_thickness, this.nose, this.depth_box);  
+		        if(bool_right)   svg_builder.draw_line(origin_x + (this.width_box - this.oppose) - this.wooden_plate_thickness, origin_y, 0, this.depth_box);
+		        if(bool_bot)   Toolbox.draw_base_side2(origin_x, origin_y, nbNotch, this.height_box, this.width_box - this.wooden_plate_thickness, this.nose, this.depth_box);
+		        if(bool_left)  svg_builder.draw_line(origin_x, origin_y, 0, this.depth_box);   
+		        svg_builder.define_box_width_and_length(this.width_box, this.depth_box + this.height_box/2 + 50);
+		    } else if(number_part == 6) {
+		        Toolbox.draw_path2(this.wooden_plate_thickness, this.hypothenuse,0, origin_x, origin_y,-45);
+		        if(bool_top)  Toolbox.draw_bot(origin_x + this.width_box, origin_y, nbNotch, height_box, this.width_box, this.nose,3);
+		        if(bool_right)   svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 4, origin_x + this.width_box, origin_y -(this.height_box-this.nose)/2);
+		        if(bool_bot)   Toolbox.draw_top(origin_x, origin_y + this.height_box, nbNotch, this.height_box, this.width_box, this.nose,0);
+		        if(bool_left)   svg_builder.draw_path(this.wooden_plate_thickness, this.nose, 5, origin_x, origin_y);
+		        svg_builder.draw_line(origin_x, origin_y + this.nose, this.oppose, (this.height_box-this.nose)/2);
+		        svg_builder.define_box_width_and_length(this.width_box + 10, this.height_box + 10);
+		    } else if(number_part == 2) {
+		        svg_builder.draw_line(origin_x, origin_y, this.oppose, -(this.height_box-this.nose)/2);
+		        if(bool_top)  Toolbox.draw_top(origin_x, origin_y, nbNotch, this.height_box, this.width_box, this.nose,1);
+		        if(bool_right)   svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 4, origin_x + this.width_box, origin_y -(this.height_box-this.nose)/2);
+		        if(bool_bot)   Toolbox.draw_bot(origin_x + width_box, origin_y + this.height_box, nbNotch, this.height_box, width_box, this.nose,2);
+		        if(bool_left)   svg_builder.draw_path(this.wooden_plate_thickness, this.nose, 5, origin_x, origin_y);
+		        Toolbox.draw_path2(this.wooden_plate_thickness, this.hypothenuse,1,origin_x, origin_y+this.nose,45);
+		        svg_builder.define_box_width_and_length(this.width_box + 10, this.height_box + this.height_box/2 + 10);
+		    } else if(number_part == 3) {
+		        if(bool_top)  svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 1, origin_x, origin_y);
+		        if(bool_right)  svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 5, origin_x + this.depth_box, origin_y);
+		        if(bool_bot)   svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 2, origin_x + this.depth_box, origin_y + this.height_box);
+		        if(bool_left)   svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 7, origin_x, origin_y + this.height_box);
 				/*
 				else{
 					if(bool_top)	svg_builder.draw_path(wooden_plate_thickness, height_box, 1, origin_x, origin_y);
@@ -891,42 +893,41 @@
 					if(bool_bot) 	svg_builder.draw_path(wooden_plate_thickness, height_box, 3, origin_x+height_box, origin_y+depth_box);
 					if(bool_left) 	svg_builder.draw_path(wooden_plate_thickness, depth_box, 7, origin_x, origin_y+depth_box);
 				}*/
-				svg_builder.define_box_width_and_length(hypothenuse + 10, depth_box + height_box + 10);
-			} else if(number_part == 4) {
-				if(bool_top) 	/*svg_builder.draw_line(origin_x, origin_y, depth_box, 0);*/svg_builder.draw_path(wooden_plate_thickness, nose, 1, origin_x, origin_y);
-				if(bool_right)	/*svg_builder.draw_path(wooden_plate_thickness, nose, 5, origin_x+depth_box, origin_y);*/svg_builder.draw_line(origin_x+nose, origin_y, 0, depth_box);
-				if(bool_bot) 	/*svg_builder.draw_line(origin_x, origin_y + nose, depth_box,0);*/svg_builder.draw_path(wooden_plate_thickness, nose, 3, origin_x+nose, origin_y+depth_box);
-				if(bool_left)	/*svg_builder.draw_path(wooden_plate_thickness, nose, 7, origin_x, origin_y+nose);*/svg_builder.draw_line(origin_x, origin_y + depth_box, 0, -depth_box);
-				svg_builder.define_box_width_and_length(nose + 10, height_box + 10);
-			} else if(number_part == 5) {
-				console.log("hypothenuse : "+hypothenuse);
-				if(bool_top)	/*svg_builder.draw_line(origin_x, origin_y, depth_box, 0);*/Toolbox.draw_path_right_left_correction2(wooden_plate_thickness, hypothenuse, 1, origin_x, origin_y);
-				if(bool_right) 	/*svg_builder.draw_path(wooden_plate_thickness, hypothenuse, 5, origin_x+depth_box, origin_y);*/svg_builder.draw_line(origin_x + hypothenuse - 2* wooden_plate_thickness, origin_y, 0, depth_box);
-				if(bool_bot) 	/*svg_builder.draw_line(origin_x, origin_y + hypothenuse, depth_box,0);*/Toolbox.draw_path_right_left_correction2(wooden_plate_thickness, hypothenuse, 3, origin_x + hypothenuse - 2* wooden_plate_thickness, origin_y+depth_box);
-				if(bool_left)	/*svg_builder.draw_path(wooden_plate_thickness, hypothenuse, 7, origin_x, origin_y+hypothenuse);*/svg_builder.draw_line(origin_x, origin_y+depth_box, 0, -depth_box);
-				svg_builder.define_box_width_and_length(depth_box + 10, height_box + 10);
-			}
+				svg_builder.define_box_width_and_length(this.hypothenuse + 10, this.depth_box + this.height_box + 10);
+		    } else if(number_part == 4) {
+		        if(bool_top)   /*svg_builder.draw_line(origin_x, origin_y, this.depth_box, 0);*/svg_builder.draw_path(this.wooden_plate_thickness, this.nose, 1, origin_x, origin_y);
+		        if(bool_right)  /*svg_builder.draw_path(this.wooden_plate_thickness, this.nose, 5, origin_x+this.depth_box, origin_y);*/svg_builder.draw_line(origin_x + this.nose, origin_y, 0, this.depth_box);
+		        if(bool_bot)   /*svg_builder.draw_line(origin_x, origin_y + nose, depth_box,0);*/svg_builder.draw_path(this.wooden_plate_thickness, this.nose, 3, origin_x + this.nose, origin_y + this.depth_box);
+		        if(bool_left)  /*svg_builder.draw_path(this.wooden_plate_thickness, this.nose, 7, origin_x, origin_y+this.nose);*/svg_builder.draw_line(origin_x, origin_y + this.depth_box, 0, -this.depth_box);
+		        svg_builder.define_box_width_and_length(this.nose + 10, this.depth_box  + height_box);
+		    } else if(number_part == 5) {
+		        if(bool_top)  /*svg_builder.draw_line(origin_x, origin_y, depth_box, 0);*/Toolbox.draw_path_right_left_correction2(this.wooden_plate_thickness, this.hypothenuse, 1, origin_x, origin_y);
+		        if(bool_right)   /*svg_builder.draw_path(wooden_plate_thickness, hypothenuse, 5, origin_x+depth_box, origin_y);*/svg_builder.draw_line(origin_x + this.hypothenuse - 2* this.wooden_plate_thickness, origin_y, 0, this.depth_box);
+		        if(bool_bot)   /*svg_builder.draw_line(origin_x, origin_y + hypothenuse, depth_box,0);*/Toolbox.draw_path_right_left_correction2(this.wooden_plate_thickness, this.hypothenuse, 3, origin_x + this.hypothenuse - 2* this.wooden_plate_thickness, origin_y + this.depth_box);
+		        if(bool_left)  /*svg_builder.draw_path(wooden_plate_thickness, hypothenuse, 7, origin_x, origin_y+hypothenuse);*/svg_builder.draw_line(origin_x, origin_y + this.depth_box, 0, -this.depth_box);
+		        svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box*2 + 10);
+		    }
 			/*
 			;
 			console.log(nbNotch);
 			Toolbox.draw_top(origin_x, origin_y, nbNotch, height_box, width_box, nose);
 			svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y -(height_box-nose)/2);
 			Toolbox.draw_bot(origin_x + width_box, origin_y + height_box, nbNotch, height_box, width_box, nose);
-			svg_builder.draw_line(origin_x, origin_y+nose, Math.tan(45*(Math.PI /180))*((height_box-nose)/2), (height_box-nose)/2);
+			svg_builder.draw_line(origin_x, origin_y+nose, this.oppose, (height_box-nose)/2);
 			svg_builder.draw_path(wooden_plate_thickness, nose, 5, origin_x, origin_y);*/
-			//svg_builder.draw_line(origin_x, origin_y, Math.tan(45*(Math.PI /180))*((height_box-nose)/2), -(height_box-nose)/2);
-			//svg_builder.draw_path(wooden_plate_thickness, width_box-Math.tan(45*(Math.PI /180))*((height_box-nose)/2), 1, origin_x + Math.tan(45*(Math.PI /180))*((height_box-nose)/2), origin_y -(height_box-nose)/2,0,3);
+			//svg_builder.draw_line(origin_x, origin_y, this.oppose, -(height_box-nose)/2);
+			//svg_builder.draw_path(wooden_plate_thickness, width_box-this.oppose, 1, origin_x + this.oppose, origin_y -(height_box-nose)/2,0,3);
 			//svg_builder.draw_path(wooden_plate_thickness, height_box, 4, origin_x + width_box, origin_y -(height_box-nose)/2);
 			//svg_builder.draw_path(wooden_plate_thickness, height_box, 6, origin_x, origin_y + height_box);
 			//svg_builder.define_box_width_and_length(width_box + 10, height_box + 10);
 		},
 
 		optimize_part_1_add_line: function(origin_x, origin_y, height_box, width_box, nose){
-			nbNotch = Math.round((width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2))/70);
+			nbNotch = Math.round((width_box - this.oppose)/70);
 			l_origin_x = origin_x;
 			l_origin_y = origin_y;
 			sizeBigNotch = NOTCH_SIZE * 2;
-			sizeBetweenBigNotch = (width_box - Math.tan(45*(Math.PI /180))*((height_box-nose)/2) - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
+			sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
 			for(i = 1;i<=nbNotch*2+1; i++){
 				if(i%2 == 0){
 					svg_builder.draw_line(l_origin_x, l_origin_y,sizeBigNotch, 0)
@@ -939,46 +940,44 @@
 		},
 
 		economize_laser_and_wood_one_box: function (origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, nose) {
-			oppose = (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)
-			hypothenuse = Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)*(Math.tan(45*(Math.PI /180))*(height_box-nose)/2));
+			//oppose = (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)
+			//hypothenuse = Math.sqrt(((height_box-nose)/2)*((height_box-nose)/2) +  (Math.tan(45*(Math.PI /180))*(height_box-nose)/2)*(Math.tan(45*(Math.PI /180))*(height_box-nose)/2));
 			
-			Toolbox.draw_single_part(2, origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-			Toolbox.optimize_part_1_add_line(origin_x + oppose, origin_y + (height_box-nose)/2 + nose,height_box, width_box, nose)
-			Toolbox.draw_single_part(1, origin_x + oppose, origin_y + (height_box-nose)/2 + nose, wooden_plate_thickness, width_box, depth_box, height_box, false, true, false, true, nose);
-			Toolbox.optimize_part_1_add_line(origin_x + oppose, origin_y + (height_box-nose)/2 + nose + depth_box,height_box, width_box, nose)
-			Toolbox.draw_single_part(6, origin_x, origin_y + height_box + depth_box, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+			Toolbox.draw_single_part(2, origin_x, origin_y, true, true, true, true);
+			Toolbox.optimize_part_1_add_line(origin_x + this.oppose, origin_y + (this.height_box-this.nose)/2 + this.nose,this.height_box, this.width_box, this.nose)
+			Toolbox.draw_single_part(1, origin_x + this.oppose, origin_y + (this.height_box-this.nose)/2 + this.nose, false, true, false, true);
+			Toolbox.optimize_part_1_add_line(origin_x + this.oppose, origin_y + (this.height_box-this.nose)/2 + this.nose + this.depth_box,this.height_box, this.width_box, this.nose)
+			Toolbox.draw_single_part(6, origin_x, origin_y + this.height_box + this.depth_box, true, true, true, true);
 			
 
-			if(oppose > nose){
-				if(nose < NOTCH_SIZE*2){
-					Toolbox.draw_single_part(4, origin_x + oppose - nose - NOTCH_SIZE, origin_y + (height_box-nose)/2 + nose, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-				}
-				else{
-					Toolbox.draw_single_part(4, origin_x + oppose - nose, origin_y + (height_box-nose)/2 + nose, wooden_plate_thickness, width_box, depth_box, height_box, true, false, true, true, nose);
-				}
-				Toolbox.draw_single_part(5, origin_x, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-				if(hypothenuse > width_box){
-					Toolbox.draw_single_part(3, origin_x + width_box, origin_y - oppose, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false, nose);
-				}
-				else{
-					Toolbox.draw_single_part(3, origin_x + hypothenuse, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2	, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-				}
+			if(this.oppose > this.nose){
+		        if(this.nose < NOTCH_SIZE*2){
+		          Toolbox.draw_single_part(4, origin_x + this.oppose - this.nose - NOTCH_SIZE, origin_y + (this.height_box-this.nose)/2 + this.nose, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, true, this.nose);
+		        }
+		        else{
+		          Toolbox.draw_single_part(4, origin_x + this.oppose - this.nose, origin_y + (height_box-nose)/2 + this.nose, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, false, true, true, this.nose);
+		        }
+		        Toolbox.draw_single_part(5, origin_x, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, true, this.nose);
+		        if(this.hypothenuse > this.width_box){
+		          Toolbox.draw_single_part(3, origin_x + this.width_box, origin_y - this.oppose, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, false, this.nose);
+		        }
+		        else{
+		          Toolbox.draw_single_part(3, origin_x + this.hypothenuse, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2  , this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, true, this.nose);
+		        }
+		      }
+		    else{
+		        if(this.width_box - this.nose - this.hypothenuse > this.height_box){
+		          Toolbox.draw_single_part(4, origin_x + this.hypothenuse - this.wooden_plate_thickness*2, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, false, this.nose);
+		          
+		          Toolbox.draw_single_part(5, origin_x, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, true, this.nose);
+		        }
+		        else{
+		          Toolbox.draw_single_part(4, origin_x + this.hypothenuse - this.wooden_plate_thickness*2, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, false, this.nose);
+		          Toolbox.draw_single_part(3, origin_x + this.hypothenuse + this.nose, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2  , this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, true, this.nose);
+		          Toolbox.draw_single_part(5, origin_x, origin_y + ((this.height_box-this.nose)/2) + this.nose + this.height_box + this.depth_box + this.wooden_plate_thickness*2, this.wooden_plate_thickness, this.width_box, this.depth_box, this.height_box, true, true, true, true, this.nose);
+        		}
 			}
-			else{
-				if(width_box - nose - hypothenuse > height_box){
-					Toolbox.draw_single_part(4, origin_x + hypothenuse - wooden_plate_thickness*2, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false, nose);
-					
-					Toolbox.draw_single_part(5, origin_x, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-				}
-				else{
-					Toolbox.draw_single_part(4, origin_x + hypothenuse - wooden_plate_thickness*2, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, false, nose);
-					Toolbox.draw_single_part(3, origin_x + hypothenuse + nose, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2	, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-					Toolbox.draw_single_part(5, origin_x, origin_y + ((height_box-nose)/2) + nose + height_box + depth_box + wooden_plate_thickness*2, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-				}
-				
-
-			}
-			svg_builder.define_box_width_and_length(5000,5000);
+			svg_builder.define_box_width_and_length(this.width_box + this.depth_box + this.height_box/2 + 10,this.height_box*3 + this.depth_box*2 + 10);
 			//svg_builder.define_box_width_and_length(width_box + depth_box + 10, height_box * 2 + depth_box*2 + 10);
 
 		},
@@ -996,24 +995,21 @@
 			svg_builder.define_box_width_and_length(width_box + depth_box + 10,height_box*2+depth_box*2 + 50);
 		},
 
-		draw_selected_item: function(origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, nose) {
+		draw_selected_item: function() {
 			switch( selectedModel() ) {
-				case "1" : 	this.draw_single_part(1,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+				case "1" : 	this.draw_single_part(1, this.wooden_plate_thickness,this.wooden_plate_thickness+100, true, true, true, true);
 							break;
-				case "2" : 	this.draw_single_part(2,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+				case "2" : 	this.draw_single_part(2, this.wooden_plate_thickness,this.wooden_plate_thickness+100, true, true, true, true);
 							break;
-				case "3" : 	this.draw_single_part(3,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+				case "3" : 	this.draw_single_part(3, this.wooden_plate_thickness,this.wooden_plate_thickness+100, true, true, true, true);
 							break;
-				case "4" : 	this.draw_single_part(4,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+				case "4" : 	this.draw_single_part(4, this.wooden_plate_thickness,this.wooden_plate_thickness+100, true, true, true, true);
 							break;
-				case "5" : 	this.draw_single_part(5,origin_x, origin_y, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+				case "5" : 	this.draw_single_part(5, this.wooden_plate_thickness,this.wooden_plate_thickness+100, true, true, true, true);
 							break;
-				case "6" : 	Toolbox.economize_laser_and_wood_one_box_nose_oppose(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
-							break;/*
-				case "7" : 	this.economize_laser_and_wood_all_parts_one_column_model_1(this.wooden_plate_thickness, this.wooden_plate_thickness);
+				case "6" : 	
+							Toolbox.economize_laser_and_wood_one_box(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
 							break;
-				case "8" : 	this.economize_laser_and_wood_all_parts_one_column_model_2(this.wooden_plate_thickness, this.wooden_plate_thickness);
-							break;*/
 				default : 	console.log("pas de problème, y'a point S");
 			}
 		}
@@ -1380,7 +1376,7 @@ function app3_paper_stand(download) {
 	svg_builder.show_layer2();								// to show the result in the good scale
 }
 
-function app2_toolbox(){
+function app2_toolbox(download){
 
   document.getElementById("previsualisation").click();
   svg_builder.clear_svg("svgLayer1");
@@ -1397,14 +1393,24 @@ function app2_toolbox(){
  
   height_box = height_box - wooden_plate_thickness * 2;
   //nose = 50;
-  Toolbox.draw_selected_item(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
-  //Toolbox.draw_single_part(5,wooden_plate_thickness+40, wooden_plate_thickness+40, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
- //Toolbox.economize_laser_and_wood_one_box_nose_oppose(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
- 
-  svg_builder.generate_svg_file();  
-  svg_builder.show_layer2();
-  
-  // on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
-  //var svg = document.getElementById("svg");
-  //svg.removeAttribute("transform");
+
+	if( !checkValue("longueur","largeur","hauteur","encoche","nose") ) {
+		console.log("error parameters, there is not only positive integer" );
+		return;
+	}
+
+	else{
+		Toolbox.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, nose);
+		  Toolbox.init_geometry_parameters();
+		  Toolbox.draw_selected_item();
+		  //Toolbox.draw_single_part(5,wooden_plate_thickness+40, wooden_plate_thickness+40, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
+		 //Toolbox.economize_laser_and_wood_one_box_nose_oppose(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
+		 
+		  if( download == true ) svg_builder.generate_svg_file();  
+		  svg_builder.show_layer2();
+		  
+		  // on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
+		  //var svg = document.getElementById("svg");
+		  //svg.removeAttribute("transform");
+	}
 }
