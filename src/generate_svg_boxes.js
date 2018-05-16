@@ -37,6 +37,12 @@
  * 	@type {int}
  */
  var BOX_SCHEME_WIDTH = 0;
+ 
+ /**
+ * 	global value for the wooden thickness the user choosed
+ * 	@type {int}
+ */
+ var THICKNESS = 0;
 
 /**
  *	@class contains the functions needed to create the svg tag, to make it downloadable, to build it ( the idea is to set multiple path tag inside the g tag of the svg tag, all those path will be the side of your shape at the end ) 
@@ -63,7 +69,7 @@
 	 	var svg = document.getElementById("svg");
 		svg.setAttribute("width",width + "");
 		svg.setAttribute("height",height + "");
-		var stringViewBox = "0 0 " + ( width + 10 ) + " " + ( height + 10 ); 
+		var stringViewBox = -THICKNESS + " " + -THICKNESS + " " + ( width + (THICKNESS*2) ) + " " + ( height + (THICKNESS*2) ); 
 		svg.setAttribute("viewBox",stringViewBox);
 	},
 
@@ -85,6 +91,8 @@
 		var svg_height = svg.getAttribute("height");
 		svg.setAttribute("width", svg_width + "mm");
 		svg.setAttribute("height", svg_height + "mm");
+		var stringViewBox = "0 0 " + ( BOX_SCHEME_WIDTH ) + " " + ( BOX_SCHEME_LENGTH ); 
+		svg.setAttribute("viewBox",stringViewBox);
 		// Use XMLSerializer to convert the DOM to a string
 		var s = new XMLSerializer();
 		var d = document.getElementById("svg");
@@ -1348,22 +1356,24 @@ function app1_close_or_open_box(download) {
 	svg_builder.clear_svg("svgLayer2");
 	
 	// parameters
-	wooden_plate_width = selectPlanche[indexSelection].width;
-	wooden_plate_length = selectPlanche[indexSelection].length;
-	wooden_plate_thickness = selectPlanche[indexSelection].thickness;   // = 5;   // as an exemple.
-	width_box = Number(document.getElementById("longueur").value);     // = 200;
-	depth_box = Number(document.getElementById("largeur").value);     // = 50;
-	height_box = Number(document.getElementById("hauteur").value);     // = 50;
+	var wooden_plate_width = selectPlanche[indexSelection].width;
+	var wooden_plate_length = selectPlanche[indexSelection].length;
+	var wooden_plate_thickness = selectPlanche[indexSelection].thickness;   // = 5;   // as an exemple.
+	var width_box = Number(document.getElementById("longueur").value);     // = 200;
+	var depth_box = Number(document.getElementById("largeur").value);     // = 50;
+	var height_box = Number(document.getElementById("hauteur").value);     // = 50;
 	var notch_size = Number(document.getElementById("encoche").value);   // = 10;
 	NOTCH_SIZE = notch_size;
+	THICKNESS = wooden_plate_thickness;
 	
-	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 
 	// we create our object, depending on whether the checkbox is checked or not
 	var app1_close_or_open_box;
 	if ( document.getElementById("formCheck-1").checked ) {
+		height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 		app1_close_or_open_box = Object.create(Box_with_top);
 	} else {
+		height_box = height_box - wooden_plate_thickness; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 		var app1_close_or_open_box = Object.create(Box_without_top);
 	}
 	
@@ -1391,21 +1401,23 @@ function app1_close_or_open_box(download) {
  */
 function app2_toolbox(download){
 
-  document.getElementById("previsualisation").click();
-  svg_builder.clear_svg("svgLayer1");
-  svg_builder.clear_svg("svgLayer2");
-  wooden_plate_width = selectPlanche[indexSelection].width;
-  wooden_plate_length = selectPlanche[indexSelection].length;
-  wooden_plate_thickness = selectPlanche[indexSelection].thickness; // = 5;
-  width_box = Number(document.getElementById("longueur").value); // = 200;
-  depth_box = Number(document.getElementById("largeur").value); // = 50;
-  height_box = Number(document.getElementById("hauteur").value); // = 50;
-  var notch_size = Number(document.getElementById("encoche").value); // = 10;
-  nose = Number(document.getElementById("nose").value);
- 
- 
-  height_box = height_box - wooden_plate_thickness * 2;
-  //nose = 50;
+	document.getElementById("previsualisation").click();
+	svg_builder.clear_svg("svgLayer1");
+	svg_builder.clear_svg("svgLayer2");
+	wooden_plate_width = selectPlanche[indexSelection].width;
+	wooden_plate_length = selectPlanche[indexSelection].length;
+	wooden_plate_thickness = selectPlanche[indexSelection].thickness; // = 5;
+	width_box = Number(document.getElementById("longueur").value); // = 200;
+	depth_box = Number(document.getElementById("largeur").value); // = 50;
+	height_box = Number(document.getElementById("hauteur").value); // = 50;
+	notch_size = Number(document.getElementById("encoche").value); // = 10;
+	nose = Number(document.getElementById("nose").value);
+	NOTCH_SIZE = notch_size;
+	THICKNESS = wooden_plate_thickness;
+
+	height_box = height_box - wooden_plate_thickness; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
+	depth_box = depth_box - ( 2 * wooden_plate_thickness ); // to correct the depth_box lack ( its the fact that we must count the wooden_plate_thickness ! )
+	//nose = 50;
 
 	if( !checkValue("longueur","largeur","hauteur","encoche","nose") ) {
 		console.log("error parameters, there is not only positive integer" );
@@ -1447,6 +1459,7 @@ function app3_paper_stand(download) {
 	height_box = Number(document.getElementById("hauteur").value); 		// = 50;
 	var notch_size = Number(document.getElementById("encoche").value); 	// = 10;
 	NOTCH_SIZE = notch_size;
+	THICKNESS = wooden_plate_thickness;
 	
 	size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);	// = 50;	// is at 90 degree of his associated stand
 	size_between_stand = Number(document.getElementById("hauteurSeparation").value);		// = 120; 	// 12 cm minimum
