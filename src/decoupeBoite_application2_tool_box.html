@@ -24,20 +24,22 @@
                     </div>
                     <div class="card-body">
                         <div id="Formulaire">
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex()" id="selectP"></select>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app2_toolbox();" id="selectP"></select>
                                 <button
                                 class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
                             </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label><select onchange="selectedModel()" id="selectP2"><optgroup id="groupWithTop" label="With_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="2">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option value="6">Face 6</option><option value="7" id="groupWithTop_selected">Toutes faces en colonne</option><option value="8">Toutes faces en ligne</option><option value="9">Toutes faces x2</option></optgroup><optgroup id="groupWithoutTop" label="Without_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="3">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option selected="selected" value="6"  id="groupWithoutTop_selected">Toutes faces</option></optgroup></select>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label><select onchange="selectedModel(); app2_toolbox();" id="selectP2"><optgroup id="groupWithTop" label="With_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="2">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option value="6">Face 6</option><option value="7" id="groupWithTop_selected">Toutes faces en colonne</option><option value="8">Toutes faces en ligne</option><option value="9">Toutes faces x2</option></optgroup><optgroup id="groupWithoutTop" label="Without_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="3">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option selected="selected" value="6"  id="groupWithoutTop_selected">Toutes faces</option></optgroup></select>
                             </div>
                             <div
-                            class="form-group"><label class="d-block float-left" style="width:150px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="hauteur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="encoche" type="number" placeholder="mm" value="10"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Nez (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="nose" type="number" placeholder="mm" value="30"></div>
+                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="longueur" type="number" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="largeur" type="number" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="hauteur" type="number" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="encoche" type="number" placeholder="mm" value="10"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Nez (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="nose" type="number" placeholder="mm" value="30"></div>
                             
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
+
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app2_toolbox()" type="checkbox" id="formCheck-3"/></div>
 
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
