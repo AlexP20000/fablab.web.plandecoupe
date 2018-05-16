@@ -480,7 +480,7 @@
 	 		if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 4, origin_x + this.width_box, origin_y);
 	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 2, origin_x + this.width_box, origin_y + this.depth_box);
 	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 6, origin_x, origin_y + this.depth_box);
-	 		svg_builder.define_box_width_and_length(width_box + 10, depth_box + 10);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + 10);
 	 	} else if( (number_part == 5) || (number_part == 4) ) {
 	 		if(bool_top) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 1, origin_x, origin_y + this.wooden_plate_thickness);
 	 		if(bool_right) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.depth_box, 5, origin_x + this.height_box, origin_y + this.wooden_plate_thickness);
@@ -1451,20 +1451,20 @@ function app3_paper_stand(download) {
 	svg_builder.clear_svg("svgLayer2");
 	
 	// parameters from the form
-	wooden_plate_width = selectPlanche[indexSelection].width;
-	wooden_plate_length = selectPlanche[indexSelection].length;
-	wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
-	width_box = Number(document.getElementById("longueur").value); 		// = 200;
-	depth_box = Number(document.getElementById("largeur").value); 		// = 50;
-	height_box = Number(document.getElementById("hauteur").value); 		// = 50;
+	var wooden_plate_width = selectPlanche[indexSelection].width;
+	var wooden_plate_length = selectPlanche[indexSelection].length;
+	var wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
+	var width_box = Number(document.getElementById("longueur").value); 		// = 200;
+	var depth_box = Number(document.getElementById("largeur").value); 		// = 50;
+	var height_box = Number(document.getElementById("hauteur").value); 		// = 50;
 	var notch_size = Number(document.getElementById("encoche").value); 	// = 10;
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
 	
-	size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);	// = 50;	// is at 90 degree of his associated stand
-	size_between_stand = Number(document.getElementById("hauteurSeparation").value);		// = 120; 	// 12 cm minimum
-	stand_number = Number(document.getElementById("nombreEtage").value);					// = 3;		// at least 1 please
-	angle_degre = Number(document.getElementById("angle").value);							// = 40;	// the angle of rotation for each stands
+	var size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);	// = 50;	// is at 90 degree of his associated stand
+	var size_between_stand = Number(document.getElementById("hauteurSeparation").value);		// = 120; 	// 12 cm minimum
+	var stand_number = Number(document.getElementById("nombreEtage").value);					// = 3;		// at least 1 please
+	var angle_degre = Number(document.getElementById("angle").value);							// = 40;	// the angle of rotation for each stands
 
 	var app3_paper_stand = Object.create(Box_paper_stand);
 	app3_paper_stand.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, size_stand_front_part, size_between_stand, stand_number, angle_degre);
