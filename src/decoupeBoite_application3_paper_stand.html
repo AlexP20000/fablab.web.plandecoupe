@@ -40,20 +40,21 @@
 									<option value="8" selected>Toutes faces en 2 colonnes</option>
 								</optgroup></select>
                             </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteur" type="number" placeholder="mm" value="250"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="encoche" type="number" placeholder="mm" value="10"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="longueur" type="number" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="largeur" type="number" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteur" type="number" placeholder="mm" value="250"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="encoche" type="number" placeholder="mm" value="10"></div>
                             
-							<div class="form-group"><label class="d-block float-left" style="width:150px;">Nombres d'étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="nombreEtage" type="number" placeholder="mm" value="2"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Nombres d'étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="nombreEtage" type="number" placeholder="mm" value="2"></div>
                             </br>
-							<div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur de la partie avant d'un étage (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurPartieAvant" type="number" placeholder="mm" value="40"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur de la partie avant d'un étage (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurPartieAvant" type="number" placeholder="mm" value="40"></div>
                             </br></br>
-							<div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur entre deux étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurSeparation" type="number" placeholder="mm" value="120"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur entre deux étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurSeparation" type="number" placeholder="mm" value="120"></div>
                             </br>
-							<div class="form-group"><label class="d-block float-left" style="width:150px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" placeholder="mm" value="40"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" placeholder="mm" value="40"></div>
                             </br>
-							<div class="form-group"><label class="d-block float-left" style="width:150px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
+              <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne/externe :</label><input onchange="tafontionalphon" type="checkbox" id="formCheck-3"/></div>
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
