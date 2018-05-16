@@ -823,21 +823,19 @@ var Toolbox = {
 		var l_origin_x = origin_x;
 		var l_origin_y = origin_y;
 		
-		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
-		sizeBigNotch = NOTCH_SIZE * 2;
+		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 4)*nbNotch) / (nbNotch+1);
+		sizeBigNotch = NOTCH_SIZE * 4;
 		for(i = 1;i<=nbNotch*2+1; i++){
 			if(i%2 == 0){
-				NOTCH_SIZE = 10;
 				svg_builder.draw_line(l_origin_x, l_origin_y, sizeBigNotch, 0);
 				l_origin_x = l_origin_x + sizeBigNotch;
 			}
 			else{
-				NOTCH_SIZE = 10;
+				NOTCH_SIZE = NOTCH_SIZE * 2;
 				svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, 1, l_origin_x, origin_y);
 				//svg_builder.draw_line(l_origin_x, l_origin_y,sizeBetweenBigNotch, 0)
 				l_origin_x = l_origin_x + sizeBetweenBigNotch;
-				
-				NOTCH_SIZE = 10;
+				NOTCH_SIZE = NOTCH_SIZE / 2;
 			}				
 		}
 	},
@@ -855,22 +853,21 @@ var Toolbox = {
 	draw_base_side2:function(origin_x, origin_y, nbNotch, height_box, width_box, nose, depth_box){
 		var l_origin_x2 = origin_x;
 		var l_origin_y2 = origin_y;
-		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
-		sizeBigNotch = NOTCH_SIZE * 2;
+		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 4)*nbNotch) / (nbNotch+1);
+		sizeBigNotch = NOTCH_SIZE * 4;
 		total = 0;
 		for(i = 1;i<=nbNotch*2+1; i++){
 			if(i%2 == 0){
-				NOTCH_SIZE = 10;
 				svg_builder.draw_line(l_origin_x2, l_origin_y2 + depth_box,sizeBigNotch, 0);
 				l_origin_x2 = l_origin_x2 + sizeBigNotch;
-				NOTCH_SIZE = 10;
 				total += sizeBetweenBigNotch;
 			}
 			else{
-				NOTCH_SIZE = 10;
+				NOTCH_SIZE = NOTCH_SIZE * 2;
 				svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, 0, l_origin_x2, origin_y + depth_box);
 				l_origin_x2 = l_origin_x2 + sizeBetweenBigNotch;
 				total += sizeBigNotch;
+				NOTCH_SIZE = NOTCH_SIZE / 2;
 			}
 		}
 	},
@@ -888,18 +885,18 @@ var Toolbox = {
 	draw_top: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, rotate){
 		var l_origin_x = origin_x + this.oppose;
 		var l_origin_y = origin_y -(height_box-nose)/2;
-		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
-		sizeBigNotch = NOTCH_SIZE * 2;
+		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 4)*nbNotch) / (nbNotch+1);
+		sizeBigNotch = NOTCH_SIZE * 4;
 		for(i = 1;i<=nbNotch*2+1; i++){
-			if(i%2 == 1){
+			if(i%2 == 1){ // tiny
 				svg_builder.draw_line(l_origin_x, l_origin_y,sizeBetweenBigNotch, 0)
 				l_origin_x = l_origin_x + sizeBetweenBigNotch;
 			}
-			else{
-				NOTCH_SIZE = 15;
-				svg_builder.draw_path(wooden_plate_thickness, sizeBigNotch, rotate, l_origin_x, l_origin_y);
+			else{ // big
+				NOTCH_SIZE = NOTCH_SIZE * 2;
+				svg_builder.draw_path(this.wooden_plate_thickness, sizeBigNotch, rotate, l_origin_x, l_origin_y);
 				l_origin_x = l_origin_x + sizeBigNotch;
-				NOTCH_SIZE = 10;
+				NOTCH_SIZE = NOTCH_SIZE / 2;
 			}
 		}
 	},
@@ -917,19 +914,18 @@ var Toolbox = {
 	draw_bot: function(origin_x, origin_y, nbNotch, height_box, width_box, nose, rotate){
 		var l_origin_x = origin_x;
 		var l_origin_y = origin_y;
-		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
-		sizeBigNotch = NOTCH_SIZE * 2;
+		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 4)*nbNotch) / (nbNotch+1);
+		sizeBigNotch = NOTCH_SIZE * 4;
 		for(i = 1;i<=nbNotch*2+1; i++){
 			if(i%2 == 1){
-				NOTCH_SIZE = 10;
 				svg_builder.draw_path(wooden_plate_thickness, sizeBetweenBigNotch, rotate, l_origin_x, origin_y -(height_box-nose)/2);
 				l_origin_x = l_origin_x - sizeBetweenBigNotch;
 			}
 			else{
-				NOTCH_SIZE = 15;
+				NOTCH_SIZE = NOTCH_SIZE * 2;
 				svg_builder.draw_path(wooden_plate_thickness, sizeBigNotch, rotate, l_origin_x, origin_y -(height_box-nose)/2);
 				l_origin_x = l_origin_x - sizeBigNotch;
-				NOTCH_SIZE = 10;
+				NOTCH_SIZE = NOTCH_SIZE / 2;
 			}
 		}
 
@@ -1011,8 +1007,8 @@ var Toolbox = {
 		nbNotch = Math.round((width_box - this.oppose)/70);
 		l_origin_x = origin_x;
 		l_origin_y = origin_y;
-		sizeBigNotch = NOTCH_SIZE * 2;
-		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 2)*nbNotch) / (nbNotch+1);
+		sizeBigNotch = NOTCH_SIZE * 4;
+		sizeBetweenBigNotch = (width_box - this.oppose - (NOTCH_SIZE * 4)*nbNotch) / (nbNotch+1);
 		for(i = 1;i<=nbNotch*2+1; i++){
 			if(i%2 == 0){
 				svg_builder.draw_line(l_origin_x, l_origin_y,sizeBigNotch, 0)
