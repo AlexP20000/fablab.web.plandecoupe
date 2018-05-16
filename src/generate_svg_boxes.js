@@ -77,7 +77,7 @@
 	 *	encode the data from the svg tag into URI data, and then set those information directly to the a tag as "href".
 	 *	then we use the magic function "click()" that simulate a human click on this tag, which open the download yes/no window.
 	 */
-	 generate_svg_file: function () {
+	 generate_svg_file: function (file_name) {
 		// we delete our second layout and make a copie for re-putting it after the download operation
 		var svgLayer2 = document.getElementById("svgLayer2");
 	 	var parentElement = svgLayer2.parentElement;
@@ -102,7 +102,7 @@
 		// we set the uri content
 		document.getElementById("filesvg").setAttribute("href", encodedData);
 		// we set the file name downloaded
-		document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
+		document.getElementById("filesvg").setAttribute("download", file_name);
 		// our a tag is hidden, so we use the click function as we would click on it usualy
 		document.getElementById("filesvg").click();
 		// we re-put our second layout
@@ -1365,7 +1365,7 @@ function app1_close_or_open_box(download) {
 	var notch_size = Number(document.getElementById("encoche").value);   // = 10;
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
-	
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boite]";
 
 	// we create our object, depending on whether the checkbox is checked or not
 	var app1_close_or_open_box;
@@ -1391,7 +1391,7 @@ function app1_close_or_open_box(download) {
 		app1_close_or_open_box.draw_selected_item();
 	}
 	
-	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user
 	svg_builder.show_layer2();			// to show the result in the good scale
 }
 
@@ -1414,6 +1414,8 @@ function app2_toolbox(download){
 	nose = Number(document.getElementById("nose").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[outils]";
+
 
 	height_box = height_box - wooden_plate_thickness; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	depth_box = depth_box - ( 2 * wooden_plate_thickness ); // to correct the depth_box lack ( its the fact that we must count the wooden_plate_thickness ! )
@@ -1431,7 +1433,7 @@ function app2_toolbox(download){
 		  //Toolbox.draw_single_part(5,wooden_plate_thickness+40, wooden_plate_thickness+40, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
 		 //Toolbox.economize_laser_and_wood_one_box_nose_oppose(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
 		 
-		  if( download == true ) svg_builder.generate_svg_file();  
+		  if( download == true ) svg_builder.generate_svg_file(file_name);  
 		  svg_builder.show_layer2();
 		  
 		  // on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
@@ -1460,6 +1462,7 @@ function app3_paper_stand(download) {
 	var notch_size = Number(document.getElementById("encoche").value); 	// = 10;
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[presentoir]";
 	
 	var size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);	// = 50;	// is at 90 degree of his associated stand
 	var size_between_stand = Number(document.getElementById("hauteurSeparation").value);		// = 120; 	// 12 cm minimum
@@ -1487,6 +1490,6 @@ function app3_paper_stand(download) {
 	
 	app3_paper_stand.draw_selected_item();
 	
-	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user
 	svg_builder.show_layer2();								// to show the result in the good scale
 }
