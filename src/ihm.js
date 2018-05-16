@@ -127,6 +127,11 @@ function fileChangeEvent(){
     document.getElementById("encoche").value = result.notch;
     document.getElementById("formCheck-1").checked = result.close;
     document.getElementById("selectP").selectedIndex = result.selectedIndex;
+    document.getElementById("ormCheck-2").checked;
+    document.getElementById("nombreEtage").value = result.nombreEtage;
+    document.getElementById("hauteurPartieAvant").value = result.hauteurPartieAvant;
+    document.getElementById("hauteurSeparation").value = result.hauteurSeparation;
+    document.getElementById("angle").value = result.angle;
     updateSelectPlank(selectPlanche);
     checkValue();
 
@@ -156,7 +161,33 @@ function saveModelJson(){
   jsonObj.width = document.getElementById("largeur").value;
   jsonObj.height = document.getElementById("hauteur").value;
   jsonObj.notch = document.getElementById("encoche").value;
-  jsonObj.close = document.getElementById("formCheck-1").checked;
+  if(document.getElementById("formCheck-1")){
+    jsonObj.close = document.getElementById("formCheck-1").checked;
+  }
+  jsonObj.checkPLank = document.getElementById("formCheck-2").checked;
+  if(document.getElementById("nose")){
+    jsonObj.nose = document.getElementById("nose").value;
+  }
+
+  if(document.getElementById("nombreEtage")){
+    jsonObj.nombreEtage = document.getElementById("nombreEtage").value;
+  }
+
+  if(document.getElementById("hauteurPartieAvant")){
+    jsonObj.hauteurPartieAvant = document.getElementById("hauteurPartieAvant").value;
+  }
+
+  if(document.getElementById("hauteurSeparation")){
+    jsonObj.hauteurSeparation = document.getElementById("hauteurSeparation").value;
+  }
+
+  if(document.getElementById("angle")){
+    jsonObj.angle = document.getElementById("angle").value;
+  }
+
+
+
+
   jsonObj.selectedIndex = indexSelection;
 
   var myJSON = JSON.stringify(jsonObj); 

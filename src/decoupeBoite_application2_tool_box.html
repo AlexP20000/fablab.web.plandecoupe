@@ -28,7 +28,7 @@
                                 <button
                                 class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
                             </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label><select onchange="selectedModel()" id="selectP2"><optgroup id="groupWithTop" label="With_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="2">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option value="6">Face 6</option><option value="7" id="groupWithTop_selected">Toutes faces en colonne</option><option value="8">Toutes faces en ligne</option><option value="9">Toutes faces x2</option></optgroup><optgroup id="groupWithoutTop" label="Without_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="3">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option value="6"  id="groupWithoutTop_selected">Toutes faces</option><option value="7">Toutes faces x2</option><option value="8">Toutes faces x4</option></optgroup></select>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label><select onchange="selectedModel()" id="selectP2"><optgroup id="groupWithTop" label="With_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="2">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option value="6">Face 6</option><option value="7" id="groupWithTop_selected">Toutes faces en colonne</option><option value="8">Toutes faces en ligne</option><option value="9">Toutes faces x2</option></optgroup><optgroup id="groupWithoutTop" label="Without_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="3">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option selected="selected" value="6"  id="groupWithoutTop_selected">Toutes faces</option></optgroup></select>
                             </div>
                             <div
                             class="form-group"><label class="d-block float-left" style="width:150px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="longueur" type="number" placeholder="mm" value="300"></div>
@@ -36,14 +36,13 @@
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="hauteur" type="number" placeholder="mm" value="150"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="encoche" type="number" placeholder="mm" value="10"></div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Nez (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="nose" type="number" placeholder="mm" value="30"></div>
-                            <div class="form-group">
-                                <div class="form-check"><input onchange="onCheckboxChange()" class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Boite fermée</label></div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2" onclick="svg_builder.show_layer2()"><label class="form-check-label" for="formCheck-2">Faire apparaître les dimensions de la planche sur le plan de découpe</label></div>
-                            </div>
+                            
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
+
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app2_toolbox(true)" >Générer la boite</button></div>
+                            <button id="genButton" class="btn btn-primary" type="button" onclick="app2_toolbox(true)" >Télécharger la boite</button></div>
                             <a hidden id="json" href=""></a>
                         </div>
                     </div>
@@ -59,7 +58,7 @@
                             <div class="tab-pane active" role="tabpanel" id="tab-1">
 								</br>
                                 <img id="myImg" src="assets/img/tool_box/tool_box_labelled.JPG" style="width:100%;">
-                                <p><br>Ce formulaire permet de générer le plan de découpe d'une boîte à outils, ce plan est au format '.svg'. Le but principal est d'économiser au 
+                                <p class="text-justify"><br>Ce formulaire permet de générer le plan de découpe d'une boîte à outils, ce plan est au format '.svg'. Le but principal est d'économiser au 
                                   maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
                                   de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
                                   ou simplement un des morceaux / côtés de la boîte.<br><br></p>
@@ -180,16 +179,33 @@
   <script src="assets/js/jquery.min.js"></script> 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
 
-  <footer>
+  <div class="footer-clean">
+    <footer>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Liens</h3>
+                    <ul>
+                        <li><a href="http://uboopenfactory.univ-brest.fr/">Ubo OpenFactory</a></li>
+                        <li><a href="https://github.com/AlexP20000/fablab.web.plandecoupe/">Github</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Développeur</h3>
+                    <ul>
+                        <li>Murat Axel</li>
+                        <li>Mailliu Alexandre</li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Copyright</h3>
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
 
-    <a href="http://uboopenfactory.univ-brest.fr/">Site de l'ubo OpenFactory</a>
-    --------------------------------------
-    <a href="https://github.com/AlexP20000/fablab.web.plandecoupe">Github de l'application</a>
-    --------------------------------------
-    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />Ce(tte) œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a>
-    <p>Licence Creative Commons Attribution 4.0 International</p>
-
-  </footer>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
 
 </body>
 
