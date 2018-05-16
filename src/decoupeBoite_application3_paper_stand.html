@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-body">
                         <div id="Formulaire">
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex()" id="selectP"></select>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app3_paper_stand();" id="selectP"></select>
                                 <button
                                 class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
                             </div>
@@ -54,7 +54,7 @@
 							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" placeholder="mm" value="40"></div>
                             </br>
 							<div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
-              <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="tafontionalphon" type="checkbox" id="formCheck-3"/></div>
+              <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app3_paper_stand()" type="checkbox" id="formCheck-3"/></div>
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
