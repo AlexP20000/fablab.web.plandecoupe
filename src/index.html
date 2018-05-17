@@ -74,33 +74,14 @@
         </div>-->
     </div>
 
-    <div class="footer-clean">
-        <footer>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="http://uboopenfactory.univ-brest.fr/">Ubo OpenFactory</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Développeur</h3>
-                        <ul>
-                            <li>Murat Axel</li>
-                            <li>Mailliu Alexandre</li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Copyright</h3>
-                        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+    <div id="content-footer"></div>
+    <script id="footer-template" type="text/x-handlebars-template">
+    {{> footer}}
+    </script>
 
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-    
+    <script src="handlebars-v4.0.11.js"></script>
+    <script src="templates/header.js"></script>
+    <script src="templates/footer.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

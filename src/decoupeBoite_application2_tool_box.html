@@ -11,11 +11,10 @@
 
 <body onLoad="checkValue()">
     <div class="container">
-        <div class="row" style="margin-top:5px;">
-            <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a>
-                <h1 class="text-center">Générateur de fichier svg pour découpe de boites</h1>
-            </div>
-        </div>
+        <div id="content-header"></div>
+        <script id="header-template" type="text/x-handlebars-template">
+          {{> header}}
+        </script>
         <div class="row" style="margin-top:15px;" align="center">
             <div class="col-md-6">
                 <div class="card">
@@ -176,38 +175,19 @@
       <!-- Modal Caption (Image Text) --> 
       <div id="caption"></div> 
   </div> 
+
+  <div id="content-footer"></div>
+  <script id="footer-template" type="text/x-handlebars-template">
+    {{> footer}}
+  </script>
+
+  <script src="handlebars-v4.0.11.js"></script>
   <script src="ihm.js"></script> 
+  <script src="templates/header.js"></script>
+  <script src="templates/footer.js"></script>
   <script src="generate_svg_boxes.js"></script> 
   <script src="assets/js/jquery.min.js"></script> 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
-
-  <div class="footer-clean">
-    <footer>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Liens</h3>
-                    <ul>
-                        <li><a href="http://uboopenfactory.univ-brest.fr/">Ubo OpenFactory</a></li>
-                        <li><a href="https://github.com/AlexP20000/fablab.web.plandecoupe/">Github</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Développeur</h3>
-                    <ul>
-                        <li>Murat Axel</li>
-                        <li>Mailliu Alexandre</li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Copyright</h3>
-                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
 
 </body>
 
