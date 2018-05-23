@@ -1707,17 +1707,17 @@ var Collecting_box = {
 	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.height_box + 10);
 		}
 		else if( (number_part == 2 ) || (number_part == 6) ) { // ceilling and floor plate part 
-			if(bool_top) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 0, origin_x, origin_y, 0);
+			if(bool_top) svg_builder.draw_path_tight(this.wooden_plate_thickness, this.width_box - this.wooden_plate_thickness*2, 0, origin_x, origin_y, 0);
 			var parts_side = (this.depth_box - this.wooden_plate_thickness*2)/5;
 			if(bool_right) { 
-				svg_builder.draw_line(origin_x + this.width_box, origin_y, 0, this.wooden_plate_thickness);
-				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box, origin_y + this.wooden_plate_thickness, 0);
-				svg_builder.draw_line(origin_x + this.width_box, origin_y + parts_side + this.wooden_plate_thickness, 0, parts_side);
-				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box, origin_y + parts_side*2 + this.wooden_plate_thickness, 0);
-				svg_builder.draw_line(origin_x + this.width_box, origin_y + parts_side*3 + this.wooden_plate_thickness, 0, parts_side);
-				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box, origin_y + parts_side*4 + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y, 0, this.wooden_plate_thickness);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side + this.wooden_plate_thickness, 0, parts_side);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*2 + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*3 + this.wooden_plate_thickness, 0, parts_side);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*4 + this.wooden_plate_thickness, 0);
 			}
-	 		if(bool_bot) svg_builder.draw_line(origin_x + this.width_box, origin_y + this.depth_box - this.wooden_plate_thickness, -this.width_box, 0);
+	 		if(bool_bot) svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.depth_box - this.wooden_plate_thickness, - this.width_box + this.wooden_plate_thickness*2, 0);
 			if(bool_left) {
 				svg_builder.draw_line(origin_x, origin_y, 0, this.wooden_plate_thickness);
 				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 4, origin_x, origin_y + this.wooden_plate_thickness, 0);
@@ -1726,7 +1726,7 @@ var Collecting_box = {
 				svg_builder.draw_line(origin_x, origin_y + parts_side*3 + this.wooden_plate_thickness, 0, parts_side);
 				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 4, origin_x, origin_y + parts_side*4 + this.wooden_plate_thickness, 0);
 			}
-	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + 10);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + this.wooden_plate_thickness * 2+ 10);
 		}
 		else if( number_part == 3 ) { // back plate part
 			if(bool_top) svg_builder.draw_line(origin_x, origin_y, this.width_box, 0);
@@ -1774,10 +1774,10 @@ var Collecting_box = {
 	 economize_laser_and_wood_all_part: function (origin_x, origin_y) {
 	 	this.draw_single_part(6,origin_x, origin_y + this.wooden_plate_thickness, true, true, true, true);
 	 	this.draw_single_part(2,origin_x, origin_y + this.wooden_plate_thickness*0 + this.depth_box, true, true, true, true);
-		this.draw_single_part(5,origin_x + this.wooden_plate_thickness*2 + this.width_box, origin_y + this.depth_box*2 - this.height_box, true, true, true, true);
-		this.draw_single_part(4,origin_x + this.wooden_plate_thickness*2 + this.width_box, origin_y + this.depth_box*2, true, true, true, true);
-		this.draw_single_part(1,origin_x + this.wooden_plate_thickness*2, origin_y + this.depth_box*2, true, false, true, true);
-		this.draw_single_part(3,origin_x + this.wooden_plate_thickness*2, origin_y + this.depth_box*2 + this.height_box + this.wooden_plate_thickness, true, true, true, true);
+		this.draw_single_part(5,origin_x + this.width_box, origin_y + this.depth_box*2 - this.height_box, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y + this.depth_box*2, true, true, true, true);
+		this.draw_single_part(1,origin_x, origin_y + this.depth_box*2, true, false, true, true);
+		this.draw_single_part(3,origin_x, origin_y + this.depth_box*2 + this.height_box, true, true, true, true);
 		svg_builder.define_box_width_and_length(this.width_box + this.depth_box + this.opposite + 10, this.hypotenuse_2 + this.height_box + this.depth_box*2 + this.big_notch_depth + 10);
 	 },
 
@@ -2016,7 +2016,10 @@ function app5_collecting_box(download) {
 	var app5_collecting_box = Object.create(Collecting_box);
 	app5_collecting_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, angle_degre, big_notch_depth);
 	
-	height_box = height_box - wooden_plate_thickness * 2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
+	// to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! ), it depends on the way we choose to build our Collecting_box object, it could be simplified later on of course.
+	height_box = height_box - wooden_plate_thickness * 2; 
+	width_box = width_box - wooden_plate_thickness * 2;
+	depth_box = depth_box - wooden_plate_thickness * 2;
 	
 	// we initialize the parameters and check them if error / invalid values are found
 	if( !checkValue("longueur","largeur","hauteur","encoche","angle") ) {
