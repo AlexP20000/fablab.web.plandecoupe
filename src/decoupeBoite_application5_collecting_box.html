@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row" style="margin-top:5px;">
             <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a>
-                <h1 class="text-center">Générateur de fichier svg pour découpe de présentoir</h1>
+                <h1 class="text-center">Générateur de fichier svg pour découpe de boites</h1>
             </div>
         </div>
         <div class="row" style="margin-top:15px;" align="center">
@@ -24,43 +24,40 @@
                     </div>
                     <div class="card-body">
                         <div id="Formulaire">
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app3_paper_stand();" id="selectP"></select>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app5_collecting_box();" id="selectP"></select>
                                 <button
                                 class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
                             </div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label>
-								<select onchange="selectedModel(); app3_paper_stand();" id="selectP2">
-									<optgroup id="groupWithTop" label="Model :">
-										<option value="1">Face 1</option>
-										<option value="2">Face 2</option>
-										<option value="3">Face 3</option>
-										<option value="4">Face 4</option>
-										<option value="5">Toutes faces en 1 ligne</option>
-										<option value="6">Toutes faces en 2 lignes</option>
-										<option value="7">Toutes faces en 1 colonne</option>
-										<option value="8" selected>Toutes faces en 2 colonnes</option>
-									</optgroup>
-								</select>
+							<select onchange="selectedModel(); app5_collecting_box();" id="selectP2">
+								<optgroup label="With_Top">
+									<option value="1">Face 1</option>
+									<option value="2">Face 2</option>
+									<option value="3">Face 3</option>
+									<option value="4">Face 4</option>
+									<option value="5">Face 5</option>
+									<option value="6">Face 6</option>
+									<option value="7" id="groupWithTop_selected">Toutes faces</option>
+								</optgroup>
+							</select>
                             </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteur" type="number" placeholder="mm" value="250"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="encoche" type="number" placeholder="mm" value="10"></div>
-                            
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Nombres d'étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="nombreEtage" type="number" placeholder="mm" value="2"></div>
+                            <div
+                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="longueur" type="number" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="largeur" type="number" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="hauteur" type="number" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="encoche" type="number" placeholder="mm" value="10"></div>
+
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="angle" type="number" placeholder="mm" value="40"></div>
                             </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur de la partie avant d'un étage (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurPartieAvant" type="number" placeholder="mm" value="40"></div>
-                            </br></br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur entre deux étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurSeparation" type="number" placeholder="mm" value="120"></div>
-                            </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" placeholder="mm" value="40"></div>
-                            </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
-              <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app3_paper_stand()" type="checkbox" id="formCheck-3"/></div>
+							
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
+
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app5_collecting_box();" type="checkbox" id="formCheck-3"/></div>
+
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app3_paper_stand(true)" >Télécharger la boite</button></div>
+                            <button id="genButton" class="btn btn-primary" type="button" onclick="app5_collecting_box(true)" >Télécharger la boite</button></div>
                             <a hidden id="json" href=""></a>
                         </div>
                     </div>
@@ -75,11 +72,11 @@
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="tab-1">
 								</br>
-                                <img id="myImg" src="assets/img/paper_stand/paper_stand_labelled.JPG" style="width:100%;">
-                                <p class="text-justify"><br>Ce formulaire permet de générer le plan de découpe d'un présentoir de prospectus, ce plan est au format '.svg'. Le but principal est d'économiser au 
+                                <img id="myImg" src="assets/img/opened_closed_box/closed_box_labelled.JPG" style="width:100%;">
+                                <p class="text-justify"><br>Ce formulaire permet de générer le plan de découpe d'une boîte fermée, ce plan est au format '.svg'. Le but principal est d'économiser au 
                                   maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
                                   de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
-								  en ligne, en colonne, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
+                                  ou deux boîte entière, ou un sous-ensemble, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
                               </div>
                               <div class="tab-pane" role="tabpanel" id="tab-2">
 								 </br>
@@ -157,7 +154,8 @@
 								</svg>
      </div>
      <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br> <img id="img_shema_paper_stand" src="assets/img/paper_stand/scheme_paper_stand.png" alt="scheme_paper_stand" height="100%" width="100%" ></p>
+        <p><br> <img id="img_shema_boite_ouverte" src="assets/img/opened_closed_box/scheme_opened_box.png" alt="scheme_opened_box" height="100%" width="100%" >
+				<img id="img_shema_boite_ferme" src="assets/img/opened_closed_box/scheme_closed_box.png" alt="scheme_closed_box" height="100%" width="100%" ></p>
     </div>
 </div>
 </div>
@@ -224,7 +222,6 @@
         </div>
     </footer>
 </div>
-  
 </body>
 
 </html>
