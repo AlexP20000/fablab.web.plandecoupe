@@ -42,18 +42,18 @@
 									</optgroup>
 								</select>
                             </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteur" type="number" placeholder="mm" value="250"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="encoche" type="number" placeholder="mm" value="10"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteur" type="number" min="0" placeholder="mm" value="250"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
                             
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Nombres d'étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="nombreEtage" type="number" placeholder="mm" value="2"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Nombres d'étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="nombreEtage" type="number" min="0" placeholder="mm" value="2"></div>
                             </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur de la partie avant d'un étage (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurPartieAvant" type="number" placeholder="mm" value="40"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur de la partie avant d'un étage (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurPartieAvant" type="number" min="0" placeholder="mm" value="40"></div>
                             </br></br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur entre deux étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurSeparation" type="number" placeholder="mm" value="120"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur entre deux étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurSeparation" type="number" min="0" placeholder="mm" value="120"></div>
                             </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" placeholder="mm" value="40"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" min="0" placeholder="mm" value="40"></div>
                             </br>
 							<div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
               <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app3_paper_stand()" type="checkbox" id="formCheck-3"/></div>
@@ -173,9 +173,9 @@
                     <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
                     (cela rajoutera des planches provisoirement)</p>
                     <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" min="0" placeholder="mm" /></div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
             </div>

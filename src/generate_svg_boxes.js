@@ -540,6 +540,17 @@
 	},
 
 	/**
+	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 */
+	check_parameters: function() {
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( this.width_box < 40 ) return 2;
+		if( this.depth_box < 40 ) return 3;
+		if( this.height_box < 40 ) return 4;
+		return 0; // no problem
+	},
+	
+	/**
 	 *	function that draws the part 'number_part' of the Box_with_top
 	 *	@param number_part {int} the number of the part of the Box_with_top
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
@@ -686,6 +697,17 @@
 			this.depth_box += (wooden_plate_thickness * 2);
 			this.height_box += (wooden_plate_thickness);
 		}
+	},
+	
+	/**
+	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 */
+	check_parameters: function() {
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( this.width_box < 40 ) return 2;
+		if( this.depth_box < 40 ) return 3;
+		if( this.height_box < 40 ) return 4;
+		return 0; // no problem
 	},
 	
 	/**
@@ -1242,7 +1264,7 @@ var Box_paper_stand = {
 	 *	@see <a href="#img_paper_stand_jsdoc" >img_paper_stand_jsdoc</a>
 	 */
 	check_geometry_parameters: function() {
-		//if( this.triangle_opposite_side > (this.height_box / this.stand_number) ) return 1; // for a stand_number correct
+		if( this.stand_number > Math.ceil( (this.height_box - this.triangle_opposite_side) / this.size_between_stand) ) return 1; // for a stand_number correct
 		return 0; // no problem
 	},
 	
@@ -1662,6 +1684,8 @@ var Collecting_box = {
 	 */
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( this.angle_degre < 1 ) return 2; // we need an angle at least of 1 degre
+		if( this.angle_degre > 60 ) return 3; // we need an angle at least of 1 degre
 		return 0; // no problem
 	},
 	
@@ -1677,6 +1701,7 @@ var Collecting_box = {
 		this.adjacent_2 = ( this.opposite / Math.tan(this.angle_degre * (Math.PI / 180)) );
 		this.hypotenuse_1 = ( this.opposite / Math.sin(45 * (Math.PI / 180)) );
 		this.hypotenuse_2 = ( this.opposite / Math.sin(this.angle_degre * (Math.PI / 180)) );
+		this.depth_box = this.depth_box - this.opposite; // so that the length will be as the user wanted it to be, such as '30cm' instead of '30cm + opposite', already big enough...
 	},
 	
 	/**
@@ -1707,7 +1732,10 @@ var Collecting_box = {
 	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.height_box + 10);
 		}
 		else if( (number_part == 2 ) || (number_part == 6) ) { // ceilling and floor plate part 
-			if(bool_top) svg_builder.draw_path_tight(this.wooden_plate_thickness, this.width_box - this.wooden_plate_thickness*2, 0, origin_x, origin_y, 0);
+			if(bool_top) {
+				if( number_part == 2 ) svg_builder.draw_path_tight(this.wooden_plate_thickness, this.width_box - this.wooden_plate_thickness*2, 0, origin_x, origin_y, 0);
+				if( number_part == 6 ) svg_builder.draw_line(origin_x, origin_y, this.width_box - this.wooden_plate_thickness*2, 0);
+			}
 			var parts_side = (this.depth_box - this.wooden_plate_thickness*2)/5;
 			if(bool_right) { 
 				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y, 0, this.wooden_plate_thickness);
@@ -1717,7 +1745,10 @@ var Collecting_box = {
 				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*3 + this.wooden_plate_thickness, 0, parts_side);
 				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*4 + this.wooden_plate_thickness, 0);
 			}
-	 		if(bool_bot) svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.depth_box - this.wooden_plate_thickness, - this.width_box + this.wooden_plate_thickness*2, 0);
+	 		if(bool_bot) {
+				if( number_part == 2 ) svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.depth_box - this.wooden_plate_thickness, - this.width_box + this.wooden_plate_thickness*2, 0);
+				if( number_part == 6 ) svg_builder.draw_path_tight(this.wooden_plate_thickness, this.width_box - this.wooden_plate_thickness*2, 2, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.depth_box - this.wooden_plate_thickness, 0);
+			}
 			if(bool_left) {
 				svg_builder.draw_line(origin_x, origin_y, 0, this.wooden_plate_thickness);
 				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 4, origin_x, origin_y + this.wooden_plate_thickness, 0);
@@ -1772,13 +1803,13 @@ var Collecting_box = {
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 */
 	 economize_laser_and_wood_all_part: function (origin_x, origin_y) {
-	 	this.draw_single_part(6,origin_x, origin_y + this.wooden_plate_thickness, true, true, true, true);
-	 	this.draw_single_part(2,origin_x, origin_y + this.wooden_plate_thickness*0 + this.depth_box, true, true, true, true);
-		this.draw_single_part(5,origin_x + this.width_box, origin_y + this.depth_box*2 - this.height_box, true, true, true, true);
-		this.draw_single_part(4,origin_x + this.width_box, origin_y + this.depth_box*2, true, true, true, true);
-		this.draw_single_part(1,origin_x, origin_y + this.depth_box*2, true, false, true, true);
-		this.draw_single_part(3,origin_x, origin_y + this.depth_box*2 + this.height_box, true, true, true, true);
-		svg_builder.define_box_width_and_length(this.width_box + this.depth_box + this.opposite + 10, this.hypotenuse_2 + this.height_box + this.depth_box*2 + this.big_notch_depth + 10);
+		this.draw_single_part(2,origin_x + this.wooden_plate_thickness, origin_y, true, true, true, true);
+		this.draw_single_part(6,origin_x + this.wooden_plate_thickness, origin_y + this.depth_box - this.wooden_plate_thickness, false, true, false, true);
+		this.draw_single_part(5,origin_x + this.width_box + this.wooden_plate_thickness*2, origin_y + this.big_notch_depth, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box + this.wooden_plate_thickness*2, origin_y + this.height_box + this.big_notch_depth, true, true, true, true);
+		this.draw_single_part(1,origin_x, origin_y + this.depth_box*2 - this.wooden_plate_thickness*3, true, true, true, true);
+		this.draw_single_part(3,origin_x, origin_y + this.depth_box*2 + this.height_box - this.wooden_plate_thickness*3 + this.wooden_plate_thickness, true, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box + this.depth_box + this.opposite + 10, Math.max(this.depth_box*2, this.height_box) + this.hypotenuse_2 + this.height_box + this.big_notch_depth + 10);
 	 },
 
 	/**
@@ -1826,7 +1857,6 @@ function app1_close_or_open_box(download) {
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
 	
-
 	// we create our object, depending on whether the checkbox is checked or not
 	var app1_close_or_open_box;
 	if ( document.getElementById("formCheck-1").checked ) {
@@ -1841,6 +1871,10 @@ function app1_close_or_open_box(download) {
 	app1_close_or_open_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
 	if( !checkValue("longueur","largeur","hauteur","encoche") ) {
 		console.log("error parameters, there is not only positive integer" );
+		return;
+	}
+	else if( app1_close_or_open_box.check_parameters() != 0 ) { 
+		console.log("error, to detail : " + app1_close_or_open_box.check_parameters()); 
 		return;
 	}
 	
@@ -1888,6 +1922,10 @@ function app2_toolbox(download){
 		
 	if( !checkValue("longueur","largeur","hauteur","encoche","nose") ) {
 		console.log("error parameters, there is not only positive integer" );
+		return;
+	}
+	else if( app1_close_or_open_box.check_parameters() != 0 ) { 
+		console.log("error, to detail : " + app1_close_or_open_box.check_parameters()); 
 		return;
 	}
 
@@ -2018,7 +2056,7 @@ function app5_collecting_box(download) {
 	
 	// to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! ), it depends on the way we choose to build our Collecting_box object, it could be simplified later on of course.
 	height_box = height_box - wooden_plate_thickness * 2; 
-	width_box = width_box - wooden_plate_thickness * 2;
+	width_box = width_box - wooden_plate_thickness * 3;
 	depth_box = depth_box - wooden_plate_thickness * 2;
 	
 	// we initialize the parameters and check them if error / invalid values are found

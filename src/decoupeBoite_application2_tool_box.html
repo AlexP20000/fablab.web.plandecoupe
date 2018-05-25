@@ -31,11 +31,11 @@
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label><select onchange="selectedModel(); app2_toolbox();" id="selectP2"><optgroup id="groupWithTop" label="With_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="2">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option value="6">Face 6</option><option value="7" id="groupWithTop_selected">Toutes faces en colonne</option><option value="8">Toutes faces en ligne</option><option value="9">Toutes faces x2</option></optgroup><optgroup id="groupWithoutTop" label="Without_Top"><option value="1">Face 1</option><option value="2">Face 2</option><option value="3">Face 3</option><option value="4">Face 4</option><option value="5">Face 5</option><option selected="selected" value="6"  id="groupWithoutTop_selected">Toutes faces</option></optgroup></select>
                             </div>
                             <div
-                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="hauteur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="encoche" type="number" placeholder="mm" value="10"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Nez (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="nose" type="number" placeholder="mm" value="30"></div>
+                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="hauteur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Nez (mm) :&nbsp;</label><input onkeyup ="app2_toolbox()" id="nose" type="number" min="0" placeholder="mm" value="30"></div>
                             
                             <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
 
@@ -157,9 +157,9 @@
                     <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
                     (cela rajoutera des planches provisoirement)</p>
                     <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" min="0" placeholder="mm" /></div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
             </div>

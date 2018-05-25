@@ -42,12 +42,12 @@
 							</select>
                             </div>
                             <div
-                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="hauteur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="encoche" type="number" placeholder="mm" value="10"></div>
+                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="hauteur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
 
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="angle" type="number" placeholder="mm" value="40"></div>
+							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison (mm) :&nbsp;</label><input onkeyup ="app5_collecting_box()" id="angle" type="number" min="0" placeholder="mm" value="40"></div>
                             </br>
 							
                             <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
@@ -72,7 +72,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="tab-1">
 								</br>
-                                <img id="myImg" src="assets/img/opened_closed_box/closed_box_labelled.JPG" style="width:100%;">
+                                <img id="myImg" src="assets/img/collecting_box/collecting_box_labelled.JPG" style="width:100%;" alt="collecting_box_labelled.JPG" >
                                 <p class="text-justify"><br>Ce formulaire permet de générer le plan de découpe d'une boîte fermée, ce plan est au format '.svg'. Le but principal est d'économiser au 
                                   maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
                                   de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
@@ -154,8 +154,7 @@
 								</svg>
      </div>
      <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br> <img id="img_shema_boite_ouverte" src="assets/img/opened_closed_box/scheme_opened_box.png" alt="scheme_opened_box" height="100%" width="100%" >
-				<img id="img_shema_boite_ferme" src="assets/img/opened_closed_box/scheme_closed_box.png" alt="scheme_closed_box" height="100%" width="100%" ></p>
+        <p><br> <img id="img_shema_boite_ouverte" src="assets/img/collecting_box/scheme_collecting_box.png" alt="scheme_collecting_box" height="100%" width="100%"></p>
     </div>
 </div>
 </div>
@@ -171,9 +170,9 @@
                     <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
                     (cela rajoutera des planches provisoirement)</p>
                     <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" min="0" placeholder="mm" /></div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
             </div>
