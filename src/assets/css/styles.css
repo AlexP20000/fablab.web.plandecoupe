@@ -3,6 +3,11 @@ ul {
   padding: 0;
   margin: 0;
 }
+.footer-clean {
+  font:initial;
+  background-color:lightgrey;
+}
+
 
 .tab-content{
 	max-height:480px;
