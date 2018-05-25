@@ -226,43 +226,95 @@
 	},
 	
 	/**
-	 * function that draws a simple line from a (x,y) to b (x,y)
-	 * @param {int} Ax the x (abscissa) initial position
-	 * @param {int} Ay the y (ordinate) initial position
-	 * @param {int} Bx the x (abscissa) position where we must move from Ax
-	 * @param {int} By the y (ordinate) position where we must move from Ay
+	 *	function that do the same as draw_path but with tightier notches
+	 *	@see <a href="#.draw_path_rectangle" >draw_path_rectangle()</a>
+	 * 	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
+	 * 	@param size {int} is the length for which we have to make a path
+	 * 	@param angle {int} is the angle you want to rotate your path
+	 * 	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 * 	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 */
+	draw_path_rectangle_tight: function(wooden_plate_thickness, size, angle, draw_origin_x, draw_origin_y) {
+		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size + wooden_plate_thickness*2, true); 	// gets the good values to draw
+		tab_coordinate = tab_coordinate.split(' ');
+		tab_coordinate[1] = "0,0"; // we delete the "thickness,0" values
+		tab_coordinate = tab_coordinate.join(' ');
+		tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
+		svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
+	},
+	
+	/**
+	 * 	function that draws a circle using svg path tag
+	 * 	@param size {int} is the length for which we have to make a path
+	 * 	@param angle {int} is the angle you want to rotate your path
+	 * 	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 * 	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 */
+	draw_path_circle: function(size, angle, draw_origin_x, draw_origin_y) {
+		tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " a 1,1 0 0,0 " + size + ",0 a 1,1 0 0,0 " + -size +",0";
+		svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
+	},
+	
+	/**
+	 * 	function that draws a half circle using svg path tag
+	 *	@see <a href="#.draw_path_circle" >draw_path_circle()</a>
+	 * 	@param size {int} is the length for which we have to make a path
+	 * 	@param angle {int} is the angle you want to rotate your path
+	 * 	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 * 	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 *	@param boolean_down {boolean} draw a negative half circle, if true the circle points downwards, else ( by default ) it point upwards
+	 */
+	draw_path_half_circle: function(size, angle, draw_origin_x, draw_origin_y, boolean_down) {
+		if(boolean_down) {
+			tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " a 1,1 0 0,1 " + size + ",0";
+		} else {
+			tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " a 1,1 0 0,0 " + size + ",0";
+		}
+		svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
+	},
+	
+	/**
+	 *	function that draws a simple line from a (x,y) to b (x,y)
+	 *	@param {int} Ax the x (abscissa) initial position
+	 *	@param {int} Ay the y (ordinate) initial position
+	 *	@param {int} Bx the x (abscissa) position where we must move from Ax
+	 *	@param {int} By the y (ordinate) position where we must move from Ay
 	 */
 	 draw_line: function (Ax, Ay, Bx, By,angle=0) {
 		var tab_coordinate = "m " + Ax + "," + Ay + " " + Bx + "," + By + " "; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
-		svg_builder.create_path(tab_coordinate, 0, Ax, Ay);
+		svg_builder.create_path(tab_coordinate, angle, Ax, Ay);
 	},
 
 	/**
-	 * function that create a string containing the value of the path depending on a (x,y) origin and using rotation eventually.
-	 * return the tab_coordinate which contains all the cuple (x,y) to draw a path
-	 * @param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
-	 * @param size {int} is the length for which we have to make a path
-	 * @param rotate_case {int} is the case we want to use, there is 8 differents
-	 * @see <a href="#.rotate" >rotate()</a>
-	 * @param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
-	 * @param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 *	function that create a string containing the value of the path depending on a (x,y) origin and using rotation eventually.
+	 *	return the tab_coordinate which contains all the cuple (x,y) to draw a path
+	 *	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
+	 *	@param size {int} is the length for which we have to make a path
+	 *	@param rotate_case {int} is the case we want to use, there is 8 differents
+	 *	@see <a href="#.rotate" >rotate()</a>
+	 *	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 *	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 *	@param angle {int} is the angle you want to rotate your path
 	 */
-	draw_path: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y) {
+	draw_path: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle=0) {
 		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
 		tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case) 				// rotate them if need be
 		tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
-		svg_builder.create_path(tab_coordinate, 0, draw_origin_x, draw_origin_y);
+		svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
 	},
 
 
 	/**
-	 * function that do the same as draw_path, but change the total size to make it able to be used for the left and right piece of the box which are tinier on the sides
-	 * @param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
-	 * @param size {int} is the length for which we have to make a path
-	 * @param rotate_case {int} is the case we want to use, there is 8 differents
-	 * @see <a href="#.rotate" >rotate()</a>
-	 * @param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
-	 * @param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 *	function that do the same as draw_path, but change the total size to make it able to be used for the left and right piece of the box which are tinier on the sides
+	 *	reduce the size to ( size - 2 * wooden_plate_thickness ) so it will be able to match with the other part of the box perfectly
+	 *	DEPRACATED, dont use it anymore
+	 *	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
+	 *	@param size {int} is the length for which we have to make a path
+	 *	@param rotate_case {int} is the case we want to use, there is 8 differents
+	 *	@see <a href="#.rotate" >rotate()</a>
+	 *	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 *	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 *	@deprecated
 	 */
 	draw_path_right_left_correction: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y) {
 		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size, false); 	// gets the good values to draw
@@ -273,6 +325,28 @@
 		svg_builder.create_path(tab_coordinate.join(' '),0, draw_origin_x, draw_origin_y);
 	},
 	
+	/**
+	 *	function that do the same as draw_path but with tightier notches
+	 *	@see <a href="#.draw_path" >draw_path()</a>
+	 *	@param wooden_plate_thickness {int} is the thickness of the plate, used for the depth of the notch
+	 *	@param size {int} is the length for which we have to make a path
+	 *	@param rotate_case {int} is the case we want to use, there is 8 differents
+	 *	@see <a href="#.rotate" >rotate()</a>
+	 *	@param draw_origin_x {int} is the x (abscissa) position where we start the drawing.
+	 *	@param draw_origin_y {int} is the y (ordinate) position where we start the drawing.
+	 *	@param angle {int} is the angle you want to rotate your path
+	 */
+	draw_path_tight: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle) {
+		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size + wooden_plate_thickness*2, false); 	// gets the good values to draw
+		tab_coordinate = tab_coordinate.split(' ');
+		tab_coordinate[1] = "0,0"; tab_coordinate[tab_coordinate.length - 1] = "0,0";		// we delete the twos "thickness,0" values
+		tab_coordinate = tab_coordinate.join(' ');
+		tab_coordinate = svg_builder.rotate_path(tab_coordinate, rotate_case);				// rotate them if need be
+		tab_coordinate = "m " + draw_origin_x + "," + draw_origin_y + " " + tab_coordinate; // just put the relative mod for svg path "m" and take start drawing at (draw_origin_x, draw_origin_y)
+		svg_builder.create_path(tab_coordinate, angle, draw_origin_x, draw_origin_y);
+	},
+	
+	
 	/** 
 	 * 	creates the tag elements necessary and put them inside the svg tag using the tab_coordinate values.
 	 *	@param {string} tab_coordinate the values (x,y) of the different path position 
@@ -282,6 +356,7 @@
 		var svg = document.getElementById("svgLayer1");
 		var newpath = document.createElementNS(svg.namespaceURI,"path");  
 		newpath.setAttribute("d", tab_coordinate);
+		newpath.setAttribute("fill", "transparent");
 		// we need to put "angle draw_origin_x draw_origin_y" as a rotation to delete the offset made by default by "rotate(angle)"
 		newpath.setAttribute("transform", "rotate(" + angle + " " + draw_origin_x + " " + draw_origin_y + ")");  
 		svg.appendChild(newpath);
@@ -1140,7 +1215,7 @@ var Box_paper_stand = {
 	 */
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( this.size_stand_front_part < 2 * NOTCH_SIZE ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
+		if( this.size_stand_front_part < (2 * NOTCH_SIZE) + 2 ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
 		//if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
 		if( this.size_stand_front_part < 10 ) return 4; // if size_stand_front_part too tiny
 		//if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
@@ -1182,7 +1257,7 @@ var Box_paper_stand = {
 	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
 	 */
 	draw_single_part: function (number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
-		if( (number_part == 1) || (number_part == 2) ){
+		if( (number_part == 1) || (number_part == 2) ){ // side parts
 			if(bool_top)	svg_builder.draw_line(origin_x, origin_y, this.depth_box, 0);
 			if(bool_right)	svg_builder.draw_line(origin_x + this.depth_box, origin_y, 0, this.height_box);
 			if(bool_bot)	svg_builder.draw_line(origin_x + this.depth_box, origin_y + this.height_box, -this.depth_box, 0);
@@ -1193,13 +1268,13 @@ var Box_paper_stand = {
 				svg_builder.draw_path_rectangle(this.wooden_plate_thickness,this.size_stand_front_part, 270 + this.angle_degre, origin_x + this.triangle_adjacent_side, origin_y + this.height_box - this.wooden_plate_thickness - ( i * this.size_between_stand));
 			}
 			svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box + 10);
-		} else if(number_part == 3) {
+		} else if(number_part == 3) { // stand main part
 			if(bool_top) 	svg_builder.draw_line(origin_x + this.wooden_plate_thickness, origin_y, this.width_box - (2 * this.wooden_plate_thickness), 0);
 			if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.triangle_hypotenuse_side, 5, origin_x + this.width_box - this.wooden_plate_thickness, origin_y);
 			if(bool_bot) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box  - (2 * this.wooden_plate_thickness), 3, origin_x + this.width_box - this.wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
 			if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.triangle_hypotenuse_side, 7, origin_x + this.wooden_plate_thickness, origin_y + this.triangle_hypotenuse_side);
 			svg_builder.define_box_width_and_length(this.width_box + 10, this.triangle_hypotenuse_side + 10);
-		} else if(number_part == 4) {
+		} else if(number_part == 4) { // front part of a stand
 			if(bool_top) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box - (2 * this.wooden_plate_thickness), 0, origin_x + this.wooden_plate_thickness, origin_y );
 			if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.size_stand_front_part, 5, origin_x + this.width_box - this.wooden_plate_thickness, origin_y);
 			if(bool_bot) 	svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness, origin_y + this.size_stand_front_part, -this.width_box + (2 * this.wooden_plate_thickness), 0);
@@ -1316,14 +1391,14 @@ var Box_paper_stand = {
 			var is_pair = ( (this.stand_number % 2) == 0 ) ? 1 : 0; // 1 pair, 0 impair
 			var todo = Math.floor(this.stand_number/2);
 			for( var i = 0 ; i < todo ; i++ ) {
-				this.draw_single_part(3,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
-				this.draw_single_part(4,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
-				this.draw_single_part(3,origin_x + this.width_box, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
-				this.draw_single_part(4,origin_x + this.width_box, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
+				this.draw_single_part(3,origin_x, origin_y + this.height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
+				this.draw_single_part(4,origin_x, origin_y + this.height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
+				this.draw_single_part(3,origin_x + this.width_box, origin_y + this.height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), false, true, true, true);
+				this.draw_single_part(4,origin_x + this.width_box, origin_y + this.height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
 			} 
 			if(is_pair == 0) { // if impair 
-				this.draw_single_part(3,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
-				this.draw_single_part(4,origin_x, origin_y + height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
+				this.draw_single_part(3,origin_x, origin_y + this.height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)), true, true, true, true);
+				this.draw_single_part(4,origin_x, origin_y + this.height_box + ( i * (this.triangle_hypotenuse_side + this.size_stand_front_part)) + this.triangle_hypotenuse_side, false, true, true, true);
 			}
 			var width_all_items =  Math.max(this.depth_box * 2, this.width_box);
 			var height_all_items = this.height_box + ((Math.ceil(this.stand_number/2)) * (this.triangle_hypotenuse_side + this.size_stand_front_part))// Math.max((this.height_box * 2), ((this.triangle_hypotenuse_side + this.size_stand_front_part) * 2));	
@@ -1353,6 +1428,379 @@ var Box_paper_stand = {
 			case "8" : 	this.economize_laser_and_wood_all_parts_one_column_model_2(this.wooden_plate_thickness, this.wooden_plate_thickness);
 						break;
 			default : 	console.log("pas de problème, y'a point S");
+		}
+	}
+};
+
+/**
+ *	@class contains the functions needed to create a Box_hinged_lid, entirely, two in the same svg file, only a single part of it, etc...
+ *	@property {int} wooden_plate_width the width of the wooden plate the user is using
+ *	@property {int} wooden_plate_length the length of the wooden plate the user is using
+ *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
+ *	@property {int} width_box the width of the box
+ *	@property {int} depth_box the depth of the box
+ *	@property {int} height_box the height of the box
+ */
+var Box_hinged_lid = {
+	
+	/**
+	 *	function that initialize the different instance parameters
+	 *	@param wooden_plate_width {int} the width of the wooden plate the user is using
+	 *	@param wooden_plate_length {int} the length of the wooden plate the user is using
+	 *	@param wooden_plate_thickness {int} the thickness of the wooden plate the user is using
+	 *	@param width_box {int} the width of the box
+	 *	@param depth_box {int} the depth of the box
+	 *	@param height_box {int} the height of the box
+	 */
+	init_parameters: function(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box) {
+		this.wooden_plate_width = wooden_plate_width,
+		this.wooden_plate_length = wooden_plate_length,
+		this.wooden_plate_thickness = wooden_plate_thickness,
+		this.width_box = width_box,
+		this.depth_box = depth_box,
+		this.height_box = height_box
+		this.clutch_radius_top_part = wooden_plate_thickness * 2.5;
+		this.clutch_diameter_top_part = wooden_plate_thickness * 5;
+		// if it's internal == checked then we need to grow up a little bit the values depending on the wooden thickness
+		if ( document.getElementById("formCheck-3").checked ) {
+			this.width_box += (wooden_plate_thickness * 2);
+			this.depth_box += (wooden_plate_thickness * 2);
+			this.height_box += (wooden_plate_thickness * 2);
+		}
+	},
+	 
+	/**
+	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 */
+	check_parameters: function() {
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		return 0; // no problem
+	},
+	
+	/**
+	 *	function that draws the part 'number_part' of the Box_hinged_lid
+	 *	@param number_part {int} the number of the part of the Box_hinged_lid
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
+	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
+	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
+	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
+	 */
+	draw_single_part: function (number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
+		if( (number_part == 4) || (number_part == 5) ){ // side plate parts
+			// top line
+			svg_builder.draw_line(origin_x, origin_y, this.depth_box - (this.wooden_plate_thickness * 2) - (this.clutch_diameter_top_part * 2), 0);
+			svg_builder.draw_path_half_circle(this.clutch_diameter_top_part * 2, 0, origin_x + this.depth_box - (this.wooden_plate_thickness * 2) - (this.clutch_diameter_top_part * 2), origin_y - this.wooden_plate_thickness, true);
+			svg_builder.draw_line(origin_x + this.depth_box - (this.wooden_plate_thickness * 2) - (this.clutch_diameter_top_part * 2), origin_y, 0, - this.wooden_plate_thickness);
+			svg_builder.draw_path_circle(this.clutch_diameter_top_part + this.wooden_plate_thickness, 0, origin_x + this.depth_box - (this.wooden_plate_thickness * 2) - (this.wooden_plate_thickness/2) - this.clutch_diameter_top_part - this.clutch_radius_top_part, origin_y - this.wooden_plate_thickness, true);
+			svg_builder.draw_line(origin_x + this.depth_box - (this.wooden_plate_thickness * 2), origin_y - this.wooden_plate_thickness, 0, this.wooden_plate_thickness);
+			var tempo = NOTCH_SIZE;	NOTCH_SIZE = this.wooden_plate_thickness; // we draw a notch with a wooden thickness size
+			svg_builder.draw_path_rectangle_tight(this.wooden_plate_thickness,this.clutch_diameter_top_part, 0, origin_x + this.depth_box - (this.wooden_plate_thickness * 2) - this.clutch_diameter_top_part - this.clutch_radius_top_part, origin_y - this.wooden_plate_thickness);
+			NOTCH_SIZE = tempo; // we reset it as previously
+			// right, bot, left lines/path
+			if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 5, origin_x + this.depth_box - (this.wooden_plate_thickness * 2), origin_y);
+	 		if(bool_bot) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.depth_box, 3, origin_x + this.depth_box - (this.wooden_plate_thickness * 2), origin_y + this.height_box);
+	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 7, origin_x, origin_y + this.height_box);
+	 		svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box + this.clutch_diameter_top_part + this.wooden_plate_thickness + 10);
+		} else if( (number_part == 1) || (number_part == 3) ) { // front & back side plate parts
+	 		if(bool_top) svg_builder.draw_line(origin_x, origin_y, this.width_box, 0);
+	 		if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 4, origin_x + this.width_box, origin_y);
+	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 3, origin_x + this.width_box, origin_y + this.height_box);
+	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 6, origin_x, origin_y + this.height_box);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.height_box + 10);
+	 	} else if( (number_part == 2) ) { // floor plate part
+	 		if(bool_top) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 0, origin_x, origin_y);
+	 		if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 4, origin_x + this.width_box, origin_y);
+	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 2, origin_x + this.width_box, origin_y + this.depth_box);
+	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 6, origin_x, origin_y + this.depth_box);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + 10);
+		} else if( number_part == 6 ) { // cover plate part
+			if(bool_top) svg_builder.draw_line(origin_x, origin_y, this.width_box, 0); // top side
+			if(bool_right) {
+				svg_builder.draw_line(origin_x + this.width_box, origin_y, 0, this.depth_box - this.wooden_plate_thickness - this.clutch_diameter_top_part*2 - this.wooden_plate_thickness);
+				svg_builder.draw_line(origin_x + this.width_box, origin_y + this.depth_box - this.wooden_plate_thickness*2 - this.clutch_diameter_top_part*2, -this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x - this.wooden_plate_thickness + this.width_box, origin_y + this.depth_box - this.wooden_plate_thickness * 2 - this.clutch_diameter_top_part*2, 0, this.clutch_radius_top_part + this.wooden_plate_thickness);
+				var tempo = NOTCH_SIZE;	NOTCH_SIZE = this.wooden_plate_thickness; // we draw a notch with a wooden thickness size
+				svg_builder.draw_path_tight(this.wooden_plate_thickness,this.clutch_diameter_top_part, 5, origin_x - this.wooden_plate_thickness + this.width_box, origin_y + this.depth_box - (this.wooden_plate_thickness * 1) - this.clutch_diameter_top_part - this.clutch_radius_top_part, 0);
+				NOTCH_SIZE = tempo; // we reset it as previously
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness, origin_y + (this.depth_box - (this.wooden_plate_thickness * 1) - this.clutch_radius_top_part), 0, this.clutch_radius_top_part);
+			}
+			if(bool_left) {
+				svg_builder.draw_line(origin_x, origin_y, 0, this.depth_box - this.wooden_plate_thickness - this.clutch_diameter_top_part*2 - this.wooden_plate_thickness);
+				svg_builder.draw_line(origin_x, origin_y + this.depth_box - this.wooden_plate_thickness*2 - this.clutch_diameter_top_part*2, this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x + this.wooden_plate_thickness, origin_y + this.depth_box - this.wooden_plate_thickness*2 - this.clutch_diameter_top_part*2, 0, this.clutch_radius_top_part + this.wooden_plate_thickness);
+				var tempo = NOTCH_SIZE;	NOTCH_SIZE = this.wooden_plate_thickness; // we draw a notch with a wooden thickness size
+				svg_builder.draw_path_tight(this.wooden_plate_thickness,this.clutch_diameter_top_part, 4, origin_x + this.wooden_plate_thickness, origin_y + this.depth_box - (this.wooden_plate_thickness * 1) - this.clutch_diameter_top_part - this.clutch_radius_top_part, 0);
+				NOTCH_SIZE = tempo; // we reset it as previously
+				svg_builder.draw_line(origin_x + this.wooden_plate_thickness, origin_y + (this.depth_box - this.wooden_plate_thickness - this.clutch_radius_top_part), 0, this.clutch_radius_top_part);
+			}
+			if(bool_bot) svg_builder.draw_line(origin_x + this.wooden_plate_thickness, origin_y + this.depth_box - this.wooden_plate_thickness, this.width_box - this.wooden_plate_thickness*2, 0); // top side
+			svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + this.wooden_plate_thickness+ 10);
+		}
+	},
+		
+	/** 
+	 *	function that draws at a (x,y) position the line model 1 which is the best to economize both wood and laser path
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 */
+	 economize_laser_and_wood_line_model_1: function (origin_x, origin_y) {
+	 	this.draw_single_part(3,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y, true, true, true, false);
+	 	this.draw_single_part(1,origin_x + this.width_box + this.depth_box - this.wooden_plate_thickness*2, origin_y, true, true, true, false);
+		this.draw_single_part(5,origin_x + this.width_box*2 + this.depth_box - this.wooden_plate_thickness*2, origin_y, true, true, true, false);
+	 	this.draw_single_part(2,origin_x + this.width_box*2 + this.depth_box*2 - this.wooden_plate_thickness*3, origin_y, true, true, true, true);
+		this.draw_single_part(6,origin_x + this.width_box*3 + this.depth_box*2 - this.wooden_plate_thickness*3, origin_y, true, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box*4 + this.depth_box*2 + this.wooden_plate_thickness + 10, Math.max(this.depth_box, this.height_box) + this.wooden_plate_thickness*6 + 10);
+	 },
+
+	/**
+	 *	function that draws at a (x,y) position the line model 2 which is the best to economize both wood and laser path
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 */
+	economize_laser_and_wood_line_model_2: function (origin_x, origin_y) {
+	 	this.draw_single_part(3,origin_x, origin_y, true, true, false, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y, true, true, true, false);
+	 	this.draw_single_part(1,origin_x + this.width_box + this.depth_box - this.wooden_plate_thickness*2, origin_y, true, true, true, false);
+		this.draw_single_part(5,origin_x + this.width_box*2 + this.depth_box - this.wooden_plate_thickness*2, origin_y, true, true, true, false);
+	 	this.draw_single_part(2,origin_x, origin_y + this.height_box, true, true, true, true);
+		this.draw_single_part(6,origin_x + this.width_box, origin_y + this.height_box + this.wooden_plate_thickness, true, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box*2 + this.depth_box*2 + 10, this.depth_box + this.height_box + this.wooden_plate_thickness*6 + 10);
+	 },
+
+	/** 
+	 *	function that draws at a (x,y) position the column model which is the best to economize both wood and laser path
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 */
+	 economize_laser_and_wood_column_model: function (origin_x, origin_y) {
+	 	this.draw_single_part(3,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y, true, true, true, false);
+		this.draw_single_part(2,origin_x, origin_y + this.height_box, false, true, true, true);
+		this.draw_single_part(6,origin_x, origin_y + this.height_box + this.depth_box, true, true, true, true);
+	 	this.draw_single_part(1,origin_x, origin_y + this.height_box + this.depth_box*2 - this.wooden_plate_thickness, true, true, true, true);
+		this.draw_single_part(5,origin_x + this.width_box, origin_y + this.height_box + this.depth_box*2 - this.wooden_plate_thickness, true, true, true, false);
+		svg_builder.define_box_width_and_length(this.width_box + this.depth_box + 10, this.depth_box*2 + this.height_box*2 + this.wooden_plate_thickness*6 + 10);
+	},
+
+	/**
+	 *	function that draws the box/part of box which is selected in the option listStyleType
+	 */
+	draw_selected_item: function () {
+		switch( Number(selectedModel()) ) {
+			case 1 : 	this.draw_single_part(1,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 2 : 	this.draw_single_part(2,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 3 : 	this.draw_single_part(3,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 4 : 	this.draw_single_part(4,this.wooden_plate_thickness, this.wooden_plate_thickness * 6, true, true, true, true);
+						break;			
+			case 5 : 	this.draw_single_part(5,this.wooden_plate_thickness, this.wooden_plate_thickness * 6, true, true, true, true);
+						break;
+			case 6 : 	this.draw_single_part(6,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 7 :	this.economize_laser_and_wood_line_model_1(this.wooden_plate_thickness,this.wooden_plate_thickness * 6);
+						break;
+			case 8 : 	this.economize_laser_and_wood_line_model_2(this.wooden_plate_thickness,this.wooden_plate_thickness * 6);
+						break;	
+			case 9 :	this.economize_laser_and_wood_column_model(this.wooden_plate_thickness,this.wooden_plate_thickness * 6);
+						break;
+			default : 	
+		}
+	}
+};
+
+/**
+ *	@class contains the functions needed to create a Collecting_box, entirely, two in the same svg file, only a single part of it, etc...
+ *	@property {int} wooden_plate_width the width of the wooden plate the user is using
+ *	@property {int} wooden_plate_length the length of the wooden plate the user is using
+ *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
+ *	@property {int} width_box the width of the box
+ *	@property {int} depth_box the depth of the box
+ *	@property {int} height_box the height of the box 
+ *	@property {int} opposite (geometry parameters) // C' @see below to understand the meaning of this trigonometry parameters
+ *	@property {int} adjacent_1 (geometry parameters) // C @see below
+ *	@property {int} adjacent_2 (geometry parameters) // B @see below
+ *	@property {int} hypotenuse_1 (geometry parameters) // A @see below
+ *	@property {int} hypotenuse_2 (geometry parameters) // A @see below
+ *	@see <img id="img_collecting_box_jsdoc" src="../../src/assets/img/collecting_box/jsdoc.png" alt="img_collecting_box_jsdoc" height="100%" width="100%" >
+ */
+var Collecting_box = {
+	
+	/**
+	 *	function that initialize the different instance parameters
+	 *	@param wooden_plate_width {int} the width of the wooden plate the user is using
+	 *	@param wooden_plate_length {int} the length of the wooden plate the user is using
+	 *	@param wooden_plate_thickness {int} the thickness of the wooden plate the user is using
+	 *	@param width_box {int} the width of the box
+	 *	@param depth_box {int} the depth of the box
+	 *	@param height_box {int} the height of the box
+	 *	@param angle_degre {int} the angle of the front part of the box
+	 */
+	init_parameters: function(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, angle_degre, big_notch_depth) {
+		this.wooden_plate_width = wooden_plate_width,
+		this.wooden_plate_length = wooden_plate_length,
+		this.wooden_plate_thickness = wooden_plate_thickness,
+		this.width_box = width_box,
+		this.depth_box = depth_box,
+		this.height_box = height_box
+		this.angle_degre = angle_degre;
+		this.big_notch_depth = big_notch_depth;
+		// if it's internal == checked then we need to grow up a little bit the values depending on the wooden thickness
+		if ( document.getElementById("formCheck-3").checked ) {
+			this.width_box += (wooden_plate_thickness * 2);
+			this.depth_box += (wooden_plate_thickness * 2);
+			this.height_box += (wooden_plate_thickness * 2);
+		}
+	},
+	 
+	/**
+	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 */
+	check_parameters: function() {
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		return 0; // no problem
+	},
+	
+	/**
+	 *	function that initialize the different parameters we will need to use for our drawing/creating path
+	 *	@see <a href="#img_collecting_box_jsdoc" >img_collecting_box_jsdoc</a>
+	 */
+	init_geometry_parameters: function () {
+		// geometry/trigonometry calculation, see annexes on the info tab on the web site to see a graph/image that explain it better with visual than words
+		// Math.cos sin tan in javascript works with radians not degrees so we need the "* (Math.PI / 180))" conversion"
+		this.opposite = ((Math.tan(45 * (Math.PI / 180)) * Math.tan(this.angle_degre * (Math.PI / 180))) / (Math.tan(45 * (Math.PI / 180)) + Math.tan(this.angle_degre * (Math.PI / 180))) * this.height_box);
+		this.adjacent_1 = ( this.opposite / Math.tan(45 * (Math.PI / 180)) );
+		this.adjacent_2 = ( this.opposite / Math.tan(this.angle_degre * (Math.PI / 180)) );
+		this.hypotenuse_1 = ( this.opposite / Math.sin(45 * (Math.PI / 180)) );
+		this.hypotenuse_2 = ( this.opposite / Math.sin(this.angle_degre * (Math.PI / 180)) );
+	},
+	
+	/**
+	 *	function that check if the geometry parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
+	 *	@see <a href="#img_collecting_box_jsdoc" >img_collecting_box_jsdoc</a>
+	 */
+	check_geometry_parameters: function() {
+		//if( ) return 1;
+		return 0; // no problem
+	},
+	
+	/**
+	 *	function that draws the part 'number_part' of the Collecting_box
+	 *	@param number_part {int} the number of the part of the Collecting_box
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
+	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
+	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
+	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
+	 */
+	draw_single_part: function (number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
+		if( number_part == 1) { // front plate part
+			if(bool_top) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 1, origin_x, origin_y + this.wooden_plate_thickness, 0); //svg_builder.draw_line(origin_x, origin_y, this.width_box, 0);
+	 		if(bool_right) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.height_box, 4, origin_x + this.width_box, origin_y + this.wooden_plate_thickness, 0);
+	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 3, origin_x + this.width_box, origin_y + this.height_box - this.wooden_plate_thickness);
+	 		if(bool_left) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.height_box, 6, origin_x, origin_y + this.height_box - this.wooden_plate_thickness);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.height_box + 10);
+		}
+		else if( (number_part == 2 ) || (number_part == 6) ) { // ceilling and floor plate part 
+			if(bool_top) svg_builder.draw_path_tight(this.wooden_plate_thickness, this.width_box - this.wooden_plate_thickness*2, 0, origin_x, origin_y, 0);
+			var parts_side = (this.depth_box - this.wooden_plate_thickness*2)/5;
+			if(bool_right) { 
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y, 0, this.wooden_plate_thickness);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side + this.wooden_plate_thickness, 0, parts_side);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*2 + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*3 + this.wooden_plate_thickness, 0, parts_side);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 5, origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + parts_side*4 + this.wooden_plate_thickness, 0);
+			}
+	 		if(bool_bot) svg_builder.draw_line(origin_x + this.width_box - this.wooden_plate_thickness*2, origin_y + this.depth_box - this.wooden_plate_thickness, - this.width_box + this.wooden_plate_thickness*2, 0);
+			if(bool_left) {
+				svg_builder.draw_line(origin_x, origin_y, 0, this.wooden_plate_thickness);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 4, origin_x, origin_y + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x, origin_y + parts_side + this.wooden_plate_thickness, 0, parts_side);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 4, origin_x, origin_y + parts_side*2 + this.wooden_plate_thickness, 0);
+				svg_builder.draw_line(origin_x, origin_y + parts_side*3 + this.wooden_plate_thickness, 0, parts_side);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 4, origin_x, origin_y + parts_side*4 + this.wooden_plate_thickness, 0);
+			}
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + this.wooden_plate_thickness * 2+ 10);
+		}
+		else if( number_part == 3 ) { // back plate part
+			if(bool_top) svg_builder.draw_line(origin_x, origin_y, this.width_box, 0);
+	 		if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.hypotenuse_2, 4, origin_x + this.width_box, origin_y, 0);
+	 		if(bool_bot) svg_builder.draw_line(origin_x + this.width_box, origin_y + this.hypotenuse_2 - this.wooden_plate_thickness, -this.width_box, 0);
+	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.hypotenuse_2, 6, origin_x, origin_y + this.hypotenuse_2);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.hypotenuse_2 + 10);
+	 	} 
+		else if( (number_part == 4) || (number_part == 5) ){ // side plate parts
+			var parts_side = (this.depth_box - this.wooden_plate_thickness*2)/5;
+			if(bool_top) { 
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 0, origin_x, origin_y, 0);
+				svg_builder.draw_path_tight(this.big_notch_depth, parts_side, 1, origin_x + parts_side, origin_y, 0);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 0, origin_x + parts_side*2, origin_y, 0);
+				svg_builder.draw_path_tight(this.big_notch_depth, parts_side, 1, origin_x + parts_side*3, origin_y, 0);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 0, origin_x + parts_side*4, origin_y, 0);
+			}
+			if(bool_right) {
+				svg_builder.draw_line(origin_x + this.depth_box - this.wooden_plate_thickness*2, origin_y, this.opposite, this.adjacent_1);
+				svg_builder.draw_path(this.wooden_plate_thickness, this.hypotenuse_2, 0, origin_x + this.depth_box - this.wooden_plate_thickness*2, origin_y + this.height_box, -90+this.angle_degre); // in javascript the angle are reversed from maths ( 90 goes to the bot, -90 goes to the top direction )
+			}
+			if(bool_bot) {
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 1, origin_x, origin_y + this.height_box, 0);
+				svg_builder.draw_path_tight(this.big_notch_depth, parts_side, 1, origin_x + parts_side, origin_y + this.height_box, 0);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 1, origin_x + parts_side*2, origin_y + this.height_box, 0);
+				svg_builder.draw_path_tight(this.big_notch_depth, parts_side, 1, origin_x + parts_side*3, origin_y + this.height_box, 0);
+				svg_builder.draw_path(this.wooden_plate_thickness, parts_side, 1, origin_x + parts_side*4, origin_y + this.height_box, 0);
+			}
+			if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 4, origin_x, origin_y, 0);
+			svg_builder.define_box_width_and_length(this.depth_box + this.opposite + 10, this.height_box + this.big_notch_depth + 10);
+		}/* else if( (number_part == 6) ) { // floor plate part
+			if(bool_top) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 0, origin_x, origin_y);
+	 		if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 4, origin_x + this.width_box, origin_y);
+	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 2, origin_x + this.width_box, origin_y + this.depth_box);
+	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 6, origin_x, origin_y + this.depth_box);
+	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + 10);
+		}*/
+	},
+		
+	/** 
+	 *	function that draws at a (x,y) position the line model 1 which is the best to economize both wood and laser path
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 */
+	 economize_laser_and_wood_all_part: function (origin_x, origin_y) {
+	 	this.draw_single_part(6,origin_x, origin_y + this.wooden_plate_thickness, true, true, true, true);
+	 	this.draw_single_part(2,origin_x, origin_y + this.wooden_plate_thickness*0 + this.depth_box, true, true, true, true);
+		this.draw_single_part(5,origin_x + this.width_box, origin_y + this.depth_box*2 - this.height_box, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y + this.depth_box*2, true, true, true, true);
+		this.draw_single_part(1,origin_x, origin_y + this.depth_box*2, true, false, true, true);
+		this.draw_single_part(3,origin_x, origin_y + this.depth_box*2 + this.height_box, true, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box + this.depth_box + this.opposite + 10, this.hypotenuse_2 + this.height_box + this.depth_box*2 + this.big_notch_depth + 10);
+	 },
+
+	/**
+	 *	function that draws the box/part of box which is selected in the option listStyleType
+	 */
+	draw_selected_item: function () {
+		switch( Number(selectedModel()) ) {
+			case 1 : 	this.draw_single_part(1,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 2 : 	this.draw_single_part(2,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 3 : 	this.draw_single_part(3,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 4 : 	this.draw_single_part(4,this.wooden_plate_thickness, this.big_notch_depth, true, true, true, true);
+						break;			
+			case 5 : 	this.draw_single_part(5,this.wooden_plate_thickness, this.big_notch_depth, true, true, true, true);
+						break;
+			case 6 : 	this.draw_single_part(6,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+						break;
+			case 7 :	this.economize_laser_and_wood_all_part(this.wooden_plate_thickness,this.big_notch_depth);
+						break;
+			default : 	
 		}
 	}
 };
@@ -1443,20 +1891,12 @@ function app2_toolbox(download){
 		return;
 	}
 
-	else{
-		Toolbox.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, nose);
-		  Toolbox.init_geometry_parameters();
-		  Toolbox.draw_selected_item();
-		  //Toolbox.draw_single_part(5,wooden_plate_thickness+40, wooden_plate_thickness+40, wooden_plate_thickness, width_box, depth_box, height_box, true, true, true, true, nose);
-		 //Toolbox.economize_laser_and_wood_one_box_nose_oppose(wooden_plate_thickness, wooden_plate_thickness+height_box/2, wooden_plate_thickness, width_box, depth_box, height_box,nose);
-		 
-		  if( download == true ) svg_builder.generate_svg_file();  
-		  svg_builder.show_layer2();
-		  
-		  // on retire la viewBox pour que notre affichage sur le site reste visible avec des proportions correctes
-		  //var svg = document.getElementById("svg");
-		  //svg.removeAttribute("transform");
-	}
+	Toolbox.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, nose);
+	Toolbox.init_geometry_parameters();
+	Toolbox.draw_selected_item();
+
+	if( download == true ) svg_builder.generate_svg_file();  
+	svg_builder.show_layer2();
 }
 
 /**
@@ -1509,3 +1949,129 @@ function app3_paper_stand(download) {
 	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
 	svg_builder.show_layer2();								// to show the result in the good scale
 }
+
+/**
+ *  function used by the fourth application which creates a "hinged lid box".
+ *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done
+ */
+function app4_hinged_lid_box(download) {
+	
+	document.getElementById("previsualisation").click();
+	svg_builder.clear_svg("svgLayer1");
+	svg_builder.clear_svg("svgLayer2");
+	
+	// parameters from the form
+	var wooden_plate_width = selectPlanche[indexSelection].width;
+	var wooden_plate_length = selectPlanche[indexSelection].length;
+	var wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
+	var width_box = Number(document.getElementById("longueur").value); 		// = 200;
+	var depth_box = Number(document.getElementById("largeur").value); 		// = 50;
+	var height_box = Number(document.getElementById("hauteur").value); 		// = 50;
+	var notch_size = Number(document.getElementById("encoche").value); 		// = 10;
+	NOTCH_SIZE = notch_size;
+	THICKNESS = wooden_plate_thickness;
+	
+	var app4_hinged_lid_box = Object.create(Box_hinged_lid);
+	app4_hinged_lid_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
+	
+	// we initialize the parameters and check them if error / invalid values are found
+	if( !checkValue("longueur","largeur","hauteur","encoche") ) {
+		console.log("error parameters, there is not only positive integer" );
+		return;
+	}
+	else if( app4_hinged_lid_box.check_parameters() != 0 ) { 
+		console.log("error, to detail : " + app4_hinged_lid_box.check_parameters()); 
+		return;
+	}
+	
+	app4_hinged_lid_box.draw_selected_item();
+	
+	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	svg_builder.show_layer2();								// to show the result in the good scale
+}
+
+/*
+ *  function used by the fourth application which creates a "collecting box".
+ *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done
+ */
+function app5_collecting_box(download) {
+	
+	document.getElementById("previsualisation").click();
+	svg_builder.clear_svg("svgLayer1");
+	svg_builder.clear_svg("svgLayer2");
+	
+	// parameters from the form
+	var wooden_plate_width = selectPlanche[indexSelection].width;
+	var wooden_plate_length = selectPlanche[indexSelection].length;
+	var wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
+	var width_box = Number(document.getElementById("longueur").value); 		// = 200;
+	var depth_box = Number(document.getElementById("largeur").value); 		// = 50;
+	var height_box = Number(document.getElementById("hauteur").value); 		// = 50;
+	var notch_size = Number(document.getElementById("encoche").value); 		// = 10;
+	var angle_degre = Number(document.getElementById("angle").value);
+	NOTCH_SIZE = notch_size;
+	THICKNESS = wooden_plate_thickness;
+	var big_notch_depth = wooden_plate_thickness*2;
+	
+	var app5_collecting_box = Object.create(Collecting_box);
+	app5_collecting_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box, angle_degre, big_notch_depth);
+	
+	// to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! ), it depends on the way we choose to build our Collecting_box object, it could be simplified later on of course.
+	height_box = height_box - wooden_plate_thickness * 2; 
+	width_box = width_box - wooden_plate_thickness * 2;
+	depth_box = depth_box - wooden_plate_thickness * 2;
+	
+	// we initialize the parameters and check them if error / invalid values are found
+	if( !checkValue("longueur","largeur","hauteur","encoche","angle") ) {
+		console.log("error parameters, there is not only positive integer" );
+		return;
+	}
+	else if( app5_collecting_box.check_parameters() != 0 ) { 
+		console.log("error, to detail : " + app5_collecting_box.check_parameters()); 
+		return;
+	} else {
+		app5_collecting_box.init_geometry_parameters(); 
+		if( app5_collecting_box.check_geometry_parameters() != 0 ) {
+			console.log("error geometry parameters, to detail : " + app5_collecting_box.check_geometry_parameters()); 
+			return;
+		}
+	}
+	
+	app5_collecting_box.draw_selected_item();
+	
+	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	svg_builder.show_layer2();								// to show the result in the good scale
+}
+
+/*
+ *  function type to show how you have to start to create a new box, to test it, first of all here, then gets to somethings that looks like the previous completed boxes.
+ *	@param download {boolean} indicates whether we want to download the svg tag as a file, or not, if not it will simply draws out what needs to be done
+ */
+/*function app0_my_super_box(download) {
+	
+	document.getElementById("previsualisation").click();
+	svg_builder.clear_svg("svgLayer1");
+	svg_builder.clear_svg("svgLayer2");
+	
+	// parameters from the form
+	var wooden_plate_width = selectPlanche[indexSelection].width;
+	var wooden_plate_length = selectPlanche[indexSelection].length;
+	var wooden_plate_thickness = selectPlanche[indexSelection].thickness; 	// = 5; 	// as an exemple.
+	var width_box = Number(document.getElementById("longueur").value); 		// = 200;
+	var depth_box = Number(document.getElementById("largeur").value); 		// = 50;
+	var height_box = Number(document.getElementById("hauteur").value); 		// = 50;
+	var notch_size = Number(document.getElementById("encoche").value); 	// = 10;
+	NOTCH_SIZE = notch_size;
+	THICKNESS = wooden_plate_thickness;
+	
+	var app0_my_super_box = Object.create(Hinged_lid_box);
+	app0_my_super_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
+	
+	
+	//svg_builder.draw_path_circle(100, 0, 0, 100);
+	//svg_builder.define_box_width_and_length(1000 + 10, 1000 + 10);
+	// what u xwant to start building
+	
+	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	svg_builder.show_layer2();								// to show the result in the good scale
+}*/
