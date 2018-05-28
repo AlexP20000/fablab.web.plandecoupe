@@ -544,9 +544,10 @@
 	 */
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( this.width_box < 40 ) return 2;
-		if( this.depth_box < 40 ) return 3;
-		if( this.height_box < 40 ) return 4;
+		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
+		if( this.width_box < 40 ) return 3; // the width_box must be minimum 5cm
+		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 8cm
+		if( this.height_box < 40 ) return 5; // the height_box must be minimum 5cm
 		return 0; // no problem
 	},
 	
@@ -704,9 +705,10 @@
 	 */
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( this.width_box < 40 ) return 2;
-		if( this.depth_box < 40 ) return 3;
-		if( this.height_box < 40 ) return 4;
+		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
+		if( this.width_box < 40 ) return 3; // the width_box must be minimum 5cm
+		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 8cm
+		if( this.height_box < 40 ) return 5; // the height_box must be minimum 5cm
 		return 0; // no problem
 	},
 	
@@ -826,6 +828,7 @@
 
 /**
  *	@class contains the functions needed to create a Toolbox, entirely, two in the same svg file, only a single part of it, etc...
+ *	DO NOT TAKE THIS CLASS AS AN EXAMPLE TO BUILD OTHER BOXES, PREFER USING THE OTHER OBJECTS...
  *	@property {int} wooden_plate_width the width of the wooden plate the user is using
  *	@property {int} wooden_plate_length the length of the wooden plate the user is using
  *	@property {int} wooden_plate_thickness the thickness of the wooden plate the user is using
@@ -1236,13 +1239,17 @@ var Box_paper_stand = {
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
-		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( this.size_stand_front_part < (2 * NOTCH_SIZE) + 2 ) return 2; // for compatibility between size_stand_front_part and NOTCH_SIZE
-		//if( 60 < this.size_stand_front_part ) return 3; // if size_stand_front_part too big
-		if( this.size_stand_front_part < 10 ) return 4; // if size_stand_front_part too tiny
-		//if( this.size_between_stand < 120 ) return 5; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
-		if( 40 < this.angle_degre ) return 6; // if angle_degre too big
-		if( this.angle_degre <= 0 ) return 7; // if angle_degre too tiny
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimetersif( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		//if(  ) return 2; // if the notch_size is too big // a bit hard to implement, depends on too many things
+		if( this.width_box < 40 ) return 3; // the width_box must be minimum 4cm
+		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 4cm
+		if( this.height_box < 40 ) return 5; // the height_box must be minimum 4cm
+		if( this.size_stand_front_part < (2 * NOTCH_SIZE) + 2 ) return 6; // for compatibility between size_stand_front_part and NOTCH_SIZE
+		//if( 60 < this.size_stand_front_part ) return 7; // if size_stand_front_part too big
+		if( this.size_stand_front_part < 10 ) return 8; // if size_stand_front_part too tiny
+		//if( this.size_between_stand < 120 ) return 9; // if size_between_stand too tiny, the hand of a normal human must be able to be used to catch items in the paper stand
+		if( 40 < this.angle_degre ) return 10; // if angle_degre too big
+		if( this.angle_degre < 0 ) return 11; // if angle_degre too tiny
 		return 0; // no problem
 	},
 	
@@ -1496,6 +1503,10 @@ var Box_hinged_lid = {
 	 */
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
+		if( this.width_box < 40 ) return 3; // the width_box must be minimum 4cm
+		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 4cm
+		if( this.height_box < 40 ) return 5; // the height_box must be minimum 4cm
 		return 0; // no problem
 	},
 	
@@ -1592,21 +1603,6 @@ var Box_hinged_lid = {
 		svg_builder.define_box_width_and_length(this.width_box*2 + this.depth_box*2 + 10, this.depth_box + this.height_box + this.wooden_plate_thickness*6 + 10);
 	 },
 
-	/** 
-	 *	function that draws at a (x,y) position the column model which is the best to economize both wood and laser path
-	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
-	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 */
-	 economize_laser_and_wood_column_model: function (origin_x, origin_y) {
-	 	this.draw_single_part(3,origin_x, origin_y, true, true, true, true);
-		this.draw_single_part(4,origin_x + this.width_box, origin_y, true, true, true, false);
-		this.draw_single_part(2,origin_x, origin_y + this.height_box, false, true, true, true);
-		this.draw_single_part(6,origin_x, origin_y + this.height_box + this.depth_box, true, true, true, true);
-	 	this.draw_single_part(1,origin_x, origin_y + this.height_box + this.depth_box*2 - this.wooden_plate_thickness, true, true, true, true);
-		this.draw_single_part(5,origin_x + this.width_box, origin_y + this.height_box + this.depth_box*2 - this.wooden_plate_thickness, true, true, true, false);
-		svg_builder.define_box_width_and_length(this.width_box + this.depth_box + 10, this.depth_box*2 + this.height_box*2 + this.wooden_plate_thickness*6 + 10);
-	},
-
 	/**
 	 *	function that draws the box/part of box which is selected in the option listStyleType
 	 */
@@ -1627,8 +1623,6 @@ var Box_hinged_lid = {
 			case 7 :	this.economize_laser_and_wood_line_model_1(this.wooden_plate_thickness,this.wooden_plate_thickness * 6);
 						break;
 			case 8 : 	this.economize_laser_and_wood_line_model_2(this.wooden_plate_thickness,this.wooden_plate_thickness * 6);
-						break;	
-			case 9 :	this.economize_laser_and_wood_column_model(this.wooden_plate_thickness,this.wooden_plate_thickness * 6);
 						break;
 			default : 	
 		}
@@ -1684,8 +1678,12 @@ var Collecting_box = {
 	 */
 	check_parameters: function() {
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( this.angle_degre < 1 ) return 2; // we need an angle at least of 1 degre
-		if( this.angle_degre > 60 ) return 3; // we need an angle at least of 1 degre
+		//if(  ) return 2; // if the notch_size is too big // a bit hard to implement, depends on too many things
+		if( this.width_box < 50 ) return 3; // the width_box must be minimum 5cm
+		if( this.depth_box < 80 ) return 4; // the depth_box must be minimum 8cm
+		if( this.height_box < 50 ) return 5; // the height_box must be minimum 5cm
+		if( this.angle_degre < 1 ) return 6; // we need an angle at least of 1 degre
+		if( this.angle_degre > 60 ) return 7; // we need an angle at least of 1 degre		
 		return 0; // no problem
 	},
 	
@@ -1788,13 +1786,7 @@ var Collecting_box = {
 			}
 			if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 4, origin_x, origin_y, 0);
 			svg_builder.define_box_width_and_length(this.depth_box + this.opposite + 10, this.height_box + this.big_notch_depth + 10);
-		}/* else if( (number_part == 6) ) { // floor plate part
-			if(bool_top) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 0, origin_x, origin_y);
-	 		if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 4, origin_x + this.width_box, origin_y);
-	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 2, origin_x + this.width_box, origin_y + this.depth_box);
-	 		if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 6, origin_x, origin_y + this.depth_box);
-	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + 10);
-		}*/
+		}
 	},
 		
 	/** 
