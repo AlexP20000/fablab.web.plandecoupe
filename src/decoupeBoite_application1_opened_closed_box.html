@@ -11,11 +11,10 @@
 
 <body onLoad="checkValue()">
     <div class="container">
-        <div class="row" style="margin-top:5px;">
-            <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a>
-                <h1 class="text-center">Générateur de fichier svg pour découpe de boites</h1>
-            </div>
-        </div>
+        <div id="content-header"></div>
+        <script id="header-template" type="text/x-handlebars-template">
+          {{> header}}
+        </script>
         <div class="row" style="margin-top:15px;" align="center">
             <div class="col-md-6">
                 <div class="card">
@@ -53,10 +52,10 @@
 								</optgroup></select>
                             </div>
                             <div
-                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="longueur" type="number" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="largeur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="hauteur" type="number" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="encoche" type="number" placeholder="mm" value="10"></div>
+                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="hauteur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
 
                             <div class="form-group"><label class="d-block float-left" style="width:200px;">Boite fermée :</label><input onchange="onCheckboxChange(); app1_close_or_open_box();" type="checkbox" id="formCheck-1"/></div>
 
@@ -181,9 +180,9 @@
                     <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
                     (cela rajoutera des planches provisoirement)</p>
                     <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" placeholder="mm" /></div>
+                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" min="0" placeholder="mm" /></div>
+                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" min="0" placeholder="mm" /></div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
             </div>
@@ -200,38 +199,24 @@
       <!-- Modal Caption (Image Text) --> 
       <div id="caption"></div> 
   </div> 
+
+  <div id="content-footer"></div>
+  <script type="text/javascript">
+    
+  </script>
+  <script id="footer-template" type="text/x-handlebars-template">
+    {{> footer}}
+  </script>
+
+  <script src="handlebars-v4.0.11.js"></script>
+  <script src="templates/header.js"></script>
+  <script src="templates/footer.js"></script>
   <script src="ihm.js"></script> 
   <script src="generate_svg_boxes.js"></script> 
   <script src="assets/js/jquery.min.js"></script> 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
 
-  <div class="footer-clean">
-    <footer>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Liens</h3>
-                    <ul>
-                        <li><a href="http://uboopenfactory.univ-brest.fr/">Ubo OpenFactory</a></li>
-                        <li><a href="https://github.com/AlexP20000/fablab.web.plandecoupe/">Github</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Développeur</h3>
-                    <ul>
-                        <li>Murat Axel</li>
-                        <li>Mailliu Alexandre</li>
-                    </ul>
-                </div>
-                <div class="col-sm-4 col-md-3 item">
-                    <h3>Copyright</h3>
-                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
+  
 </body>
 
 </html>

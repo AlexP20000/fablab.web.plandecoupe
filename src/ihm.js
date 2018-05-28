@@ -218,7 +218,7 @@ function checkValue() {
 	var valid = true;
 	for( var i = 0 ; i <  arguments.length ; i++ ) {
 		var currentParameter = document.getElementById(arguments[i]).value;
-		valid = valid && isNumeric(currentParameter) && currentParameter > 0;
+		valid = valid && isNumeric(currentParameter) && currentParameter >= 0;
 	}
 	document.getElementById("genButton").disabled = !valid;
 	return valid;
