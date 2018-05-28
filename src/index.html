@@ -78,51 +78,15 @@
             </div>
         </div>
     </div>
-	
-    </br>
-	
-	<div class="row d-table d-flex">
-		<div class="col d-table-cell align-self-stretch">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Boîte de collecte</h5>
-                </div>
-                <div class="card-body" align="center"><a href="decoupeBoite_application5_collecting_box.html"><img src="assets/img/collecting_box/collecting_box_front_page.JPG" style="width:100%;"></a>
-                    <p class="card-text">Génération d'un plan optimisé de découpe d'une boîte de collecte.</p>
-                    <p>Il est possible de faire une boîte entière sous différentes positions, ou simplement un des côtés de la boîte.</p>
-                    <a class="btn btn-primary" href="decoupeBoite_application5_collecting_box.html">Accéder</a>
-                </div>
-            </div>
-        </div>
-    </div>
-	
-    <div class="footer-clean">
-        <footer>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="http://uboopenfactory.univ-brest.fr/">Ubo OpenFactory</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Développeur</h3>
-                        <ul>
-                            <li>Murat Axel</li>
-                            <li>Mailliu Alexandre</li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Copyright</h3>
-                        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
 
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-    
+    <div id="content-footer"></div>
+    <script id="footer-template" type="text/x-handlebars-template">
+    {{> footer}}
+    </script>
+
+    <script src="handlebars-v4.0.11.js"></script>
+    <script src="templates/header.js"></script>
+    <script src="templates/footer.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
