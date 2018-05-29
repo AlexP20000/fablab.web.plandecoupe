@@ -580,60 +580,58 @@
 	 		if(bool_bot) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 3, origin_x + this.height_box, origin_y + this.depth_box - this.wooden_plate_thickness);
 	 		if(bool_left) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.depth_box, 7, origin_x, origin_y + this.depth_box - this.wooden_plate_thickness);
 	 		svg_builder.define_box_width_and_length(this.height_box + 10, this.depth_box + 10);
-	 	}
+	 	} else if( (number_part == 50) || (number_part == 40) ) { // same parts as 4 and 5 but with a rotation of 90°
+			if(bool_top) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.depth_box, 1, origin_x, origin_y);
+			if(bool_right) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 5, origin_x + this.depth_box - this.wooden_plate_thickness*2, origin_y);
+			if(bool_bot) svg_builder.draw_path_right_left_correction(this.wooden_plate_thickness, this.depth_box, 3, origin_x + this.depth_box - this.wooden_plate_thickness*2, origin_y + this.height_box);
+			if(bool_left) svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 7, origin_x, origin_y + this.height_box);
+			svg_builder.define_box_width_and_length(this.depth_box + 10, this.height_box + 10);
+		}
 	 },
 
 	/** 
-	 *	function that draws at a (x,y) position the basic scheme ( 3 pieces bounds perfecly ) which is the best
-	 *	to economize both wood and laser path.
+	 *	function that draws at a (x,y) position the box with top in the model 1
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@param boolean_duplicate_right {boolean} tell us whether the right part of the basic scheme must be drawn ( to avoid duplicate ) if 2 basic scheme are stick together.
-	 *	@param boolean_duplicate_bottom {boolean} tell us whether the bottom part of the basic scheme must be drawn ( to avoid duplicate ) if 2 basic scheme are stick together.
 	 */
-	 economize_laser_and_wood_basic_scheme: function (origin_x, origin_y, boolean_duplicate_right, boolean_duplicate_bottom) {
-	 	this.draw_single_part(1,origin_x, origin_y, true, true, true, true);
-	 	this.draw_single_part(2,origin_x, origin_y + this.height_box, false, true, boolean_duplicate_bottom, true);
-	 	this.draw_single_part(5,origin_x + this.width_box, origin_y + this.height_box, true, boolean_duplicate_right, true, false);
-	 	svg_builder.define_box_width_and_length(this.width_box + this.height_box + 10, this.depth_box + this.height_box + 10);
+	economize_laser_and_wood_model_1: function (origin_x, origin_y) {
+		this.draw_single_part(2,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y, true, false, true, false);
+		this.draw_single_part(6,origin_x + this.width_box + this.height_box, origin_y, true, true, true, true);
+		this.draw_single_part(5,origin_x + this.width_box*2 + this.height_box, origin_y, true, true, true, false);
+		this.draw_single_part(1,origin_x + this.width_box*2 + this.height_box*2 + this.wooden_plate_thickness*1.5, origin_y + this.wooden_plate_thickness, true, true, true, true);
+		this.draw_single_part(3,origin_x + this.width_box*3 + this.height_box*2 + this.wooden_plate_thickness*2, origin_y + this.wooden_plate_thickness, true, true, true, true);
+	 	svg_builder.define_box_width_and_length(this.width_box*4 + this.height_box*2 + 10, Math.max(this.depth_box,this.height_box) + 10);
 	 },
 
 	/**
-	 *	function that draws at a (x,y) position the line model which is the best to economize both wood and laser path
-	 * 	line model means it use the basic scheme 2 times in line.
+	 *	function that draws at a (x,y) position the box with top in the model 2
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 */
-	 economize_laser_and_wood_line_model: function (origin_x, origin_y) {
-	 	this.economize_laser_and_wood_basic_scheme(origin_x, origin_y, false, true);
-	 	this.economize_laser_and_wood_basic_scheme(origin_x + this.width_box + this.height_box, origin_y, true, true);
-	 	svg_builder.define_box_width_and_length(this.width_box * 2 + this.height_box * 2 + 10, this.depth_box + this.height_box + 10);
-	 },
-
-	/** 
-	 *	function that draws at a (x,y) position the column model which is the best to economize both wood and laser path
-	 *	column model means it use the basic scheme 2 times in column.
-	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
-	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 */
-	 economize_laser_and_wood_column_model: function (origin_x, origin_y) {
-	 	this.economize_laser_and_wood_basic_scheme(origin_x, origin_y, true, false);
-	 	this.economize_laser_and_wood_basic_scheme(origin_x, origin_y + this.height_box + this.depth_box, true, true);
-	 	svg_builder.define_box_width_and_length(this.width_box + this.height_box + 10, this.depth_box * 2 + this.height_box * 2 + 10);
+	 economize_laser_and_wood_model_2: function (origin_x, origin_y) {
+		this.draw_single_part(2,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(4,origin_x + this.width_box, origin_y, true, false, true, false);
+		this.draw_single_part(6,origin_x + this.width_box + this.height_box, origin_y, true, true, true, true);
+		this.draw_single_part(5,origin_x + this.width_box*2 + this.height_box, origin_y, true, true, true, false);
+		this.draw_single_part(1,origin_x, origin_y + this.depth_box, false, true, true, true);
+		this.draw_single_part(3,origin_x + this.width_box + this.wooden_plate_thickness/2, origin_y + this.depth_box + this.wooden_plate_thickness*1.5, true, true, true, true);
+	 	svg_builder.define_box_width_and_length(this.width_box*2 + this.height_box*2 + 10, this.depth_box + this.height_box + 10);
 	 },
 
 	/**
-	 *	function that draws at (x,y) position 4 basic scheme ( == 2 entire boxes ) which is the best to economize both wood and laser path
-	 * 	this is of couse used to draw two boxes, and have them inside the same svg.
+	 *	function that draws at (x,y) position the box with top in the model 3
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 */
-	economize_laser_and_wood_square_model: function (origin_x, origin_y) {
-		this.economize_laser_and_wood_basic_scheme(origin_x, origin_y, false, false);
-		this.economize_laser_and_wood_basic_scheme(origin_x + this.width_box + this.height_box, origin_y, true, false);
-		this.economize_laser_and_wood_basic_scheme(origin_x, origin_y + this.height_box + this.depth_box, false, true);
-		this.economize_laser_and_wood_basic_scheme(origin_x + this.width_box + this.height_box, origin_y + this.height_box + this.depth_box, true, true);
-		svg_builder.define_box_width_and_length(this.width_box * 2 + this.height_box * 2 + 10, this.depth_box * 2 + this.height_box * 2 + 10);
+	economize_laser_and_wood_model_3: function (origin_x, origin_y) {
+		this.draw_single_part(1,origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(40,origin_x + this.width_box, origin_y, true, true, true, false);
+		this.draw_single_part(3,origin_x + this.width_box + this.depth_box - this.wooden_plate_thickness*2, origin_y, true, true, true, false);
+		this.draw_single_part(50,origin_x + this.width_box*2 + this.depth_box - this.wooden_plate_thickness*2, origin_y, true, true, true, false);
+		this.draw_single_part(2,origin_x, origin_y + this.height_box, false, true, true, true);
+		this.draw_single_part(6,origin_x + this.width_box + this.wooden_plate_thickness/2, origin_y + this.height_box + this.wooden_plate_thickness*1.5, true, true, true, true);
+	 	svg_builder.define_box_width_and_length(this.width_box*2 + this.depth_box*2 + 10, this.depth_box + this.height_box + 10);
 	},
 	
 	/**
@@ -652,12 +650,12 @@
 			case 5 : 	this.draw_single_part(5,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
 						break;
 			case 6 : 	this.draw_single_part(6,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
-						break;			
-			case 7 : 	this.economize_laser_and_wood_column_model(this.wooden_plate_thickness, this.wooden_plate_thickness, true, true);
-						break;
-			case 8 : 	this.economize_laser_and_wood_line_model(this.wooden_plate_thickness, this.wooden_plate_thickness, true, true);
 						break;	
-			case 9 :	this.economize_laser_and_wood_square_model(this.wooden_plate_thickness, this.wooden_plate_thickness, true, true);
+			case 7 : 	this.economize_laser_and_wood_model_1(this.wooden_plate_thickness, this.wooden_plate_thickness);
+						break;
+			case 8 : 	this.economize_laser_and_wood_model_2(this.wooden_plate_thickness, this.wooden_plate_thickness);
+						break;	
+			case 9 :	this.economize_laser_and_wood_model_3(this.wooden_plate_thickness, this.wooden_plate_thickness);
 						break;
 			default : 	
 						
@@ -735,7 +733,13 @@
 	 		if(bool_bot) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 2, origin_x + this.width_box, origin_y + this.depth_box);
 	 		if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 6, origin_x, origin_y + this.depth_box);
 	 		svg_builder.define_box_width_and_length(this.width_box + 10, this.depth_box + 10);
-	 	} else if(number_part == 3) {
+	 	} else if(number_part == 20) { // same as part 2 but with a rotation by 90°
+			if(bool_top) 	svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 0, origin_x, origin_y);
+			if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 4, origin_x + this.depth_box, origin_y);
+			if(bool_bot) 	svg_builder.draw_path(this.wooden_plate_thickness, this.depth_box, 2, origin_x + this.depth_box, origin_y + this.width_box);
+			if(bool_left) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 6, origin_x, origin_y + this.width_box);
+			svg_builder.define_box_width_and_length(this.depth_box + 10, this.width_box + 10);
+		} else if(number_part == 3) {
 	 		if(bool_top) 	svg_builder.draw_path(this.wooden_plate_thickness, this.width_box, 1, origin_x, origin_y );
 	 		if(bool_right) 	svg_builder.draw_path(this.wooden_plate_thickness, this.height_box, 4, origin_x + this.width_box, origin_y);
 	 		if(bool_bot) 	svg_builder.draw_line(origin_x + this.width_box, origin_y + this.height_box, -this.width_box, 0);
@@ -757,49 +761,50 @@
 	 },
 
 	/**
-	 *	function that draws at a (x,y) position the box without top which is the best to economize both wood and laser path.
-	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
-	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 *	@param bool_top {boolean} if true the top side of this part will be drawn, else way it wont
-	 *	@param bool_right {boolean} if true the right side of this part will be drawn, else way it wont
-	 *	@param bool_bot {boolean} if true the bot side of this part will be drawn, else way it wont
-	 *	@param bool_left {boolean} if true the left side of this part will be drawn, else way it wont
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
-	 */
-	 economize_laser_and_wood_one_box: function (origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left) {
-	 	this.draw_single_part(1, origin_x, origin_y, bool_top, true, true, bool_left);
-	 	this.draw_single_part(2, origin_x, origin_y + this.height_box, false, true, true, true);
-	 	this.draw_single_part(3, origin_x, origin_y + this.height_box + this.depth_box, false, true, bool_bot, bool_left);
-	 	this.draw_single_part(4, origin_x + this.width_box, origin_y, bool_top, bool_right, true, false);
-	 	this.draw_single_part(5, origin_x + this.width_box, origin_y + this.depth_box + this.height_box, true, bool_right, bool_bot, false);
-	 	svg_builder.define_box_width_and_length(this.width_box + this.depth_box + 10, this.height_box * 2 + this.depth_box + 10);
-	 },
-
-	/**
-	 *	function that draws at a (x,y) position of two boxes without top which is the best to economize both wood and laser path.
-	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
-	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
-	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
-	 */
-	 economize_laser_and_wood_two_boxes: function (origin_x, origin_y) {
-	 	this.economize_laser_and_wood_one_box(origin_x, origin_y, true, true, true, true);
-	 	this.economize_laser_and_wood_one_box(origin_x + this.depth_box + this.width_box - this.wooden_plate_thickness * 2, origin_y, true, true, true, false);
-	 	svg_builder.define_box_width_and_length(this.width_box * 2 + this.depth_box * 2 + 10, this.height_box * 2 + this.depth_box + 10);		
-	 },
-
-	/**
-	 *	function that draws at a (x,y) position four boxes without top which is the best to economize both wood and laser path.
+	 *	function that draws at a (x,y) position the box without top in the model 1
 	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
 	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
 	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a> to get the parameters informations
 	 */
-	economize_laser_and_wood_four_boxes: function (origin_x, origin_y) {
-		this.economize_laser_and_wood_two_boxes(origin_x, origin_y);
-		this.economize_laser_and_wood_one_box(origin_x, origin_y + this.height_box * 2 + this.depth_box, false, true, true, true);
-		this.economize_laser_and_wood_one_box(origin_x + this.width_box + this.depth_box - this.wooden_plate_thickness * 2, origin_y + this.height_box * 2 + this.depth_box, false, true, true, false);
-		svg_builder.define_box_width_and_length(this.width_box * 2 + this.depth_box * 2 + 10, this.height_box * 4 + this.depth_box *2 + 10);		
+	economize_laser_and_wood_model_1: function (origin_x, origin_y) {
+		this.draw_single_part(3, origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(5, origin_x + this.width_box, origin_y, true, true, true, false);
+		this.draw_single_part(1, origin_x, origin_y + this.height_box, false, true, true, true);
+		this.draw_single_part(4, origin_x + this.width_box, origin_y + this.height_box, false, true, true, false);
+		this.draw_single_part(20, origin_x + this.width_box + this.depth_box + this.wooden_plate_thickness, origin_y, true, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box + this.wooden_plate_thickness + this.depth_box*2 + 10, Math.max(this.height_box*2, this.width_box) + 10);		
 	},
+
+	/**
+	 *	function that draws at a (x,y) position the box  without top in the model 3
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 */
+	 economize_laser_and_wood_model_2: function (origin_x, origin_y) {
+		this.draw_single_part(3, origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(5, origin_x + this.width_box, origin_y, true, true, true, false);
+		this.draw_single_part(1, origin_x, origin_y + this.height_box, false, true, true, true);
+		this.draw_single_part(4, origin_x + this.width_box, origin_y + this.height_box, false, true, true, false);
+		this.draw_single_part(2, origin_x, origin_y + this.height_box*2, false, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box + this.wooden_plate_thickness + this.depth_box + 10, this.height_box*2 + this.depth_box + 10);	
+	 },
 	
+	/**
+	 *	function that draws at a (x,y) position the box without top in the model 2
+	 *	@param origin_x {int} its the x (abscissa) origin of the drawing of this part
+	 *	@param origin_y {int} its the y (abscissa) origin of the drawing of this part
+	 * 	@see <a href="#.draw_single_part" >draw_single_part()</a>
+	 */
+	economize_laser_and_wood_model_3: function (origin_x, origin_y) {
+		this.draw_single_part(3, origin_x, origin_y, true, true, true, true);
+		this.draw_single_part(5, origin_x + this.width_box, origin_y, true, true, true, false);
+		this.draw_single_part(1, origin_x, origin_y + this.height_box, false, true, true, true);
+		this.draw_single_part(4, origin_x + this.width_box, origin_y + this.height_box, false, true, false, false);
+		this.draw_single_part(20, origin_x + this.width_box, origin_y + this.height_box*2, true, true, true, true);
+		svg_builder.define_box_width_and_length(this.width_box + this.wooden_plate_thickness + this.depth_box + 10, this.height_box*2 + this.width_box + 10);	
+	 },
+
 	/**
 	 *	function that draws the box/part of box which is selected in the option listStyleType
 	 */
@@ -815,11 +820,11 @@
 						break;			
 			case 5 : 	this.draw_single_part(5,this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
 						break;
-			case 6 : 	this.economize_laser_and_wood_one_box(this.wooden_plate_thickness, this.wooden_plate_thickness, true, true, true, true);
+			case 6 : 	this.economize_laser_and_wood_model_1(this.wooden_plate_thickness, this.wooden_plate_thickness);
 						break;			
-			case 7 : 	this.economize_laser_and_wood_two_boxes(this.wooden_plate_thickness, this.wooden_plate_thickness);
+			case 7 : 	this.economize_laser_and_wood_model_2(this.wooden_plate_thickness, this.wooden_plate_thickness);
 						break;
-			case 8 :	this.economize_laser_and_wood_four_boxes(this.wooden_plate_thickness, this.wooden_plate_thickness);
+			case 8 :	this.economize_laser_and_wood_model_3(this.wooden_plate_thickness, this.wooden_plate_thickness);
 						break;
 			default : 	
 		}
