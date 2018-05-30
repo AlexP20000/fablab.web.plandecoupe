@@ -771,7 +771,7 @@
 		this.draw_single_part(5, origin_x + this.width_box, origin_y, true, true, true, false);
 		this.draw_single_part(1, origin_x, origin_y + this.height_box, false, true, true, true);
 		this.draw_single_part(4, origin_x + this.width_box, origin_y + this.height_box, false, true, true, false);
-		this.draw_single_part(20, origin_x + this.width_box + this.depth_box + this.wooden_plate_thickness, origin_y, true, true, true, true);
+		this.draw_single_part(20, origin_x + this.width_box + this.depth_box - this.wooden_plate_thickness/2, origin_y, true, true, true, true);
 		svg_builder.define_box_width_and_length(this.width_box + this.wooden_plate_thickness + this.depth_box*2 + 10, Math.max(this.height_box*2, this.width_box) + 10);		
 	},
 
