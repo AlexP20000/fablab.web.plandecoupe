@@ -601,7 +601,7 @@
 		this.draw_single_part(5,origin_x + this.width_box*2 + this.height_box, origin_y, true, true, true, false);
 		this.draw_single_part(1,origin_x + this.width_box*2 + this.height_box*2 + this.wooden_plate_thickness*1.5, origin_y + this.wooden_plate_thickness, true, true, true, true);
 		this.draw_single_part(3,origin_x + this.width_box*3 + this.height_box*2 + this.wooden_plate_thickness*2, origin_y + this.wooden_plate_thickness, true, true, true, true);
-	 	svg_builder.define_box_width_and_length(this.width_box*4 + this.height_box*2 + 10, Math.max(this.depth_box,this.height_box) + 10);
+	 	svg_builder.define_box_width_and_length(this.width_box*4 + this.height_box*2 + this.wooden_plate_thickness + 10, Math.max(this.depth_box,this.height_box) + 10);
 	 },
 
 	/**
@@ -616,7 +616,7 @@
 		this.draw_single_part(5,origin_x + this.width_box*2 + this.height_box, origin_y, true, true, true, false);
 		this.draw_single_part(1,origin_x, origin_y + this.depth_box, false, true, true, true);
 		this.draw_single_part(3,origin_x + this.width_box + this.wooden_plate_thickness/2, origin_y + this.depth_box + this.wooden_plate_thickness*1.5, true, true, true, true);
-	 	svg_builder.define_box_width_and_length(this.width_box*2 + this.height_box*2 + 10, this.depth_box + this.height_box + 10);
+	 	svg_builder.define_box_width_and_length(this.width_box*2 + this.height_box*2 + 10, this.depth_box + this.height_box + this.wooden_plate_thickness*2 + 10);
 	 },
 
 	/**
