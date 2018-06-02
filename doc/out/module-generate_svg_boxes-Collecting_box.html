@@ -376,7 +376,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1647">line 1647</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1728">line 1728</a>
     </li></ul></dd>
     
 
@@ -489,7 +489,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1709">line 1709</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1790">line 1790</a>
     </li></ul></dd>
     
 
@@ -582,7 +582,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1679">line 1679</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1760">line 1760</a>
     </li></ul></dd>
     
 
@@ -624,7 +624,7 @@
 
 
 <div class="description">
-    function that draws the box/part of box which is selected in the option listStyleType
+    function that draws the box/part which is selected in the option listStyleType
 </div>
 
 
@@ -668,7 +668,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1810">line 1810</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1899">line 1899</a>
     </li></ul></dd>
     
 
@@ -702,7 +702,7 @@
     
 
     
-    <h4 class="name" id=".draw_single_part"><span class="type-signature">(static) </span>draw_single_part<span class="signature">(number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".draw_single_part"><span class="type-signature">(static) </span>draw_single_part<span class="signature">(number_part, g_tag_id, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
     
 
     
@@ -762,7 +762,30 @@
 
             
 
-            <td class="description last">the number of the part of the Collecting_box</td>
+            <td class="description last">the number of the part</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>g_tag_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the id of the g tag containing the box piece. Used for referencing the box piece with svg_builder.set_attribute_g_tag()</td>
         </tr>
 
     
@@ -808,7 +831,7 @@
 
             
 
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+            <td class="description last">its the y (ordinate) origin of the drawing of this part</td>
         </tr>
 
     
@@ -941,12 +964,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1724">line 1724</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1807">line 1807</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="#svg_builder.set_attribute_g_tag()" >svg_builder.set_attribute_g_tag()</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -1058,7 +1088,7 @@
 
             
 
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+            <td class="description last">its the y (ordinate) origin of the drawing of this part</td>
         </tr>
 
     
@@ -1099,7 +1129,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1797">line 1797</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1885">line 1885</a>
     </li></ul></dd>
     
 
@@ -1185,7 +1215,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1694">line 1694</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1775">line 1775</a>
     </li></ul></dd>
     
 
@@ -1465,7 +1495,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1659">line 1659</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line1740">line 1740</a>
     </li></ul></dd>
     
 
@@ -1515,7 +1545,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 28 2018 15:41:51 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jun 03 2018 00:00:56 GMT+0200 (Paris, Madrid (heure d’été))
 </footer>
 
 <script> prettyPrint(); </script>
