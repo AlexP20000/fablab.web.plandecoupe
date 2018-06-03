@@ -827,7 +827,7 @@
 		this.draw_single_part(1, "g_tag_id_1", origin_x, origin_y + this.height_box, false, true, true, true);
 		this.draw_single_part(4, "g_tag_id_4", origin_x + this.width_box, origin_y + this.height_box, false, true, true, false);
 		this.draw_single_part(2, "g_tag_id_2", origin_x, origin_y, true, true, true, true);
-		svg_builder.set_attribute_g_tag("g_tag_id_2","scale(1,1)","translate("+(this.width_box + this.depth_box - this.wooden_plate_thickness/2)+","+(this.width_box+this.wooden_plate_thickness*2)+")","rotate(270,0,0)");
+		svg_builder.set_attribute_g_tag("g_tag_id_2","scale(1,1)","translate("+(this.width_box + this.depth_box - this.wooden_plate_thickness/2)+","+(this.width_box+this.wooden_plate_thickness)+")","rotate(270,0,0)");
 		svg_builder.define_box_width_and_length(this.width_box + this.wooden_plate_thickness + this.depth_box*2 + 10, Math.max(this.height_box*2, this.width_box) + 10);		
 	},
 
