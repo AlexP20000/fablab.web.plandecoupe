@@ -77,7 +77,7 @@
 	 *	encode the data from the svg tag into URI data, and then set those information directly to the a tag as "href".
 	 *	then we use the magic function "click()" that simulate a human click on this tag, which open the download yes/no window.
 	 */
-	 generate_svg_file: function () {
+	 generate_svg_file: function (file_name) {
 		// we delete our second layout and make a copie for re-putting it after the download operation
 		var wooden_plate_layer = document.getElementById("wooden_plate_layer");
 	 	var parentElement = wooden_plate_layer.parentElement;
@@ -102,7 +102,7 @@
 		// we set the uri content
 		document.getElementById("filesvg").setAttribute("href", encodedData);
 		// we set the file name downloaded
-		document.getElementById("filesvg").setAttribute("download", "thismustbethebest.svg");
+		document.getElementById("filesvg").setAttribute("download", file_name); 
 		// our a tag is hidden, so we use the click function as we would click on it usualy
 		document.getElementById("filesvg").click();
 		// we re-put our second layout
@@ -292,7 +292,7 @@
 	
 	/**
 	 * 	function that draws a circle using svg path tag
-	 * 	@param {int} size is the length for which we have to make a path
+	 * 	@param {int} size is the diameter for which we have to make a path
 	 * 	@param {int} angle is the angle you want to rotate your path
 	 * 	@param {int} draw_origin_x is the x (abscissa) position where we start the drawing.
 	 * 	@param {int} draw_origin_y is the y (ordinate) position where we start the drawing.
@@ -306,7 +306,7 @@
 	/**
 	 *	function that draws a half circle using svg path tag
 	 *	@see <a href="#.draw_path_circle" >draw_path_circle()</a>
-	 *	@param {int} size is the length for which we have to make a path
+	 *	@param {int} size is the diameter for which we have to make a path
 	 *	@param {int} angle is the angle you want to rotate your path
 	 *	@param {int} draw_origin_x is the x (abscissa) position where we start the drawing.
 	 *	@param {int} draw_origin_y is the y (ordinate) position where we start the drawing.
@@ -656,7 +656,7 @@
 		this.draw_single_part(5, "g_tag_id_5", origin_x + this.width_box*2 + this.height_box, origin_y, true, true, true, false);
 		this.draw_single_part(1, "g_tag_id_1", origin_x + this.width_box*2 + this.height_box*2 + this.wooden_plate_thickness*1.5, origin_y + this.wooden_plate_thickness, true, true, true, true);
 		this.draw_single_part(3, "g_tag_id_3", origin_x + this.width_box*3 + this.height_box*2 + this.wooden_plate_thickness*2, origin_y + this.wooden_plate_thickness, true, true, true, true);
-	 	svg_builder.define_box_width_and_length(this.width_box*4 + this.height_box*2 + this.wooden_plate_thickness, Math.max(this.depth_box,this.height_box) + this.wooden_plate_thickness);
+	 	svg_builder.define_box_width_and_length(this.width_box*4 + this.height_box*2 + this.wooden_plate_thickness*4, Math.max(this.depth_box,this.height_box) + this.wooden_plate_thickness);
 	 },
 
 	/**
@@ -1937,6 +1937,8 @@ function app1_closed_or_openned_box(download) {
 	var notch_size = Number(document.getElementById("encoche").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boite]"; 
 	
 	// we create our object, depending on whether the checkbox is checked or not
 	var app1_closed_or_openned_box;
@@ -1966,7 +1968,7 @@ function app1_closed_or_openned_box(download) {
 		app1_closed_or_openned_box.draw_selected_item();
 	}
 	
-	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
 	svg_builder.show_layer2();	// to show the result in the good scale
 }
 
@@ -1989,6 +1991,7 @@ function app2_toolbox(download){
 	nose = Number(document.getElementById("nose").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boiteOutils]"; 
 
 	height_box = height_box - wooden_plate_thickness; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	depth_box = depth_box - ( 2 * wooden_plate_thickness ); // to correct the depth_box lack ( its the fact that we must count the wooden_plate_thickness ! )
@@ -2014,7 +2017,7 @@ function app2_toolbox(download){
 	Toolbox.init_geometry_parameters();
 	Toolbox.draw_selected_item();
 
-	if( download == true ) svg_builder.generate_svg_file();  
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
 	svg_builder.show_layer2();
 }
 
@@ -2037,6 +2040,7 @@ function app3_paper_stand(download) {
 	var notch_size = Number(document.getElementById("encoche").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[presentoir]"; 
 	
 	var size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);
 	var size_between_stand = Number(document.getElementById("hauteurSeparation").value);		// 12 cm minimum
@@ -2064,7 +2068,7 @@ function app3_paper_stand(download) {
 	
 	app3_paper_stand.draw_selected_item();
 	
-	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
 	svg_builder.show_layer2();								// to show the result in the good scale
 }
 
@@ -2087,6 +2091,7 @@ function app4_hinged_lid_box(download) {
 	var notch_size = Number(document.getElementById("encoche").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[hingedLidBox]"; 
 	
 	height_box = height_box - wooden_plate_thickness*2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness once and the cover part of the box )
 	
@@ -2105,7 +2110,7 @@ function app4_hinged_lid_box(download) {
 	
 	app4_hinged_lid_box.draw_selected_item();
 	
-	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
 	svg_builder.show_layer2();								// to show the result in the good scale
 }
 
@@ -2129,6 +2134,7 @@ function app5_collecting_box(download) {
 	var angle_degre = Number(document.getElementById("angle").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[collectingBox]"; 
 	var big_notch_depth = wooden_plate_thickness*2;
 	
 	var app5_collecting_box = Object.create(Collecting_box);
@@ -2157,7 +2163,7 @@ function app5_collecting_box(download) {
 	
 	app5_collecting_box.draw_selected_item();
 	
-	if( download == true ) svg_builder.generate_svg_file(); // if download is true, it will be downloadable by the user
+	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
 	svg_builder.show_layer2();								// to show the result in the good scale
 }
 

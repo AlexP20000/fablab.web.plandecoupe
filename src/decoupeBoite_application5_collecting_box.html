@@ -11,10 +11,11 @@
 
 <body onLoad="checkValue()">
     <div class="container">
-        <div id="content-header"></div>
-        <script id="header-template" type="text/x-handlebars-template">
-          {{> header}}
-        </script>
+        <div class="row" style="margin-top:5px;"> 
+            <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a> 
+                <h1 class="text-center">Générateur de fichier svg pour découpe de boites de collecte</h1> 
+            </div> 
+        </div> 
         <div class="row" style="margin-top:15px;" align="center">
             <div class="col-md-6">
                 <div class="card">
@@ -30,12 +31,12 @@
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label>
 							<select onchange="selectedModel(); app5_collecting_box();" id="selectP2">
 								<optgroup label="Modèle :">
-									<option value="1">Face 1</option>
-									<option value="2">Face 2</option>
-									<option value="3">Face 3</option>
-									<option value="4">Face 4</option>
-									<option value="5">Face 5</option>
-									<option value="6">Face 6</option>
+									<option value="1">Back part</option>
+									<option value="2">Cover part</option>
+									<option value="3">Front tilt part</option>
+									<option value="4">Side part 1</option>
+									<option value="5">Side part 2</option>
+									<option value="6">Floor part</option>
 									<option value="7" selected>Toutes faces</option>
 								</optgroup>
 							</select>
@@ -51,12 +52,12 @@
 							
                             <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app5_collecting_box();" type="checkbox" id="formCheck-3"/></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesures internes :</label><input onchange="app5_collecting_box();" type="checkbox" id="formCheck-3"/></div>
 
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app5_collecting_box(true)" >Télécharger la boite</button></div>
+                            <button id="genButton" class="btn btn-primary" type="button" onclick="app5_collecting_box(true)" >Télécharger le plan</button></div>
                             <a hidden id="json" href=""></a>
                         </div>
                     </div>
@@ -150,7 +151,7 @@
 								</svg>
      </div>
      <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br> <img id="img_shema_boite_ouverte" src="assets/img/collecting_box/scheme_collecting_box.png" alt="scheme_collecting_box" height="100%" width="100%"></p>
+        <p><br> <img id="img_shema_boite_ouverte" src="assets/img/collecting_box/blueprint_collecting_box.png" alt="blueprint_collecting_box" height="100%" width="100%"></p>
     </div>
 </div>
 </div>
