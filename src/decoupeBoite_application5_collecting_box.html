@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row" style="margin-top:5px;"> 
             <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a> 
-                <h1 class="text-center">Générateur de fichier svg pour découpe de boites chelou 2</h1> 
+                <h1 class="text-center">Générateur de fichier svg pour découpe de boites de collecte</h1> 
             </div> 
         </div> 
         <div class="row" style="margin-top:15px;" align="center">
@@ -52,12 +52,12 @@
 							
                             <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app5_collecting_box();" type="checkbox" id="formCheck-3"/></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesures internes :</label><input onchange="app5_collecting_box();" type="checkbox" id="formCheck-3"/></div>
 
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app5_collecting_box(true)" >Télécharger la boite</button></div>
+                            <button id="genButton" class="btn btn-primary" type="button" onclick="app5_collecting_box(true)" >Télécharger le plan</button></div>
                             <a hidden id="json" href=""></a>
                         </div>
                     </div>
