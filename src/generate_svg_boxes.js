@@ -292,7 +292,7 @@
 	
 	/**
 	 * 	function that draws a circle using svg path tag
-	 * 	@param {int} size is the length for which we have to make a path
+	 * 	@param {int} size is the diameter for which we have to make a path
 	 * 	@param {int} angle is the angle you want to rotate your path
 	 * 	@param {int} draw_origin_x is the x (abscissa) position where we start the drawing.
 	 * 	@param {int} draw_origin_y is the y (ordinate) position where we start the drawing.
@@ -306,7 +306,7 @@
 	/**
 	 *	function that draws a half circle using svg path tag
 	 *	@see <a href="#.draw_path_circle" >draw_path_circle()</a>
-	 *	@param {int} size is the length for which we have to make a path
+	 *	@param {int} size is the diameter for which we have to make a path
 	 *	@param {int} angle is the angle you want to rotate your path
 	 *	@param {int} draw_origin_x is the x (abscissa) position where we start the drawing.
 	 *	@param {int} draw_origin_y is the y (ordinate) position where we start the drawing.
