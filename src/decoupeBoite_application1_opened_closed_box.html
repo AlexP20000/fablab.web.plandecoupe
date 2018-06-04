@@ -24,12 +24,12 @@
                     </div>
                     <div class="card-body">
                         <div id="Formulaire">
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app1_close_or_open_box();" id="selectP"></select>
+                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app1_closed_or_openned_box();" id="selectP"></select>
                                 <button
                                 class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
                             </div>
                             <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label>
-							<select onchange="selectedModel(); app1_close_or_open_box();" id="selectP2">
+							<select onchange="selectedModel(); app1_closed_or_openned_box();" id="selectP2">
 								<optgroup id="groupWithTop" label="With_Top">
 									<option value="1">Face 1</option>
 									<option value="2">Face 2</option>
@@ -53,21 +53,21 @@
 								</optgroup></select>
                             </div>
                             <div
-                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="hauteur" type="number" min="0" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app1_close_or_open_box()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
+                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="hauteur" type="number" min="0" placeholder="mm" value="150"></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Boite fermée :</label><input onchange="onCheckboxChange(); app1_close_or_open_box();" type="checkbox" id="formCheck-1"/></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Boite fermée :</label><input onchange="onCheckboxChange(); app1_closed_or_openned_box();" type="checkbox" id="formCheck-1"/></div>
 
                             <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app1_close_or_open_box();" type="checkbox" id="formCheck-3"/></div>
+                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesure interne :</label><input onchange="app1_closed_or_openned_box();" type="checkbox" id="formCheck-3"/></div>
 
                             <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
                             <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
                             <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app1_close_or_open_box(true)" >Télécharger la boite</button></div>
+                            <button id="genButton" class="btn btn-primary" type="button" onclick="app1_closed_or_openned_box(true)" >Télécharger la boite</button></div>
                             <a hidden id="json" href=""></a>
                         </div>
                     </div>
@@ -155,10 +155,7 @@
 										</cc:Work>
 									 </rdf:RDF>
 									 </metadata>
-									 <g id="svgLayer1" inkscape:label="Calque 1" inkscape:groupmode="layer">
-										 <!-- your path goes here my dear -->
-									 </g>
-									 <g id="svgLayer2" inkscape:label="Calque 2" inkscape:groupmode="layer" opacity="0">
+									 <g id="wooden_plate_layer" inkscape:label="Calque 2" inkscape:groupmode="layer" opacity="0">
 										 <!-- your path goes here my dear -->
 									 </g>
 								</svg>

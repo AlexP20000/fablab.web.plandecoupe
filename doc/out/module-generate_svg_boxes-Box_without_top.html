@@ -261,7 +261,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line677">line 677</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line733">line 733</a>
     </li></ul></dd>
     
 
@@ -367,7 +367,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line706">line 706</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line762">line 762</a>
     </li></ul></dd>
     
 
@@ -409,7 +409,7 @@
 
 
 <div class="description">
-    function that draws the box/part of box which is selected in the option listStyleType
+    function that draws the box/part which is selected in the option listStyleType
 </div>
 
 
@@ -453,7 +453,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line806">line 806</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line868">line 868</a>
     </li></ul></dd>
     
 
@@ -487,7 +487,7 @@
     
 
     
-    <h4 class="name" id=".draw_single_part"><span class="type-signature">(static) </span>draw_single_part<span class="signature">(number_part, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".draw_single_part"><span class="type-signature">(static) </span>draw_single_part<span class="signature">(number_part, g_tag_id, origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
     
 
     
@@ -547,7 +547,30 @@
 
             
 
-            <td class="description last">the number of the part of the Box_without_top</td>
+            <td class="description last">the number of the part</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>g_tag_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the id of the g tag containing the box piece. Used for referencing the box piece with svg_builder.set_attribute_g_tag()</td>
         </tr>
 
     
@@ -593,7 +616,7 @@
 
             
 
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+            <td class="description last">its the y (ordinate) origin of the drawing of this part</td>
         </tr>
 
     
@@ -726,12 +749,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line725">line 725</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line783">line 783</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="#svg_builder.set_attribute_g_tag()" >svg_builder.set_attribute_g_tag()</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -760,7 +790,7 @@
     
 
     
-    <h4 class="name" id=".economize_laser_and_wood_four_boxes"><span class="type-signature">(static) </span>economize_laser_and_wood_four_boxes<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".economize_laser_and_wood_model_1"><span class="type-signature">(static) </span>economize_laser_and_wood_model_1<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
     
 
     
@@ -768,7 +798,7 @@
 
 
 <div class="description">
-    function that draws at a (x,y) position four boxes without top which is the best to economize both wood and laser path.
+    function that draws at a (x,y) position the box without top in the model 1
 </div>
 
 
@@ -843,7 +873,7 @@
 
             
 
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+            <td class="description last">its the y (ordinate) origin of the drawing of this part</td>
         </tr>
 
     
@@ -884,7 +914,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line796">line 796</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line824">line 824</a>
     </li></ul></dd>
     
 
@@ -925,7 +955,7 @@
     
 
     
-    <h4 class="name" id=".economize_laser_and_wood_one_box"><span class="type-signature">(static) </span>economize_laser_and_wood_one_box<span class="signature">(origin_x, origin_y, bool_top, bool_right, bool_bot, bool_left)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".economize_laser_and_wood_model_2"><span class="type-signature">(static) </span>economize_laser_and_wood_model_2<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
     
 
     
@@ -933,7 +963,7 @@
 
 
 <div class="description">
-    function that draws at a (x,y) position the box without top which is the best to economize both wood and laser path.
+    function that draws at a (x,y) position the box  without top in the model 3
 </div>
 
 
@@ -1008,99 +1038,7 @@
 
             
 
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_top</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the top side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_right</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the right side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_bot</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the bot side of this part will be drawn, else way it wont</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bool_left</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">if true the left side of this part will be drawn, else way it wont</td>
+            <td class="description last">its the y (ordinate) origin of the drawing of this part</td>
         </tr>
 
     
@@ -1141,7 +1079,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line769">line 769</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line840">line 840</a>
     </li></ul></dd>
     
 
@@ -1182,7 +1120,7 @@
     
 
     
-    <h4 class="name" id=".economize_laser_and_wood_two_boxes"><span class="type-signature">(static) </span>economize_laser_and_wood_two_boxes<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".economize_laser_and_wood_model_3"><span class="type-signature">(static) </span>economize_laser_and_wood_model_3<span class="signature">(origin_x, origin_y)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1190,7 +1128,7 @@
 
 
 <div class="description">
-    function that draws at a (x,y) position of two boxes without top which is the best to economize both wood and laser path.
+    function that draws at a (x,y) position the box without top in the model 2
 </div>
 
 
@@ -1265,7 +1203,7 @@
 
             
 
-            <td class="description last">its the y (abscissa) origin of the drawing of this part</td>
+            <td class="description last">its the y (ordinate) origin of the drawing of this part</td>
         </tr>
 
     
@@ -1306,7 +1244,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line784">line 784</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line855">line 855</a>
     </li></ul></dd>
     
 
@@ -1563,7 +1501,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line688">line 688</a>
+        <a href="generate_svg_boxes.js.html">generate_svg_boxes.js</a>, <a href="generate_svg_boxes.js.html#line744">line 744</a>
     </li></ul></dd>
     
 
@@ -1613,7 +1551,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 28 2018 15:41:51 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jun 03 2018 00:00:56 GMT+0200 (Paris, Madrid (heure d’été))
 </footer>
 
 <script> prettyPrint(); </script>
