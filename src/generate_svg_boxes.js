@@ -1938,7 +1938,7 @@ function app1_closed_or_openned_box(download) {
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
 
-	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boite]"; 
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boite].svg"; 
 	
 	// we create our object, depending on whether the checkbox is checked or not
 	var app1_closed_or_openned_box;
@@ -1991,7 +1991,7 @@ function app2_toolbox(download){
 	nose = Number(document.getElementById("nose").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
-	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boiteOutils]"; 
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[boiteOutils].svg"; 
 
 	height_box = height_box - wooden_plate_thickness; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness ! )
 	depth_box = depth_box - ( 2 * wooden_plate_thickness ); // to correct the depth_box lack ( its the fact that we must count the wooden_plate_thickness ! )
@@ -2040,7 +2040,7 @@ function app3_paper_stand(download) {
 	var notch_size = Number(document.getElementById("encoche").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
-	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[presentoir]"; 
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[presentoir].svg"; 
 	
 	var size_stand_front_part = Number(document.getElementById("hauteurPartieAvant").value);
 	var size_between_stand = Number(document.getElementById("hauteurSeparation").value);		// 12 cm minimum
@@ -2091,7 +2091,7 @@ function app4_hinged_lid_box(download) {
 	var notch_size = Number(document.getElementById("encoche").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
-	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[hingedLidBox]"; 
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[hingedLidBox].svg"; 
 	
 	height_box = height_box - wooden_plate_thickness*2; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness once and the cover part of the box )
 	
@@ -2134,7 +2134,7 @@ function app5_collecting_box(download) {
 	var angle_degre = Number(document.getElementById("angle").value);
 	NOTCH_SIZE = notch_size;
 	THICKNESS = wooden_plate_thickness;
-	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[collectingBox]"; 
+	file_name = "["+width_box/10+"cm]x["+depth_box/10+"cm]_["+wooden_plate_thickness+"mm]-[collectingBox].svg"; 
 	var big_notch_depth = wooden_plate_thickness*2;
 	
 	var app5_collecting_box = Object.create(Collecting_box);
