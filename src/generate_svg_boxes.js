@@ -328,6 +328,7 @@
 	 *	@param {int} Ay the y (ordinate) initial position
 	 *	@param {int} Bx the x (abscissa) position where we must move from Ax
 	 *	@param {int} By the y (ordinate) position where we must move from Ay
+	 *	@param {int} angle is the angle you want to rotate your path
 	 *	@param {string} layer this is the layer where you want to add your path tag
 	 */
 	 draw_line: function (Ax, Ay, Bx, By, angle=0, layer) {
@@ -391,7 +392,7 @@
 	 *	@param {int} angle is the angle you want to rotate your path
 	 *	@param {string} layer this is the layer where you want to add your path tag
 	 */
-	draw_path_tight: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle, layer) {
+	draw_path_tight: function (wooden_plate_thickness, size, rotate_case, draw_origin_x, draw_origin_y, angle=0, layer) {
 		var tab_coordinate = svg_builder.draw_side(wooden_plate_thickness, size + wooden_plate_thickness*2, false); 	// gets the good values to draw
 		tab_coordinate = tab_coordinate.split(' ');
 		tab_coordinate[1] = "0,0"; tab_coordinate[tab_coordinate.length - 1] = "0,0";		// we delete the twos "thickness,0" values
