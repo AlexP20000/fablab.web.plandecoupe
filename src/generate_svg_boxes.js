@@ -93,16 +93,15 @@
 		svg.setAttribute("height", svg_height + "mm");
 		var stringViewBox = "0 0 " + ( BOX_SCHEME_WIDTH ) + " " + ( BOX_SCHEME_LENGTH ); 
 		svg.setAttribute("viewBox",stringViewBox);
-		// Use XMLSerializer to convert the DOM to a string
-		var s = new XMLSerializer();
-		var d = document.getElementById("svg");
-		var str = s.serializeToString(d); // the svg tag with its contents 
-		// and then btoa can convert that to base64
-		var encodedData = "data:image/svg+xml;base64," + window.btoa("<?xml version='1.0' encoding='UTF-8' standalone='no'?> " + str); 
+		// my lovely blob
+		var aFileParts = ['<?xml version="1.0" encoding="UTF-8" standalone="no"?>', svg_container.innerHTML];
+		var oMyBlob = new Blob(aFileParts, {
+			type: 'data:image/svg+xml;base64 '
+		});
 		// we set the uri content
-		document.getElementById("filesvg").setAttribute("href", encodedData);
+		document.getElementById("filesvg").setAttribute("href", URL.createObjectURL(oMyBlob));
 		// we set the file name downloaded
-		document.getElementById("filesvg").setAttribute("download", file_name); 
+		document.getElementById("filesvg").setAttribute("download", file_name);
 		// our a tag is hidden, so we use the click function as we would click on it usualy
 		document.getElementById("filesvg").click();
 		// we re-put our second layout
@@ -113,7 +112,7 @@
 		// reseting the viewbox
 		svg_builder.set_viewbox();
 	},
-
+		
 	/** 
 	 *	clear the g tag of the svg tag so that it will be up for new parameters/shapes to be drawn in.
 	 *	@param {string} layer the id of the layer g tag you want to clear the components
@@ -2164,8 +2163,8 @@ function app5_collecting_box(download) {
 	
 	app5_collecting_box.draw_selected_item();
 	
-	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
-	svg_builder.show_layer2();								// to show the result in the good scale
+	if( download == true ) svg_builder.generate_svg_file(file_name); 	// if download is true, it will be downloadable by the user 
+	svg_builder.show_layer2();											// to show the result in the good scale
 }
 
 /*
