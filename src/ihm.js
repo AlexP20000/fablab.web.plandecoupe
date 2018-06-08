@@ -56,6 +56,23 @@ function updateSelectPlank(array){
     select.options[i].setAttribute("id",array[i].id);
   }
 }
+
+/**
+ * function to load an image in the modal for better view
+ * @param {HTMLComposant} img - Image you want to load in the modal
+ */
+function loadImage(img){
+  var modal = document.getElementById("myModal2");
+  var modalImg = document.getElementById("img01");
+  var captionText = document.getElementById("caption");
+  img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+  }
+}
+
+
 /**
 *Represent a plank
 *@constructor
@@ -77,6 +94,8 @@ var Planche = (function(){
 
 })();
 
+
+var modal = document.getElementById("myModal2");
 var planche1 = new Planche("planche1",700,800,3);
 var planche2 = new Planche("planche2",700,800,5);
 /** Store the selected index in the plank select*/
@@ -91,19 +110,30 @@ updateSelectPlank(selectPlanche);
 document.getElementById("genButton").disabled = true;
 document.getElementById("pButton").disabled = true;
 
+var imgP = document.getElementById("myImg");
+loadImage(imgP)
 // Get the modal
-var modal = document.getElementById("myModal2");
-
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var img = document.getElementById("myImg");
-var modalImg = document.getElementById("img01");
-var captionText = document.getElementById("caption");
-img.onclick = function(){
-  modal.style.display = "block";
-  modalImg.src = this.src;
-  captionText.innerHTML = this.alt;
+if(document.getElementById("img_shema_tool_box")){
+  var img = document.getElementById("img_shema_tool_box");
+  loadImage(img);
 }
+if(document.getElementById("img_shema_boite_ouverte")){
+  var img = document.getElementById("img_shema_boite_ouverte");
+  loadImage(img);
+}
+if(document.getElementById("img_shema_boite_ferme")){
+  var img = document.getElementById("img_shema_boite_ferme");
+  loadImage(img);
+}
+if(document.getElementById("img_shema_paper_stand")){
+  var img = document.getElementById("img_shema_paper_stand");
+  loadImage(img);
+}
+
 onCheckboxChange();
+
+
+
 
 /*
 *Function to load the values in the form after uploading an user model
