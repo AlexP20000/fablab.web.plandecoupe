@@ -206,7 +206,7 @@
 	 *	@param {string} id the id name of the tag you seek
 	 *	@param {string} scale the scale values you want to use : as "scale(1,1)"
 	 *	@param {string} translate the translate values you want to use : as "translate(20,20)" : (abscissa,ordinate)
-	 *	@param {string} rotate the rotate values you want to use : as "rotate(90°,from_x_position,from_y_position"
+	 *	@param {string} rotate the rotate values you want to use : as "rotate(90degre,from_x_position,from_y_position)"
 	 */
 	set_attribute_g_tag: function (id, scale, translate, rotate) {
 		var tag = document.getElementById(id);
