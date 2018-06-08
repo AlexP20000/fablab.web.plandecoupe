@@ -3,7 +3,7 @@ var templateInfo = document.getElementById("footer-template").innerHTML;
 var template = Handlebars.compile(templateInfo);
 
 Handlebars.registerPartial("footer",
-	'<div class="footer-clean">'
+	'<div class="footer-clean fixed-bottom">'
 		+'<footer>'
 			+'<div class="container">'
 				+'<div class="row justify-content-center">'
