@@ -1,3 +1,23 @@
+body {
+	background: rgb(222,239,255);
+	background: -moz-radial-gradient(center, ellipse cover, rgb(222,239,255) 0%, rgb(106,169,221) 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, rgb(222,239,255) 0%,rgb(106,169,221) 100%);
+	background: radial-gradient(ellipse at center, rgb(222,239,255) 0%,rgb(106,169,221) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#deefff', endColorstr='#6aa9dd',GradientType=1 );
+}
+.card {
+	box-shadow: 1px 1px 12px #000000;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color='#000000', Direction=135, Strength=12);
+	zoom: 1;
+}
+.card-body {
+	background: rgb(191,224,255);
+	background: -moz-radial-gradient(center, ellipse cover, rgb(191,224,255) 0%, rgb(255,255,255) 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, rgb(191,224,255) 0%,rgb(255,255,255) 100%);
+	background: radial-gradient(ellipse at center, rgb(191,224,255) 0%,rgb(255,255,255) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfe0ff', endColorstr='#ffffff',GradientType=1 );
+}
+
 ul {
   list-style-type: none;
   padding: 0;
