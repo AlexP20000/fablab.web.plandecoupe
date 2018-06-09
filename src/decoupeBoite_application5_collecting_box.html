@@ -4,16 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator fichier svg</title>
+    <title>Boite de collecte</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+	<!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body onLoad="checkValue()">
     <div class="container">
         <div class="row" style="margin-top:5px;"> 
             <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a> 
-                <h1 class="text-center">Générateur de fichier svg pour découpe de boites de collecte optimisées</h1> 
+                <h1 class="text-center">Boite de collecte</h1> 
             </div> 
         </div> 
         <div class="row" style="margin-top:15px;" align="center">
@@ -194,12 +197,13 @@
     {{> footer}}
   </script>
 
-  <script src="handlebars-v4.0.11.js"></script>
-  <script src="ihm.js"></script> 
+  <script src="assets/lib/handlebars-v4.0.11.js"></script>
+  <script src="assets/js/ihm.js"></script> 
   <script src="templates/header.js"></script>
   <script src="templates/footer.js"></script>
-  <script src="generate_svg_boxes.js"></script> 
-  <script src="assets/js/jquery.min.js"></script> 
+  <script src="assets/js/generate_svg_boxes.js"></script> 
+  <script src="assets/js/collectingbox.js"></script> 
+  <script src="assets/lib/jquery.min.js"></script> 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
 </div>
 </body>
