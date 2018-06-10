@@ -2,160 +2,178 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boite rectangulaire</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Boite rectangulaire</title>
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/styles.css">
+	
 	<!-- favicon -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body onLoad="checkValue()">
-    <div class="container">
-        <div class="row" style="margin-top:5px;"> 
-            <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a> 
-                <h1 class="text-center">Boite rectangulaire</h1> 
-            </div> 
-        </div> 
-        <div class="row" style="margin-top:15px;" align="center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Application</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="Formulaire">
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app1_closed_or_openned_box();" id="selectP"></select>
-                                <button
-                                class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
-                            </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label>
-							<select onchange="selectedModel(); app1_closed_or_openned_box();" id="selectP2">
-								<optgroup id="groupWithTop" label="With_Top">
-									<option value="1">Face 1</option>
-									<option value="2">Face 2</option>
-									<option value="3">Face 3</option>
-									<option value="4">Face 4</option>
-									<option value="5">Face 5</option>
-									<option value="6">Face 6</option>
-									<option value="7" id="groupWithTop_selected">Modèle 1</option>
-									<option value="8">Modèle 2</option>
-									<option value="9">Modèle 3</option>
-								</optgroup>
-								<optgroup id="groupWithoutTop" label="Without_Top">
-									<option value="1">Face 1</option>
-									<option value="2">Face 2</option>
-									<option value="3">Face 3</option>
-									<option value="4">Face 4</option>
-									<option value="5">Face 5</option>
-									<option value="6" id="groupWithoutTop_selected">Modèle 1</option>
-									<option value="7">Modèle 2</option>
-									<option value="8">Modèle 3</option>
-								</optgroup></select>
-                            </div>
-                            <div
-                            class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="hauteur" type="number" min="0" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app1_closed_or_openned_box()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Boite fermée :</label><input onchange="onCheckboxChange(); app1_closed_or_openned_box();" type="checkbox" id="formCheck-1"/></div>
+	<div class="container">
+		<!-- Menu de navigation -->
+		<nav class="navbar navbar-expand-lg navbar-light nav-fill bg-light">
+			<a class="navbar-brand" href="index.html">
+				<img src="assets/img/logo_transparent.png" height="40">
+			</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application1_opened_closed_box.html">Boîte rectangulaire</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application2_tool_box.html">Boîte à outils</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application3_paper_stand.html">Présentoir</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application4_hinged_lid_box.html">Boîte avec couvercle rabattable</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application5_collecting_box.html">Boîte de collecte</a>
+		</nav>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
 
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesures internes :</label><input onchange="app1_closed_or_openned_box();" type="checkbox" id="formCheck-3"/></div>
+		<!-- Titre de la page -->
+		<div class="jumbotron">
+			<h1 class="display-4">Boite rectangulaire</h1>
+			<p class="lead ">Modes de découpe disponibles :</p>
+			<ul>
+				<li>une boîte entière,</li>
+				<li>deux boîte entière,</li>
+				<li>un sous-ensemble,</li>
+				<li>un des morceaux / côtés de la boîte.</li>
+			</ul>
+		</div>
 
-                            <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
-                            <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
-                            <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app1_closed_or_openned_box(true)" >Télécharger le plan</button></div>
-                            <a hidden id="json" href=""></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Documentation</a></li>
-                            <li class="nav-item"><a id="previsualisation" class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Prévisualisation</a></li>
-                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Infos</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" role="tabpanel" id="tab-1">
-								</br>
-                                <img id="myImg" src="assets/img/opened_closed_box/closed_box_labelled.JPG" style="width:100%;">
-                                <p class="text-justify"><br>Ce formulaire permet de générer le plan de découpe d'une boîte fermée, ce plan est au format '.svg'. Le but principal est d'économiser au 
-                                  maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
-                                  de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
-                                  ou deux boîte entière, ou un sous-ensemble, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
-                              </div>
-                              <div class="tab-pane" role="tabpanel" id="tab-2">
-								 </br>
-                                 <a id="filesvg" >
-                                 </a>
-                                 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-								 <div id="svg_container">
-									 <svg
-										 xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-										 xmlns:dc="http://purl.org/dc/elements/1.1/"
-										 xmlns:cc="http://creativecommons.org/ns#"
-										 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-										 xmlns:svg="http://www.w3.org/2000/svg"
-										 xmlns="http://www.w3.org/2000/svg"
-										 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-										 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-										 width="100%"
-										 height="100%"
-										 version="1.1"
-										 id="svg"
-										 inkscape:version="0.92.3 (2405546, 2018-03-11)"
-										 sodipodi:docname="inkscape1test.svg"
-										 stroke="#ff0000" fill="#ffffff" fill-opacity="0">
+
+		<div class="row">
+			<div class="col-md-6">
+				<form id="Formulaire" class="form-inline" role="form">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="mb-0">Paramètres</h5>
+						</div>
+						<div class="card-body">
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="selectP">Type de planche</label>
+								<select class="form-control col-sm-7" onchange="getSelectedPlankIndex(); app1_closed_or_openned_box();" id="selectP"></select>
+								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">+</button>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="selectP2">Mode de découpe</label>
+								<select class="form-control col-sm-8" onchange="selectedModel(); app1_closed_or_openned_box();" id="selectP2">
+									<optgroup id="groupWithTop" label="With_Top">
+										<option value="1">Face 1</option>
+										<option value="2">Face 2</option>
+										<option value="3">Face 3</option>
+										<option value="4">Face 4</option>
+										<option value="5">Face 5</option>
+										<option value="6">Face 6</option>
+										<option value="7" id="groupWithTop_selected">Modèle 1</option>
+										<option value="8">Modèle 2</option>
+										<option value="9">Modèle 3</option>
+									</optgroup>
+									<optgroup id="groupWithoutTop" label="Without_Top">
+										<option value="1">Face 1</option>
+										<option value="2">Face 2</option>
+										<option value="3">Face 3</option>
+										<option value="4">Face 4</option>
+										<option value="5">Face 5</option>
+										<option value="6" id="groupWithoutTop_selected">Modèle 1</option>
+										<option value="7">Modèle 2</option>
+										<option value="8">Modèle 3</option>
+									</optgroup>
+								</select>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="longueur">Longueur</label>
+								<div class="input-group">
+									<input class="form-control" onkeyup="app1_closed_or_openned_box()" id="longueur" type="number" min="0" placeholder="mm" value="300">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="largeur">Largeur</label>
+								<div class="input-group">
+									<input class="form-control " onkeyup="app1_closed_or_openned_box()" id="largeur" type="number" min="0" placeholder="mm" value="150">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="hauteur">Hauteur</label>
+								<div class="input-group">
+									<input class="form-control " onkeyup="app1_closed_or_openned_box()" id="hauteur" type="number" min="0" placeholder="mm" value="150">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="encoche">Encoches</label>
+								<div class="input-group">
+									<input class="form-control " onkeyup="app1_closed_or_openned_box()" id="encoche" type="number" min="0" placeholder="mm" value="10">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="formCheck-1">Boite fermée</label>
+								<div class="form-check">
+									<input class="form-check-input" onchange="onCheckboxChange(); app1_closed_or_openned_box();" type="checkbox" id="formCheck-1" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="formCheck-2">Afficher planche</label>
+								<div class="form-check">
+									<input class="form-check-input" onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label" for="formCheck-3">Mesures internes</label>
+								<div class="form-check">
+									<input class="form-check-input" onchange="app1_closed_or_openned_box();" type="checkbox" id="formCheck-3" />
+								</div>
+							</div>
+
+						</div>
+						<div class="card-footer">
+							<div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+								<button class="btn btn-secondary" type="button" onclick="saveModelJson()">Sauver les paramètres</button>
+								<button class="btn btn-secondary" type="button" onclick="document.getElementById('fileid').click();">Restaurer les paramètres</button>
+								<button class="btn btn-primary" type="button" onclick="app1_closed_or_openned_box(true)" id="genButton">Télécharger le plan</button>
+							</div>
+							<input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden />
+							<a id="json" href=""></a>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Documentation</a></li>
+					<li class="nav-item"><a id="previsualisation" class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Prévisualisation</a></li>
+					<li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Infos</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" role="tabpanel" id="tab-1">
+						</br> <img id="myImg" src="assets/img/opened_closed_box/closed_box_labelled.JPG" style="width: 100%;">
+					</div>
+					<div class="tab-pane" role="tabpanel" id="tab-2">
+						</br>
+						<a id="filesvg"> </a>
+						<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+						<div id="svg_container">
+							<svg xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+								xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
+								xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="100%" height="100%" version="1.1" id="svg"
+								inkscape:version="0.92.3 (2405546, 2018-03-11)" sodipodi:docname="inkscape1test.svg" stroke="#ff0000" fill="#ffffff" fill-opacity="0">
 										 <defs id="defs3727">
-											 <linearGradient
-											 inkscape:collect="always"
-											 id="linearGradient4578"
-											 osb:paint="gradient">
-												 <stop
-												 style="stop-color:#000000;stop-opacity:1;"
-												 offset="0"
-												 id="stop4574" />
-												 <stop
-												 style="stop-color:#000000;stop-opacity:0;"
-												 offset="1"
-												 id="stop4576" />
+											 <linearGradient inkscape:collect="always" id="linearGradient4578" osb:paint="gradient">
+												 <stop style="stop-color:#000000;stop-opacity:1;" offset="0" id="stop4574" />
+												 <stop style="stop-color:#000000;stop-opacity:0;" offset="1" id="stop4576" />
 											 </linearGradient>
 										 </defs>
-										 <sodipodi:namedview
-										 id="base"
-										 pagecolor="#ffffff"
-										 bordercolor="#666666"
-										 borderopacity="1.0"
-										 inkscape:pageopacity="0.0"
-										 inkscape:pageshadow="2"
-										 inkscape:zoom="0.7"
-										 inkscape:cx="280.75598"
-										 inkscape:cy="674.9179"
-										 inkscape:document-units="mm" 
-										 units="mm"
-										 inkscape:current-layer="layer1"
-										 showgrid="false"
-										 inkscape:window-width="1600"
-										 inkscape:window-height="837"
-										 inkscape:window-x="-8"
-										 inkscape:window-y="-8"
-										 inkscape:window-maximized="1" />
-										 <metadata
-										 id="metadata3730">
+										 <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.7" inkscape:cx="280.75598"
+									inkscape:cy="674.9179" inkscape:document-units="mm" units="mm" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="1600" inkscape:window-height="837"
+									inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" />
+										 <metadata id="metadata3730">
 										 <rdf:RDF>
-											 <cc:Work
-											 rdf:about="">
+											 <cc:Work rdf:about="">
 												 <dc:format>image/svg+xml</dc:format>
-												 <dc:type
-												 rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+												 <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
 												 <dc:title></dc:title>
 											</cc:Work>
 										 </rdf:RDF>
@@ -164,64 +182,84 @@
 											 <!-- your path goes here my dear -->
 										 </g>
 									</svg>
-								</div>
-     </div>
-     <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br> <img id="img_shema_boite_ouverte" src="assets/img/opened_closed_box/blueprint_opened_box.png" alt="blueprint_opened_box" height="100%" width="100%" >
-				<img id="img_shema_boite_ferme" src="assets/img/opened_closed_box/blueprint_closed_box.png" alt="blueprint_closed_box" height="100%" width="100%" ></p>
-    </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="myModal" role="dialog" tabindex="-1" class="modal fade">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Ajout de planche</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
-                    (cela rajoutera des planches provisoirement)</p>
-                    <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" min="0" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" min="0" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" min="0" placeholder="mm" /></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
-    <div id="myModal2" class="modal-image"> 
+						</div>
+					</div>
+					<div class="tab-pane" role="tabpanel" id="tab-3">
+						<p>
+							<br> <img id="img_shema_boite_ouverte" src="assets/img/opened_closed_box/blueprint_opened_box.png" alt="blueprint_opened_box" height="100%" width="100%"> <img
+								id="img_shema_boite_ferme" src="assets/img/opened_closed_box/blueprint_closed_box.png" alt="blueprint_closed_box" height="100%" width="100%">
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal" role="dialog" tabindex="-1" class="modal fade">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Ajout de planche</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="" role="form">
+						<p>Entrez les dimensions du support sur lequel vous souhaitez découper votre boite.</p>
+						<div class="form-group">
+							<input class="form-control" onkeyup="checkValueModal()" id='pName' type="text" placeholder="Désignation"/>
+						</div>
+						<div class="form-group ">
+							<div class="input-group">
+								<input class="form-control" onkeyup="checkValueModal()" id='pLenght' type="number" min="0" placeholder="Longueur" />
+								<div class="input-group-append"><span class="input-group-text">mm</span></div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<div class="input-group">
+								<input class="form-control" onkeyup="checkValueModal()" id='pWidth' type="number" min="0" placeholder="Largeur" />
+								<div class="input-group-append"><span class="input-group-text">mm</span></div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<div class="input-group">
+								<input class="form-control" onkeyup="checkValueModal()" id='pThick' type="number" min="0" placeholder="Epaisseur" />
+								<div class="input-group-append"><span class="input-group-text">mm</span></div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+					<button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal2" class="modal-image">
 
-      <!-- The Close Button --> 
-      <button onclick="modal.style.display = 'none'" class="close" type="button" data-dismiss="modal-image">&times;</button> 
+		<!-- The Close Button -->
+		<button onclick="modal.style.display = 'none'" class="close" type="button" data-dismiss="modal-image">&times;</button>
 
-      <!-- Modal Content (The Image) --> 
-      <img class="modal-content-image" id="img01"> 
+		<!-- Modal Content (The Image) -->
+		<img class="modal-content-image" id="img01">
 
-      <!-- Modal Caption (Image Text) --> 
-      <div id="caption"></div> 
-  </div> 
+		<!-- Modal Caption (Image Text) -->
+		<div id="caption"></div>
+	</div>
 
-  <div id="content-footer"></div>
-  <script type="text/javascript">
-    
-  </script>
-  <script id="footer-template" type="text/x-handlebars-template">
-    {{> footer}}
-  </script>
+	<div id="content-footer"></div>
+	<script id="footer-template" type="text/x-handlebars-template">
+    	{{> footer}}
+	</script>
 
-  <script src="assets/lib/handlebars-v4.0.11.js"></script>
-  <script src="templates/header.js"></script>
-  <script src="templates/footer.js"></script>
-  <script src="assets/js/ihm.js"></script> 
-  <script src="assets/js/generate_svg_boxes.js"></script> 
-  <script src="assets/js/rectangularbox.js"></script> 
-  <script src="assets/lib/jquery.min.js"></script> 
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
-
-  
+	<script src="assets/lib/handlebars-v4.0.11.js"></script>
+	<script src="templates/header.js"></script>
+	<script src="templates/footer.js"></script>
+	<script src="assets/js/ihm.js"></script>
+	<script src="assets/js/generate_svg_boxes.js"></script>
+	<script src="assets/js/rectangularbox.js"></script>
+	<script src="assets/lib/jquery.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
-
 </html>

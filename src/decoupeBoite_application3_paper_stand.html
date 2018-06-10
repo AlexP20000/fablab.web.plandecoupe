@@ -2,149 +2,192 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator fichier svg</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Présentoir</title>
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/styles.css">
+<!-- favicon -->
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body onLoad="checkValue()">
-    <div class="container">
-        <div class="row" style="margin-top:5px;"> 
-            <div class="col" align="center"><a href="index.html"><img src="assets/img/logo_transparent.png"></a> 
-                <h1 class="text-center">Générateur de fichier svg pour présentoir optimisés</h1> 
-            </div> 
-        </div> 
-        <div class="row" style="margin-top:15px;" align="center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Application</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="Formulaire">
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Type de planche :</label><select onchange="getSelectedPlankIndex(); app3_paper_stand();" id="selectP"></select>
-                                <button
-                                class="btn btn-primary" type="button" style="margin-left:16px;" data-toggle="modal" data-target="#myModal">+</button>
-                            </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:150px;">Face(s) de la boîte :</label>
-								<select onchange="selectedModel(); app3_paper_stand();" id="selectP2">
-									<optgroup label="Modèle :">
-										<option value="1">Side part 1</option>
-										<option value="2">Side part 2</option>
-										<option value="3">Stand main part</option>
-										<option value="4">Stand front part</option>
-										<option value="5">Toutes faces en 1 ligne</option>
-										<option value="6">Toutes faces en 2 lignes</option>
-										<option value="7">Toutes faces en 1 colonne</option>
-										<option value="8" selected>Toutes faces en 2 colonnes</option>
-									</optgroup>
-								</select>
-                            </div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Longueur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="longueur" type="number" min="0" placeholder="mm" value="300"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Largeur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="largeur" type="number" min="0" placeholder="mm" value="150"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteur" type="number" min="0" placeholder="mm" value="250"></div>
-                            <div class="form-group"><label class="d-block float-left" style="width:200px;">Encoches (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="encoche" type="number" min="0" placeholder="mm" value="10"></div>
-                            
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Nombres d'étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="nombreEtage" type="number" min="0" placeholder="mm" value="2"></div>
-                            </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur de la partie avant d'un étage (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurPartieAvant" type="number" min="0" placeholder="mm" value="40"></div>
-                            </br></br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Hauteur entre deux étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="hauteurSeparation" type="number" min="0" placeholder="mm" value="120"></div>
-                            </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Angle d'inclinaison des étages (mm) :&nbsp;</label><input onkeyup ="app3_paper_stand()" id="angle" type="number" min="0" placeholder="mm" value="40"></div>
-                            </br>
-							<div class="form-group"><label class="d-block float-left" style="width:200px;">Afficher planche :</label><input onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2"/></div>
-              <div class="form-group"><label class="d-block float-left" style="width:200px;">Mesures internes :</label><input onchange="app3_paper_stand()" type="checkbox" id="formCheck-3"/></div>
-                            <button class="btn btn-primary" type="button" onclick="saveModelJson()" style="margin:0px;margin-right:15px;">Enregistrer les paramètres</button>
-                            <button class="btn btn-primary" type="button" onclick="document.getElementById('fileid').click();" style="margin:0px;margin-right:15px;">Restaurer les paramètres</button>
-                            <input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden/>
-                            <button id="genButton" class="btn btn-primary" type="button" onclick="app3_paper_stand(true)" >Télécharger le plan</button></div>
-                            <a hidden id="json" href=""></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Documentation</a></li>
-                            <li class="nav-item"><a id="previsualisation" class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Prévisualisation</a></li>
-                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Infos</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" role="tabpanel" id="tab-1">
-								</br>
-                                <img id="myImg" src="assets/img/paper_stand/paper_stand_labelled.JPG" style="width:100%;">
-                                <p class="text-justify"><br>Ce formulaire permet de générer le plan de découpe d'un présentoir de prospectus, ce plan est au format '.svg'. Le but principal est d'économiser au 
-                                  maximum le passage du laser sur des mêmes bords de la boîte lors de la découpe, mais aussi de minimiser les chutes de bois pour permettre une éventuelle réutilisation
-                                  de certaines chutes de bois. Vous pouvez choisir plusieurs modes de découpe en fonction de vos paramètres : par exemple vous pouvez découper une boîte entière, 
-								  en ligne, en colonne, ou simplement un des morceaux / côtés de la boîte.<br><br></p>
-                              </div>
-                              <div class="tab-pane" role="tabpanel" id="tab-2">
-								 </br>
-                                 <a id="filesvg" >
-                                 </a>
-                                 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-								 <div id="svg_container">
-									 <svg
-										 xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-										 xmlns:dc="http://purl.org/dc/elements/1.1/"
-										 xmlns:cc="http://creativecommons.org/ns#"
-										 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-										 xmlns:svg="http://www.w3.org/2000/svg"
-										 xmlns="http://www.w3.org/2000/svg"
-										 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-										 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-										 width="100%"
-										 height="100%"
-										 version="1.1"
-										 id="svg"
-										 inkscape:version="0.92.3 (2405546, 2018-03-11)"
-										 sodipodi:docname="inkscape1test.svg"
-										 stroke="#ff0000" fill="#ffffff" fill-opacity="0">
+	<div class="container">
+		<!-- Menu de navigation -->
+		<nav class="navbar navbar-expand-lg navbar-light nav-fill bg-light">
+			<a class="navbar-brand" href="index.html">
+				<img src="assets/img/logo_transparent.png" height="40">
+			</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application1_opened_closed_box.html">Boîte rectangulaire</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application2_tool_box.html">Boîte à outils</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application3_paper_stand.html">Présentoir</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application4_hinged_lid_box.html">Boîte avec couvercle rabattable</a>
+			<a class="nav-item nav-link" href="decoupeBoite_application5_collecting_box.html">Boîte de collecte</a>
+		</nav>
+
+
+		<!-- Titre de la page -->
+		<div class="jumbotron">
+			<h1 class="display-4">Présentoir</h1>
+			<p class="lead">Modes de découpe disponibles :</p>
+			<ul>
+				<li>une boîte entière,</li>
+				<li>une disposition des face en ligne,</li>
+				<li>une disposition des face en colonne,</li>
+				<li>un des morceaux / côtés de la boîte.</li>
+			</ul>
+		</div>
+
+
+
+
+
+		<div class="row">
+			<div class="col-md-6">
+				<form id="Formulaire" class="form-inline" role="form">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="mb-0">Paramètres</h5>
+						</div>
+						<div class="card-body">
+							<div id="Formulaire">
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label" for="selectP">Type de planche</label>
+									<select onchange="getSelectedPlankIndex(); app3_paper_stand();" id="selectP"></select>
+									<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">+</button>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label" for="selectP2">Mode de découpe</label>
+									<select onchange="selectedModel(); app3_paper_stand();" id="selectP2">
+										<optgroup label="Modèle :">
+											<option value="1">Side part 1</option>
+											<option value="2">Side part 2</option>
+											<option value="3">Stand main part</option>
+											<option value="4">Stand front part</option>
+											<option value="5">Toutes les faces en 1 ligne</option>
+											<option value="6">Toutes les faces en 2 lignes</option>
+											<option value="7">Toutes les faces en 1 colonne</option>
+											<option value="8" selected>Toutes les faces en 2 colonnes</option>
+										</optgroup>
+									</select>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Longueur</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="longueur" type="number" min="0" placeholder="mm" value="300">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Largeur</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="largeur" type="number" min="0" placeholder="mm" value="150">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Hauteur</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="hauteur" type="number" min="0" placeholder="mm" value="250">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Encoches</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="encoche" type="number" min="0" placeholder="mm" value="10">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Nombres d'étages</label>
+									<input class="form-control " onkeyup="app3_paper_stand()" id="nombreEtage" type="number" min="0" placeholder="mm" value="2">
+								</div>
+
+
+
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Hauteur de la partie avant d'un étage</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="hauteurPartieAvant" type="number" min="0" placeholder="mm" value="40">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Hauteur entre deux étages</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="hauteurSeparation" type="number" min="0" placeholder="mm" value="120">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Angle d'inclinaison des étages</label>
+									<div class="input-group">
+									<input class="form-control " onkeyup="app3_paper_stand()" id="angle" type="number" min="0" placeholder="mm" value="40">
+									<div class="input-group-append"><span class="input-group-text">mm</span></div>
+								</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Afficher planche</label>
+									<input class="form-control " onchange="svg_builder.show_layer2()" type="checkbox" id="formCheck-2" />
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-6 col-form-label">Mesures internes</label>
+									<input class="form-control " onchange="app3_paper_stand()" type="checkbox" id="formCheck-3" />
+								</div>
+								
+								<input onchange="fileChangeEvent()" id='fileid' accept=".json" type='file' hidden />
+							</div>
+							<a id="json" href=""></a>
+						</div>
+						<div class="card-footer">
+							<div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+								<button class="btn btn-secondary" type="button" onclick="saveModelJson()">Sauver les paramètres</button>
+								<button class="btn btn-secondary" type="button" onclick="document.getElementById('fileid').click();">Restaurer les paramètres</button>
+								
+								<button class="btn btn-primary" type="button" onclick="app3_paper_stand(true)" id="genButton">Télécharger le plan</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<div>
+					<ul class="nav nav-tabs">
+						<li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Documentation</a></li>
+						<li class="nav-item"><a id="previsualisation" class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Prévisualisation</a></li>
+						<li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Infos</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" role="tabpanel" id="tab-1">
+							</br> <img id="myImg" src="assets/img/paper_stand/paper_stand_labelled.JPG" style="width: 100%;">
+
+						</div>
+						<div class="tab-pane" role="tabpanel" id="tab-2">
+							</br>
+							<a id="filesvg"> </a>
+							<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+							<div id="svg_container">
+								<svg xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+									xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
+									xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="100%" height="100%" version="1.1" id="svg"
+									inkscape:version="0.92.3 (2405546, 2018-03-11)" sodipodi:docname="inkscape1test.svg" stroke="#ff0000" fill="#ffffff" fill-opacity="0">
 										 <defs id="defs3727">
-											 <linearGradient
-											 inkscape:collect="always"
-											 id="linearGradient4578"
-											 osb:paint="gradient">
-												 <stop
-												 style="stop-color:#000000;stop-opacity:1;"
-												 offset="0"
-												 id="stop4574" />
-												 <stop
-												 style="stop-color:#000000;stop-opacity:0;"
-												 offset="1"
-												 id="stop4576" />
+											 <linearGradient inkscape:collect="always" id="linearGradient4578" osb:paint="gradient">
+												 <stop style="stop-color:#000000;stop-opacity:1;" offset="0" id="stop4574" />
+												 <stop style="stop-color:#000000;stop-opacity:0;" offset="1" id="stop4576" />
 											 </linearGradient>
 										 </defs>
-										 <sodipodi:namedview
-										 id="base"
-										 pagecolor="#ffffff"
-										 bordercolor="#666666"
-										 borderopacity="1.0"
-										 inkscape:pageopacity="0.0"
-										 inkscape:pageshadow="2"
-										 inkscape:zoom="0.7"
-										 inkscape:cx="280.75598"
-										 inkscape:cy="674.9179"
-										 inkscape:document-units="mm" 
-										 units="mm"
-										 inkscape:current-layer="layer1"
-										 showgrid="false"
-										 inkscape:window-width="1600"
-										 inkscape:window-height="837"
-										 inkscape:window-x="-8"
-										 inkscape:window-y="-8"
-										 inkscape:window-maximized="1" />
-										 <metadata
-										 id="metadata3730">
+										 <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.7" inkscape:cx="280.75598"
+										inkscape:cy="674.9179" inkscape:document-units="mm" units="mm" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="1600" inkscape:window-height="837"
+										inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" />
+										 <metadata id="metadata3730">
 										 <rdf:RDF>
-											 <cc:Work
-											 rdf:about="">
+											 <cc:Work rdf:about="">
 												 <dc:format>image/svg+xml</dc:format>
-												 <dc:type
-												 rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+												 <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
 												 <dc:title></dc:title>
 											</cc:Work>
 										 </rdf:RDF>
@@ -153,58 +196,86 @@
 											 <!-- your path goes here my dear -->
 										 </g>
 									</svg>
-								</div>
-     </div>
-     <div class="tab-pane" role="tabpanel" id="tab-3">
-        <p><br> <img id="img_shema_paper_stand" src="assets/img/paper_stand/blueprint_paper_stand.png" alt="blueprint_paper_stand" height="100%" width="100%" ></p>
-    </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="myModal" role="dialog" tabindex="-1" class="modal fade">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Ajout de planche</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Entrez les dimension du support sur lequel vous souhaitez découper votre boite
-                    (cela rajoutera des planches provisoirement)</p>
-                    <div class="form-group"><label>Nom :</label><input onkeyup ="checkValueModal()" id='pName' type="text" /></div>
-                    <div class="form-group"><label>Longueur (mm) :</label><input onkeyup ="checkValueModal()" id='pLenght' type="number" min="0" placeholder="mm" /></div>
-                    <div class="form-group"><label>Largeur (mm) :</label><input onkeyup ="checkValueModal()" id='pWidth' type="number" min="0" placeholder="mm" /></div>
-                    <div class="form-group"><label>Epaisseur (mm) :</label><input onkeyup ="checkValueModal()" id='pThick' type="number" min="0" placeholder="mm" /></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
-    <div id="myModal2" class="modal-image"> 
+							</div>
+						</div>
+						<div class="tab-pane" role="tabpanel" id="tab-3">
+							<p>
+								<br> <img id="img_shema_paper_stand" src="assets/img/paper_stand/blueprint_paper_stand.png" alt="blueprint_paper_stand" height="100%" width="100%">
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal" role="dialog" tabindex="-1" class="modal fade">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Ajout de planche</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="" role="form">
+						<p>Entrez les dimensions du support sur lequel vous souhaitez découper votre boite.</p>
+						<div class="form-group">
+							<input class="form-control" onkeyup="checkValueModal()" id='pName' type="text" placeholder="Désignation"/>
+						</div>
+						<div class="form-group ">
+							<div class="input-group">
+								<input class="form-control" onkeyup="checkValueModal()" id='pLenght' type="number" min="0" placeholder="Longueur" />
+								<div class="input-group-append"><span class="input-group-text">mm</span></div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<div class="input-group">
+								<input class="form-control" onkeyup="checkValueModal()" id='pWidth' type="number" min="0" placeholder="Largeur" />
+								<div class="input-group-append"><span class="input-group-text">mm</span></div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<div class="input-group">
+								<input class="form-control" onkeyup="checkValueModal()" id='pThick' type="number" min="0" placeholder="Epaisseur" />
+								<div class="input-group-append"><span class="input-group-text">mm</span></div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+					<button id="pButton" onclick="addPlank()" data-dismiss="modal" class="btn btn-primary" type="button">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal2" class="modal-image">
 
-      <!-- The Close Button --> 
-      <button onclick="modal.style.display = 'none'" class="close" type="button" data-dismiss="modal-image">&times;</button> 
+		<!-- The Close Button -->
+		<button onclick="modal.style.display = 'none'" class="close" type="button" data-dismiss="modal-image">&times;</button>
 
-      <!-- Modal Content (The Image) --> 
-      <img class="modal-content-image" id="img01"> 
+		<!-- Modal Content (The Image) -->
+		<img class="modal-content-image" id="img01">
 
-      <!-- Modal Caption (Image Text) --> 
-      <div id="caption"></div> 
-  </div> 
-  <div id="content-footer"></div>
-  <script id="footer-template" type="text/x-handlebars-template">
-    {{> footer}}
-  </script>
+		<!-- Modal Caption (Image Text) -->
+		<div id="caption"></div>
+	</div>
 
-  <script src="assets/lib/handlebars-v4.0.11.js"></script>
-  <script src="assets/js/ihm.js"></script> 
-  <script src="templates/header.js"></script>
-  <script src="templates/footer.js"></script>
-  <script src="assets/js/generate_svg_boxes.js"></script> 
-  <script src="assets/js/paperstand.js"></script> 
-  <script src="assets/lib/jquery.min.js"></script> 
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
-  
+	<div id="content-footer"></div>
+	<script id="footer-template" type="text/x-handlebars-template">
+    	{{> footer}}
+	</script>
+	
+	<script src="assets/lib/handlebars-v4.0.11.js"></script>
+	<script src="assets/js/ihm.js"></script>
+	<script src="templates/header.js"></script>
+	<script src="templates/footer.js"></script>
+	<script src="assets/js/generate_svg_boxes.js"></script>
+	<script src="assets/js/paperstand.js"></script>
+	<script src="assets/lib/jquery.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
