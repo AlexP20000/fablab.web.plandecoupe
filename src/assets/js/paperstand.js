@@ -329,6 +329,7 @@ function app3_paper_stand(download) {
 		app3_paper_stand.init_geometry_parameters(); 
 		if( app3_paper_stand.check_geometry_parameters() != 0 ) {
 			console.log("error geometry parameters, to detail : " + app3_paper_stand.check_geometry_parameters()); 
+			alert("Erreur dans les paramètres, vérifiez que la valeur d'encoche soit bien supérieur à l'épaisseur du matérielle");
 			return;
 		}
 	}

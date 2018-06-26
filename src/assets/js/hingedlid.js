@@ -207,6 +207,7 @@ function app4_hinged_lid_box(download) {
 	}
 	else if( app4_hinged_lid_box.check_parameters() != 0 ) { 
 		console.log("error, to detail : " + app4_hinged_lid_box.check_parameters()); 
+		alert("Erreur dans les paramètres, vérifiez que la valeur d'encoche soit bien supérieur à l'épaisseur du matérielle");
 		return;
 	}
 	

@@ -364,10 +364,12 @@ function app1_closed_or_openned_box(download) {
 	app1_closed_or_openned_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
 	if( !checkValue("longueur","largeur","hauteur","encoche") ) {
 		console.log("error parameters, there is not only positive integer" );
+		alert("error parameters, there is not only positive integer");
 		return;
 	}
 	else if( app1_closed_or_openned_box.check_parameters() != 0 ) { 
 		console.log("error, to detail : " + app1_closed_or_openned_box.check_parameters()); 
+		alert("Erreur in the parameters, check if notch is >= 5");
 		return;
 	}
 	

@@ -396,7 +396,8 @@ function app2_toolbox(download){
 		return;
 	}/*
 	else if( Toolbox.check_parameters() != 0 ) { 
-		console.log("error, to detail : " + Toolbox.check_parameters()); 
+		console.log("error, to detail : " + Toolbox.check_parameters());
+		alert("Erreur dans les paramètres, vérifiez que la valeur d'encoche soit bien supérieur à l'épaisseur du matérielle"); 
 		return;
 	}*/
 
