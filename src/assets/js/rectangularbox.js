@@ -357,7 +357,7 @@ function app1_closed_or_openned_box(download) {
 		app1_closed_or_openned_box = Object.create(Box_with_top);
 	} else {
 		height_box = height_box - wooden_plate_thickness; // to correct the height lack ( its the fact that we must count the wooden_plate_thickness )
-		var app1_closed_or_openned_box = Object.create(Box_without_top);
+		app1_closed_or_openned_box = Object.create(Box_without_top);
 	}
 	
 	// we initialize the parameters and check them if error / invalid values are found
@@ -381,3 +381,26 @@ function app1_closed_or_openned_box(download) {
 	if( download == true ) svg_builder.generate_svg_file(file_name); // if download is true, it will be downloadable by the user 
 	svg_builder.show_layer2();	// to show the result in the good scale
 }
+
+
+function onCheckboxChange(){
+  //console.log("checkChanged");
+ // console.log(document.getElementById("formCheck-1").checked);
+  if(document.getElementById("formCheck-1").checked){
+    document.getElementById("groupWithoutTop").style.display = "none";
+    document.getElementById("groupWithTop").style.display = "block";
+    document.getElementById("img_shema_boite_ouverte").style.display = "none";
+	document.getElementById("img_shema_boite_ferme").style.display = "block";
+	document.getElementById("groupWithTop_selected").selected = "selected";
+  }
+  else{
+    document.getElementById("groupWithTop").style.display = "none";
+    document.getElementById("groupWithoutTop").style.display = "block";
+    document.getElementById("img_shema_boite_ferme").style.display = "none";
+	document.getElementById("img_shema_boite_ouverte").style.display = "block";
+	document.getElementById("groupWithoutTop_selected").selected = "selected";
+  }
+}
+
+
+onCheckboxChange();

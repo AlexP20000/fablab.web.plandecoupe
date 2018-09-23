@@ -130,8 +130,6 @@ if(document.getElementById("img_shema_paper_stand")){
   loadImage(img);
 }
 
-onCheckboxChange();
-
 
 
 
@@ -279,22 +277,5 @@ function selectedModel() {
 	return selectedOption;
 }
 
-function onCheckboxChange(){
-  //console.log("checkChanged");
- // console.log(document.getElementById("formCheck-1").checked);
-  if(document.getElementById("formCheck-1").checked){
-    document.getElementById("groupWithoutTop").style.display = "none";
-    document.getElementById("groupWithTop").style.display = "block";
-    document.getElementById("img_shema_boite_ouverte").style.display = "none";
-	document.getElementById("img_shema_boite_ferme").style.display = "block";
-	document.getElementById("groupWithTop_selected").selected = "selected";
-  }
-  else{
-    document.getElementById("groupWithTop").style.display = "none";
-    document.getElementById("groupWithoutTop").style.display = "block";
-    document.getElementById("img_shema_boite_ferme").style.display = "none";
-	document.getElementById("img_shema_boite_ouverte").style.display = "block";
-	document.getElementById("groupWithoutTop_selected").selected = "selected";
-  }
-}
 //checkValue();
+$('.alert').alert().hide();
