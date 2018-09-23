@@ -38,11 +38,11 @@
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
-		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
-		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
 		if( this.width_box < 40 ) return 3; // the width_box must be minimum 5cm
 		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 8cm
 		if( this.height_box < 40 ) return 5; // the height_box must be minimum 5cm
+		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
+		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
 		return 0; // no problem
 	},
 	
@@ -197,12 +197,13 @@
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
+console.log( this ) ;
+		if( this.width_box < 40 ) return 3; // the width_box must be minimum 4cm
+		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 4cm
+		if( this.height_box < 40 ) return 5; // the height_box must be minimum 4cm - thikness
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
 		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
-		if( this.width_box < 40 ) return 3; // the width_box must be minimum 5cm
-		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 8cm
-		if( this.height_box < 40 ) return 5; // the height_box must be minimum 5cm
-		return 0; // no problem
+		return 100; // no problem
 	},
 	
 	/**
@@ -363,11 +364,25 @@ function app1_closed_or_openned_box(download) {
 	// we initialize the parameters and check them if error / invalid values are found
 	app1_closed_or_openned_box.init_parameters(wooden_plate_width, wooden_plate_length, wooden_plate_thickness, width_box, depth_box, height_box);
 	if( !checkValue("longueur","largeur","hauteur","encoche") ) {
+		DisplayError("Problème de saisie", "Les mesures doivent être positives.");
 		console.log("error parameters, there is not only positive integer" );
 		return;
 	}
 	else if( app1_closed_or_openned_box.check_parameters() != 0 ) { 
-		console.log("error, to detail : " + app1_closed_or_openned_box.check_parameters()); 
+		var result = app1_closed_or_openned_box.check_parameters();
+		//console.log("error, to detail : " + result);
+		// Display error in error message box
+		switch (result) {
+			case 1: DisplayError("Erreur de paramètrage", "Dimension des entailles trop petite (doit être > 5 mm )"); break;
+			case 2: DisplayError("Erreur de paramètrage", "Dimension des entailles trop grande."); break;
+			case 3: DisplayError("Erreur de paramètrage", "La longueur de la boite doit être au minimum de 40 mm."); break;
+			case 4: DisplayError("Erreur de paramètrage", "La largeur de la boite doit être au minimum de 40 mm."); break;
+			case 5: DisplayError("Erreur de paramètrage", "La hauteur de la boite doit être au minimum de 45 mm - epaisseur."); break;
+			
+			default:
+				$('.alert').hide();		// Hide the dialog box
+		}
+		
 		return;
 	}
 	

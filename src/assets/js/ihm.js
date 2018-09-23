@@ -278,4 +278,26 @@ function selectedModel() {
 }
 
 //checkValue();
+
+/**
+ * Gestion de l'affichage des erreurs.
+ * @param title	: Message box title (Erreur de saisie" if null )
+ * @param message	: Message to display.
+ * @returns none
+ */
 $('.alert').alert().hide();
+function DisplayError(title, message){
+	// Set Title
+	if( title == "") { 	$('#ErrorBoxTitle').text("Erreur de saisie");
+	} else {			$('#ErrorBoxTitle').text(title);
+	}
+	
+	// Set content
+	$('#ErrorBoxMessage').html(message);
+	
+	// Display and close after 10 secondes
+	$('.alert').fadeIn("slow");
+	setTimeout(function(){
+	    $(".alert").fadeOut("fast");
+	}, 5000);
+}
