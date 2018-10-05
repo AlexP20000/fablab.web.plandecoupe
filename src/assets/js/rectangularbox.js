@@ -197,13 +197,13 @@
 	 *	function that check if the parameters are correct or not, return 0 if no problem found, else it return an integer value depending on the issue found
 	 */
 	check_parameters: function() {
-console.log( this ) ;
+
 		if( this.width_box < 40 ) return 3; // the width_box must be minimum 4cm
 		if( this.depth_box < 40 ) return 4; // the depth_box must be minimum 4cm
 		if( this.height_box < 40 ) return 5; // the height_box must be minimum 4cm - thikness
 		if( NOTCH_SIZE < 5 ) return 1; // if the notch_size is too tiny, below 5 milimeters
 		if( NOTCH_SIZE*2 > Math.min(this.width_box,Math.min(this.depth_box,this.height_box)) ) return 2; // if the notch_size is too big
-		return 100; // no problem
+		return 0; // no problem
 	},
 	
 	/**
